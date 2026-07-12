@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Template: Gamification Level Up -->
+        <record id="email_template_gamification_level_up" model="mail.template">
+            <field name="name">ESG: Level Up Notification</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="subject">🎉 Congratulations! You reached ESG Level {{ object.esg_level }}</field>
+            <field name="email_to">{{ object.work_email }}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+        
+        <div style="text-align: center; margin-bottom: 25px;">
+            <span style="font-size: 48px;">🏆</span>
+            <h1 style="color: #1e3a8a; font-size: 24px; font-weight: 800; margin-top: 10px;">Level Up!</h1>
+        </div>
+
+        <p style="font-size: 16px; color: #334155;">Hi <strong><t t-out="object.name or 'Champion'"/></strong>,</p>
+        
+        <p style="font-size: 16px; color: #334155; line-height: 1.6;">
+            Congratulations on your incredible commitment to sustainability! You have successfully reached <strong>Level <t t-out="object.esg_level"/></strong>.
+        </p>
+
+        <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 25px 0; text-align: center; border: 1px solid #e2e8f0;">
+            <p style="font-size: 14px; color: #64748b; font-weight: bold; text-transform: uppercase; margin: 0 0 5px 0;">Total XP Earned</p>
+            <p style="font-size: 36px; color: #2563eb; font-weight: 900; margin: 0;">
+                <t t-out="object.esg_xp"/> <span style="font-size: 18px; color: #94a3b8;">XP</span>
+            </p>
+        </div>
+
+        <p style="font-size: 16px; color: #334155; line-height: 1.6;">
+            You can spend your newly earned points in the <a href="/web#action=ecosphere_gamification.action_esg_reward" style="color: #3b82f6; text-decoration: none; font-weight: bold;">Reward Store</a> to claim exclusive company swag or extra time off.
+        </p>
+
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="/web#action=ecosphere_gamification.action_esg_reward" style="background-color: #10b981; color: #ffffff; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 6px; display: inline-block;">Go to Reward Store</a>
+        </div>
+        
+    </div>
+</div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <!-- Template: Policy Acknowledgement Request -->
+        <record id="email_template_policy_ack_request" model="mail.template">
+            <field name="name">ESG: Policy Acknowledgement Request</field>
+            <field name="model_id" ref="ecosphere_governance.model_policy_acknowledgement"/>
+            <field name="subject">Action Required: Please Acknowledge Policy - {{ object.policy_id.name }}</field>
+            <field name="email_to">{{ object.employee_id.work_email }}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+        
+        <h2 style="color: #1e3a8a; font-weight: 800; margin-top: 0;">New Policy Published</h2>
+
+        <p style="font-size: 16px; color: #334155;">Hello <strong><t t-out="object.employee_id.name or 'Employee'"/></strong>,</p>
+        
+        <p style="font-size: 16px; color: #334155; line-height: 1.6;">
+            A new governance policy has been published and requires your review and acknowledgement.
+        </p>
+
+        <div style="background-color: #fffbeb; padding: 20px; border-left: 4px solid #f59e0b; margin: 25px 0;">
+            <p style="margin: 0 0 10px 0;"><strong>Policy Name:</strong> <t t-out="object.policy_id.name"/></p>
+            <p style="margin: 0 0 10px 0;"><strong>Version:</strong> <t t-out="object.policy_id.version"/></p>
+            <t t-if="object.policy_id.acknowledgement_deadline">
+                <p style="margin: 0;"><strong>Due Date:</strong> <span style="color: #dc2626; font-weight: bold;"><t t-out="object.policy_id.acknowledgement_deadline"/></span></p>
+            </t>
+        </div>
+
+        <div style="margin-top: 30px; text-align: center;">
+            <a t-attf-href="/web#id={{ object.id }}&amp;model=policy.acknowledgement&amp;view_type=form" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 6px; display: inline-block;">Review and Acknowledge</a>
+        </div>
+        
+    </div>
+</div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+    </data>
+</odoo>
