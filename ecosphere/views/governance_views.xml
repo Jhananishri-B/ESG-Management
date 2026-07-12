@@ -1,128 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- ESG Governance Record Views -->
-    <record id="view_esg_governance_record_list" model="ir.ui.view">
-        <field name="name">esg.governance.record.list</field>
-        <field name="model">esg.governance.record</field>
+    <!-- ESG Policy Views -->
+    <record id="view_esg_policy_list" model="ir.ui.view">
+        <field name="name">esg.policy.list</field>
+        <field name="model">esg.policy</field>
         <field name="arch" type="xml">
             <list>
-                <field name="id"/>
+                <field name="name"/>
+                <field name="version"/>
+                <field name="status"/>
             </list>
         </field>
     </record>
 
-    <record id="view_esg_governance_record_form" model="ir.ui.view">
-        <field name="name">esg.governance.record.form</field>
-        <field name="model">esg.governance.record</field>
+    <record id="view_esg_policy_form" model="ir.ui.view">
+        <field name="name">esg.policy.form</field>
+        <field name="model">esg.policy</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,active,archived"/>
+                </header>
                 <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Information Security Policy"/></h1>
+                    </div>
                     <group>
-                        <field name="id"/>
+                        <field name="version"/>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Write policy text here..."/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
-    <record id="view_esg_governance_record_search" model="ir.ui.view">
-        <field name="name">esg.governance.record.search</field>
-        <field name="model">esg.governance.record</field>
-        <field name="arch" type="xml">
-            <search>
-                <field name="id"/>
-            </search>
-        </field>
-    </record>
-
-    <record id="action_esg_governance_record" model="ir.actions.act_window">
-        <field name="name">Governance Records</field>
-        <field name="res_model">esg.governance.record</field>
+    <record id="action_esg_policy" model="ir.actions.act_window">
+        <field name="name">Policies</field>
+        <field name="res_model">esg.policy</field>
         <field name="view_mode">list,form</field>
-        <field name="search_view_id" ref="view_esg_governance_record_search"/>
     </record>
 
-    <!-- ESG Board Meeting Views -->
-    <record id="view_esg_board_meeting_list" model="ir.ui.view">
-        <field name="name">esg.board.meeting.list</field>
-        <field name="model">esg.board.meeting</field>
+    <!-- ESG Policy Acknowledgement Views -->
+    <record id="view_esg_policy_acknowledgement_list" model="ir.ui.view">
+        <field name="name">esg.policy.acknowledgement.list</field>
+        <field name="model">esg.policy.acknowledgement</field>
         <field name="arch" type="xml">
             <list>
-                <field name="id"/>
+                <field name="policy_id"/>
+                <field name="employee_id"/>
+                <field name="acknowledgement_date"/>
+                <field name="status"/>
             </list>
         </field>
     </record>
 
-    <record id="view_esg_board_meeting_form" model="ir.ui.view">
-        <field name="name">esg.board.meeting.form</field>
-        <field name="model">esg.board.meeting</field>
+    <record id="view_esg_policy_acknowledgement_form" model="ir.ui.view">
+        <field name="name">esg.policy.acknowledgement.form</field>
+        <field name="model">esg.policy.acknowledgement</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,acknowledged"/>
+                </header>
                 <sheet>
                     <group>
-                        <field name="id"/>
+                        <field name="policy_id"/>
+                        <field name="employee_id"/>
+                        <field name="acknowledgement_date"/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
-    <record id="view_esg_board_meeting_search" model="ir.ui.view">
-        <field name="name">esg.board.meeting.search</field>
-        <field name="model">esg.board.meeting</field>
-        <field name="arch" type="xml">
-            <search>
-                <field name="id"/>
-            </search>
-        </field>
-    </record>
-
-    <record id="action_esg_board_meeting" model="ir.actions.act_window">
-        <field name="name">Board Meetings</field>
-        <field name="res_model">esg.board.meeting</field>
+    <record id="action_esg_policy_acknowledgement" model="ir.actions.act_window">
+        <field name="name">Policy Acknowledgements</field>
+        <field name="res_model">esg.policy.acknowledgement</field>
         <field name="view_mode">list,form</field>
-        <field name="search_view_id" ref="view_esg_board_meeting_search"/>
     </record>
 
-    <!-- ESG Policy Compliance Views -->
-    <record id="view_esg_policy_compliance_list" model="ir.ui.view">
-        <field name="name">esg.policy.compliance.list</field>
-        <field name="model">esg.policy.compliance</field>
+    <!-- ESG Audit Views -->
+    <record id="view_esg_audit_list" model="ir.ui.view">
+        <field name="name">esg.audit.list</field>
+        <field name="model">esg.audit</field>
         <field name="arch" type="xml">
             <list>
-                <field name="id"/>
+                <field name="name"/>
+                <field name="auditor_id"/>
+                <field name="date"/>
+                <field name="status"/>
             </list>
         </field>
     </record>
 
-    <record id="view_esg_policy_compliance_form" model="ir.ui.view">
-        <field name="name">esg.policy.compliance.form</field>
-        <field name="model">esg.policy.compliance</field>
+    <record id="view_esg_audit_form" model="ir.ui.view">
+        <field name="name">esg.audit.form</field>
+        <field name="model">esg.audit</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,completed,cancelled"/>
+                </header>
                 <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Q3 Security Audit"/></h1>
+                    </div>
                     <group>
-                        <field name="id"/>
+                        <field name="auditor_id"/>
+                        <field name="date"/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
-    <record id="view_esg_policy_compliance_search" model="ir.ui.view">
-        <field name="name">esg.policy.compliance.search</field>
-        <field name="model">esg.policy.compliance</field>
+    <record id="action_esg_audit" model="ir.actions.act_window">
+        <field name="name">Audits</field>
+        <field name="res_model">esg.audit</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ESG Compliance Issue Views -->
+    <record id="view_esg_compliance_issue_list" model="ir.ui.view">
+        <field name="name">esg.compliance.issue.list</field>
+        <field name="model">esg.compliance.issue</field>
         <field name="arch" type="xml">
-            <search>
-                <field name="id"/>
-            </search>
+            <list>
+                <field name="audit_id"/>
+                <field name="severity"/>
+                <field name="owner_id"/>
+                <field name="due_date"/>
+                <field name="status"/>
+            </list>
         </field>
     </record>
 
-    <record id="action_esg_policy_compliance" model="ir.actions.act_window">
-        <field name="name">Policy Compliance</field>
-        <field name="res_model">esg.policy.compliance</field>
+    <record id="view_esg_compliance_issue_form" model="ir.ui.view">
+        <field name="name">esg.compliance.issue.form</field>
+        <field name="model">esg.compliance.issue</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="open,in_progress,resolved"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="audit_id"/>
+                            <field name="severity"/>
+                        </group>
+                        <group>
+                            <field name="owner_id"/>
+                            <field name="due_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Describe the compliance issue..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_esg_compliance_issue" model="ir.actions.act_window">
+        <field name="name">Compliance Issues</field>
+        <field name="res_model">esg.compliance.issue</field>
         <field name="view_mode">list,form</field>
-        <field name="search_view_id" ref="view_esg_policy_compliance_search"/>
     </record>
 </odoo>

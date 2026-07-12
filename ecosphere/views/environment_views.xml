@@ -1,128 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- ESG Environment Record Views -->
-    <record id="view_esg_environment_record_list" model="ir.ui.view">
-        <field name="name">esg.environment.record.list</field>
-        <field name="model">esg.environment.record</field>
+    <!-- ESG Environmental Goal Views -->
+    <record id="view_esg_environmental_goal_list" model="ir.ui.view">
+        <field name="name">esg.environmental.goal.list</field>
+        <field name="model">esg.environmental.goal</field>
         <field name="arch" type="xml">
             <list>
-                <field name="id"/>
+                <field name="name"/>
+                <field name="target_value"/>
+                <field name="current_value"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="status"/>
             </list>
         </field>
     </record>
 
-    <record id="view_esg_environment_record_form" model="ir.ui.view">
-        <field name="name">esg.environment.record.form</field>
-        <field name="model">esg.environment.record</field>
+    <record id="view_esg_environmental_goal_form" model="ir.ui.view">
+        <field name="name">esg.environmental.goal.form</field>
+        <field name="model">esg.environmental.goal</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,active,achieved,failed"/>
+                </header>
                 <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Reduce Scope 1 Emissions by 20%"/></h1>
+                    </div>
                     <group>
-                        <field name="id"/>
+                        <group>
+                            <field name="target_value"/>
+                            <field name="current_value"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
-    <record id="view_esg_environment_record_search" model="ir.ui.view">
-        <field name="name">esg.environment.record.search</field>
-        <field name="model">esg.environment.record</field>
-        <field name="arch" type="xml">
-            <search>
-                <field name="id"/>
-            </search>
-        </field>
-    </record>
-
-    <record id="action_esg_environment_record" model="ir.actions.act_window">
-        <field name="name">Environmental Records</field>
-        <field name="res_model">esg.environment.record</field>
+    <record id="action_esg_environmental_goal" model="ir.actions.act_window">
+        <field name="name">Environmental Goals</field>
+        <field name="res_model">esg.environmental.goal</field>
         <field name="view_mode">list,form</field>
-        <field name="search_view_id" ref="view_esg_environment_record_search"/>
     </record>
 
-    <!-- ESG Carbon Emission Views -->
-    <record id="view_esg_carbon_emission_list" model="ir.ui.view">
-        <field name="name">esg.carbon.emission.list</field>
-        <field name="model">esg.carbon.emission</field>
+    <!-- ESG Carbon Transaction Views -->
+    <record id="view_esg_carbon_transaction_list" model="ir.ui.view">
+        <field name="name">esg.carbon.transaction.list</field>
+        <field name="model">esg.carbon.transaction</field>
         <field name="arch" type="xml">
             <list>
-                <field name="id"/>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="source_doc"/>
+                <field name="department_id"/>
+                <field name="emission_factor_id"/>
+                <field name="quantity"/>
+                <field name="calculated_co2"/>
             </list>
         </field>
     </record>
 
-    <record id="view_esg_carbon_emission_form" model="ir.ui.view">
-        <field name="name">esg.carbon.emission.form</field>
-        <field name="model">esg.carbon.emission</field>
+    <record id="view_esg_carbon_transaction_form" model="ir.ui.view">
+        <field name="name">esg.carbon.transaction.form</field>
+        <field name="model">esg.carbon.transaction</field>
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="CT-XXXXX"/></h1>
+                    </div>
                     <group>
-                        <field name="id"/>
+                        <group>
+                            <field name="date"/>
+                            <field name="source_doc"/>
+                            <field name="department_id"/>
+                        </group>
+                        <group>
+                            <field name="emission_factor_id"/>
+                            <field name="quantity"/>
+                            <field name="calculated_co2"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" placeholder="Detailed notes..."/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
-    <record id="view_esg_carbon_emission_search" model="ir.ui.view">
-        <field name="name">esg.carbon.emission.search</field>
-        <field name="model">esg.carbon.emission</field>
-        <field name="arch" type="xml">
-            <search>
-                <field name="id"/>
-            </search>
-        </field>
-    </record>
-
-    <record id="action_esg_carbon_emission" model="ir.actions.act_window">
-        <field name="name">Carbon Emissions</field>
-        <field name="res_model">esg.carbon.emission</field>
+    <record id="action_esg_carbon_transaction" model="ir.actions.act_window">
+        <field name="name">Carbon Transactions</field>
+        <field name="res_model">esg.carbon.transaction</field>
         <field name="view_mode">list,form</field>
-        <field name="search_view_id" ref="view_esg_carbon_emission_search"/>
-    </record>
-
-    <!-- ESG Energy Consumption Views -->
-    <record id="view_esg_energy_consumption_list" model="ir.ui.view">
-        <field name="name">esg.energy.consumption.list</field>
-        <field name="model">esg.energy.consumption</field>
-        <field name="arch" type="xml">
-            <list>
-                <field name="id"/>
-            </list>
-        </field>
-    </record>
-
-    <record id="view_esg_energy_consumption_form" model="ir.ui.view">
-        <field name="name">esg.energy.consumption.form</field>
-        <field name="model">esg.energy.consumption</field>
-        <field name="arch" type="xml">
-            <form>
-                <sheet>
-                    <group>
-                        <field name="id"/>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
-
-    <record id="view_esg_energy_consumption_search" model="ir.ui.view">
-        <field name="name">esg.energy.consumption.search</field>
-        <field name="model">esg.energy.consumption</field>
-        <field name="arch" type="xml">
-            <search>
-                <field name="id"/>
-            </search>
-        </field>
-    </record>
-
-    <record id="action_esg_energy_consumption" model="ir.actions.act_window">
-        <field name="name">Energy Consumption</field>
-        <field name="res_model">esg.energy.consumption</field>
-        <field name="view_mode">list,form</field>
-        <field name="search_view_id" ref="view_esg_energy_consumption_search"/>
     </record>
 </odoo>

@@ -1,86 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- ESG Gamification Goal Views -->
-    <record id="view_esg_gamification_goal_list" model="ir.ui.view">
-        <field name="name">esg.gamification.goal.list</field>
-        <field name="model">esg.gamification.goal</field>
+    <!-- ESG Challenge Views -->
+    <record id="view_esg_challenge_list" model="ir.ui.view">
+        <field name="name">esg.challenge.list</field>
+        <field name="model">esg.challenge</field>
         <field name="arch" type="xml">
             <list>
-                <field name="id"/>
+                <field name="title"/>
+                <field name="category_id"/>
+                <field name="xp"/>
+                <field name="difficulty"/>
+                <field name="deadline"/>
+                <field name="status"/>
             </list>
         </field>
     </record>
 
-    <record id="view_esg_gamification_goal_form" model="ir.ui.view">
-        <field name="name">esg.gamification.goal.form</field>
-        <field name="model">esg.gamification.goal</field>
+    <record id="view_esg_challenge_form" model="ir.ui.view">
+        <field name="name">esg.challenge.form</field>
+        <field name="model">esg.challenge</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,active,under_review,completed,archived"/>
+                </header>
                 <sheet>
+                    <div class="oe_title">
+                        <label for="title" class="oe_edit_only"/>
+                        <h1><field name="title" placeholder="e.g. Green Commute Month"/></h1>
+                    </div>
                     <group>
-                        <field name="id"/>
+                        <group>
+                            <field name="category_id"/>
+                            <field name="xp"/>
+                        </group>
+                        <group>
+                            <field name="difficulty"/>
+                            <field name="deadline"/>
+                            <field name="evidence_required"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Challenge guidelines..."/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
-    <record id="view_esg_gamification_goal_search" model="ir.ui.view">
-        <field name="name">esg.gamification.goal.search</field>
-        <field name="model">esg.gamification.goal</field>
-        <field name="arch" type="xml">
-            <search>
-                <field name="id"/>
-            </search>
-        </field>
-    </record>
-
-    <record id="action_esg_gamification_goal" model="ir.actions.act_window">
-        <field name="name">Gamification Goals</field>
-        <field name="res_model">esg.gamification.goal</field>
+    <record id="action_esg_challenge" model="ir.actions.act_window">
+        <field name="name">Challenges</field>
+        <field name="res_model">esg.challenge</field>
         <field name="view_mode">list,form</field>
-        <field name="search_view_id" ref="view_esg_gamification_goal_search"/>
     </record>
 
-    <!-- ESG Gamification Badge Views -->
-    <record id="view_esg_gamification_badge_list" model="ir.ui.view">
-        <field name="name">esg.gamification.badge.list</field>
-        <field name="model">esg.gamification.badge</field>
+    <!-- ESG Challenge Participation Views -->
+    <record id="view_esg_challenge_participation_list" model="ir.ui.view">
+        <field name="name">esg.challenge.participation.list</field>
+        <field name="model">esg.challenge.participation</field>
         <field name="arch" type="xml">
             <list>
-                <field name="id"/>
+                <field name="challenge_id"/>
+                <field name="employee_id"/>
+                <field name="progress"/>
+                <field name="xp_awarded"/>
+                <field name="approval_status"/>
             </list>
         </field>
     </record>
 
-    <record id="view_esg_gamification_badge_form" model="ir.ui.view">
-        <field name="name">esg.gamification.badge.form</field>
-        <field name="model">esg.gamification.badge</field>
+    <record id="view_esg_challenge_participation_form" model="ir.ui.view">
+        <field name="name">esg.challenge.participation.form</field>
+        <field name="model">esg.challenge.participation</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <field name="approval_status" widget="statusbar" statusbar_visible="draft,under_review,approved,rejected"/>
+                </header>
                 <sheet>
                     <group>
-                        <field name="id"/>
+                        <group>
+                            <field name="challenge_id"/>
+                            <field name="employee_id"/>
+                        </group>
+                        <group>
+                            <field name="progress"/>
+                            <field name="xp_awarded"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="proof" widget="image" string="Upload Evidence"/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
-    <record id="view_esg_gamification_badge_search" model="ir.ui.view">
-        <field name="name">esg.gamification.badge.search</field>
-        <field name="model">esg.gamification.badge</field>
+    <record id="action_esg_challenge_participation" model="ir.actions.act_window">
+        <field name="name">Challenge Participations</field>
+        <field name="res_model">esg.challenge.participation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ESG Badge Views -->
+    <record id="view_esg_badge_list" model="ir.ui.view">
+        <field name="name">esg.badge.list</field>
+        <field name="model">esg.badge</field>
         <field name="arch" type="xml">
-            <search>
-                <field name="id"/>
-            </search>
+            <list>
+                <field name="name"/>
+                <field name="unlock_rule"/>
+            </list>
         </field>
     </record>
 
-    <record id="action_esg_gamification_badge" model="ir.actions.act_window">
-        <field name="name">Gamification Badges</field>
-        <field name="res_model">esg.gamification.badge</field>
+    <record id="view_esg_badge_form" model="ir.ui.view">
+        <field name="name">esg.badge.form</field>
+        <field name="model">esg.badge</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="unlock_rule"/>
+                        <field name="icon" widget="image"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_esg_badge" model="ir.actions.act_window">
+        <field name="name">Badges</field>
+        <field name="res_model">esg.badge</field>
         <field name="view_mode">list,form</field>
-        <field name="search_view_id" ref="view_esg_gamification_badge_search"/>
+    </record>
+
+    <!-- ESG Reward Views -->
+    <record id="view_esg_reward_list" model="ir.ui.view">
+        <field name="name">esg.reward.list</field>
+        <field name="model">esg.reward</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="points_required"/>
+                <field name="stock"/>
+                <field name="status"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_esg_reward_form" model="ir.ui.view">
+        <field name="name">esg.reward.form</field>
+        <field name="model">esg.reward</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="points_required"/>
+                        <field name="stock"/>
+                        <field name="status"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_esg_reward" model="ir.actions.act_window">
+        <field name="name">Rewards</field>
+        <field name="res_model">esg.reward</field>
+        <field name="view_mode">list,form</field>
     </record>
 </odoo>

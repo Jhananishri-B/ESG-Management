@@ -6,46 +6,150 @@
               web_icon="ecosphere,static/description/icon.png"
               sequence="10"/>
 
-    <!-- Sub-menus referencing actions defined in their respective view files -->
+    <!-- Dashboard -->
     <menuitem id="menu_ecosphere_dashboard"
               name="Dashboard"
               parent="menu_ecosphere_root"
               action="action_esg_dashboard_card"
               sequence="10"/>
 
+    <!-- Environmental Menu -->
     <menuitem id="menu_ecosphere_environmental"
               name="Environmental"
               parent="menu_ecosphere_root"
-              action="action_esg_environment_record"
               sequence="20"/>
 
+    <menuitem id="menu_esg_carbon_transaction"
+              name="Carbon Transactions"
+              parent="menu_ecosphere_environmental"
+              action="action_esg_carbon_transaction"
+              sequence="10"/>
+
+    <menuitem id="menu_esg_environmental_goal"
+              name="Environmental Goals"
+              parent="menu_ecosphere_environmental"
+              action="action_esg_environmental_goal"
+              sequence="20"/>
+
+    <!-- Social Menu -->
     <menuitem id="menu_ecosphere_social"
               name="Social"
               parent="menu_ecosphere_root"
-              action="action_esg_social_record"
               sequence="30"/>
 
+    <menuitem id="menu_esg_csr_activity"
+              name="CSR Activities"
+              parent="menu_ecosphere_social"
+              action="action_esg_csr_activity"
+              sequence="10"/>
+
+    <menuitem id="menu_esg_employee_participation"
+              name="Employee CSR Participations"
+              parent="menu_ecosphere_social"
+              action="action_esg_employee_participation"
+              sequence="20"/>
+
+    <!-- Governance Menu -->
     <menuitem id="menu_ecosphere_governance"
               name="Governance"
               parent="menu_ecosphere_root"
-              action="action_esg_governance_record"
               sequence="40"/>
 
+    <menuitem id="menu_esg_policy"
+              name="Policies"
+              parent="menu_ecosphere_governance"
+              action="action_esg_policy"
+              sequence="10"/>
+
+    <menuitem id="menu_esg_policy_acknowledgement"
+              name="Policy Acknowledgements"
+              parent="menu_ecosphere_governance"
+              action="action_esg_policy_acknowledgement"
+              sequence="20"/>
+
+    <menuitem id="menu_esg_audit"
+              name="Audits"
+              parent="menu_ecosphere_governance"
+              action="action_esg_audit"
+              sequence="30"/>
+
+    <menuitem id="menu_esg_compliance_issue"
+              name="Compliance Issues"
+              parent="menu_ecosphere_governance"
+              action="action_esg_compliance_issue"
+              sequence="40"/>
+
+    <!-- Gamification Menu -->
     <menuitem id="menu_ecosphere_gamification"
               name="Gamification"
               parent="menu_ecosphere_root"
-              action="action_esg_gamification_goal"
               sequence="50"/>
 
+    <menuitem id="menu_esg_challenge"
+              name="Challenges"
+              parent="menu_ecosphere_gamification"
+              action="action_esg_challenge"
+              sequence="10"/>
+
+    <menuitem id="menu_esg_challenge_participation"
+              name="Challenge Participations"
+              parent="menu_ecosphere_gamification"
+              action="action_esg_challenge_participation"
+              sequence="20"/>
+
+    <menuitem id="menu_esg_badge"
+              name="Badges"
+              parent="menu_ecosphere_gamification"
+              action="action_esg_badge"
+              sequence="30"/>
+
+    <menuitem id="menu_esg_reward"
+              name="Rewards"
+              parent="menu_ecosphere_gamification"
+              action="action_esg_reward"
+              sequence="40"/>
+
+    <!-- Master Data Menu -->
+    <menuitem id="menu_ecosphere_master_data"
+              name="Master Data"
+              parent="menu_ecosphere_root"
+              sequence="60"/>
+
+    <menuitem id="menu_esg_department"
+              name="Departments"
+              parent="menu_ecosphere_master_data"
+              action="action_esg_department"
+              sequence="10"/>
+
+    <menuitem id="menu_esg_category"
+              name="Categories"
+              parent="menu_ecosphere_master_data"
+              action="action_esg_category"
+              sequence="20"/>
+
+    <menuitem id="menu_esg_emission_factor"
+              name="Emission Factors"
+              parent="menu_ecosphere_master_data"
+              action="action_esg_emission_factor"
+              sequence="30"/>
+
+    <menuitem id="menu_esg_product_profile"
+              name="Product ESG Profiles"
+              parent="menu_ecosphere_master_data"
+              action="action_esg_product_profile"
+              sequence="40"/>
+
+    <!-- Reports -->
     <menuitem id="menu_ecosphere_reports"
               name="Reports"
               parent="menu_ecosphere_root"
               action="action_esg_report_config"
-              sequence="60"/>
+              sequence="70"/>
 
+    <!-- Settings -->
     <menuitem id="menu_ecosphere_settings"
               name="Settings"
               parent="menu_ecosphere_root"
               action="action_esg_settings"
-              sequence="70"/>
+              sequence="80"/>
 </odoo>
