@@ -18,6 +18,7 @@ along with gamification elements and detailed reports.
         'base',
         'mail',
         'portal',
+        'website',
     ],
     'data': [
         'security/security.xml',
@@ -31,6 +32,7 @@ along with gamification elements and detailed reports.
         'views/reports_views.xml',
         'views/settings_views.xml',
         'views/menus_views.xml',
+        'views/frontend_templates.xml',
     ],
     'demo': [
         'demo/demo_data.xml',
