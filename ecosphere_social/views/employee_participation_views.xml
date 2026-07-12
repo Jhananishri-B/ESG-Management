@@ -104,5 +104,12 @@
             <field name="view_mode">list,form</field>
         </record>
 
+        <!-- Employee Participation action -->
+        <record id="action_employee_participation" model="ir.actions.act_window">
+            <field name="name">Participations</field>
+            <field name="res_model">employee.participation</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
     </data>
 </odoo>
