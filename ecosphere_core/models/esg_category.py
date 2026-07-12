@@ -23,6 +23,16 @@ class EsgCategory(models.Model):
     sequence = fields.Integer(string='Sequence', default=10)
     description = fields.Text(string='Description')
     active = fields.Boolean(string='Active', default=True)
+    type = fields.Selection([
+        ('csr', 'CSR Activity Category'),
+        ('challenge', 'Challenge Category'),
+        ('other', 'Other'),
+    ], string='Type', default='other')
+    status = fields.Selection([
+        ('draft', 'Draft'),
+        ('active', 'Active'),
+        ('inactive', 'Inactive')
+    ], string='Status', default='active')
 
     # Computed stats (populated by other modules)
     goal_count = fields.Integer(string='Goals', compute='_compute_goal_count')
