@@ -16,7 +16,7 @@ class EsgCategory(models.Model):
         ('E', 'Environmental'),
         ('S', 'Social'),
         ('G', 'Governance'),
-    ], string='Code', required=True)
+    ], string='Code', required=False)
     color = fields.Integer(string='Color Index', default=0)
     icon = fields.Char(string='Icon Class', default='fa-leaf',
                        help='Font Awesome icon class (e.g. fa-leaf, fa-users, fa-shield)')
