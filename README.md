@@ -1,93 +1,64 @@
-# EcoSphere: Enterprise ESG Management Platform
+# 🌍 EcoSphere - Odoo 18 ESG Management Platform
 
-EcoSphere is a production-ready, enterprise-grade application built on **Odoo 18 Community Edition** for the Odoo Hackathon. It provides a comprehensive, beautifully designed platform for managing a corporation's Environmental, Social, and Governance (ESG) footprint.
-
-Instead of a traditional ERP interface, EcoSphere brings a modern, premium SaaS aesthetic (resembling Microsoft 365 or Stripe Dashboard) with custom SCSS and interactive OWL components.
+An enterprise-grade ESG (Environmental, Social, Governance) Management Platform built natively on Odoo 18. Transforms standard ERP operations into a dynamic, gamified sustainability engine. Designed exclusively for corporate sustainability tracking and employee engagement.
 
 ---
 
-## 🌟 Key Features
+## 🚀 Key Features
 
-The platform is split into decoupled, maintainable modules:
+### 🌱 1. Environmental: Emission Tracking & Goals
+Monitor your firm's carbon footprint in real-time.
+- **Carbon Transactions:** Log CO2 emissions by department or source (e.g. Flight travel, Scope 1 + 2 tracking).
+- **Environmental Goals:** Set targets like "Carbon Neutral by 2027" or "Achieve 40% Renewable Energy" with dynamic progress bars.
+- **Live Statistics:** At-a-glance KPI cards showing total generated carbon records, active goals, and achieved objectives.
+- **Emission Tips:** Actionable, UI-integrated insights for employees to reduce their daily carbon footprint.
 
-### 1. 🌍 Core & Environment (`ecosphere_core`, `ecosphere_environment`)
-- **Central ESG Scoring Engine:** Automatically calculates aggregate E, S, and G scores across an unlimited, hierarchical department structure.
-- **Carbon Tracking:** Logs energy usage, fleet emissions, and waste, auto-calculating CO2-equivalent footprints.
-- **Goal Management:** Track corporate sustainability goals with real-time target versus actual metrics.
+![Environmental Dashboard](file:///C:/Users/JHANANISHRI/.gemini/antigravity/brain/tempmediaStorage/media__1783859444972.png) 
 
-### 2. 🤝 Social Responsibility (`ecosphere_social`)
-- **CSR Activity Tracking:** Plan and track community engagement and volunteer events.
-- **Employee Participation:** Allow employees to log volunteer hours.
-- **Health & Safety Incidents:** Integrated OSHA-style workplace incident tracking.
+### 🤝 2. Social: CSR & Employee Engagement
+Foster a culture of giving back to society with interactive CSR campaigns.
+- **CSR Campaigns:** Browse active company-sponsored CSR activities (Tree Plantation, E-Waste Collection, Blood Donation).
+- **One-Click Joining:** Frictionless enrollment via the dashboard with real-time UI updates to "✓ Joined".
+- **Engagement Tracking:** Deep integration into employee profiles to track total hours, challenges joined, and completed activities.
 
-### 3. ⚖️ Governance & Compliance (`ecosphere_governance`)
-- **Policy Lifecycle:** Create, version, and publish governance policies. Requires mandatory employee acknowledgement.
-- **Audit Management:** Conduct internal and external ESG audits, record findings, and enforce corrective actions.
-- **Risk Register:** Dynamic heat-mapped risk kanban board based on Likelihood × Impact.
-- **Compliance Escalation:** Automated cron jobs escalate severe and unaddressed compliance issues to management.
+### 🛡️ 3. Governance: Policies, Audits & Compliance
+Ensure complete regulatory alignment and risk management.
+- **Policy Management:** Centralized hub for all ESG policies (Environmental Management, Anti-Corruption, Data Privacy).
+- **Compliance Audits:** Log tracking for recent internal and external compliance audits across the organization.
+- **Issue Tracking:** Severity-coded compliance issue tracker (Critical, Major, Minor) with resolution statuses and due dates.
+- **Report Generation:** Quick export functionality to generate executive compliance reports.
 
-### 4. 🎮 Gamification (`ecosphere_gamification`)
-- **ESG Levels & XP:** Employees earn Experience Points (XP) for volunteering and completing challenges.
-- **Reward Store:** A point-based shop where employees can redeem XP for company swag, extra time off, or charitable donations.
-- **Dynamic Challenges:** Create individual or team-based sustainability challenges (e.g., "Zero Waste November").
-- **Badges:** Auto-awarded achievements for hitting specific milestones.
+### 🎮 4. ESG Gamification Command Center
+Make sustainability deeply engaging through built-in game mechanics and social evidence.
+- **Unified 8-Section Dashboard:** A complete command center unifying E, S, and G metrics into a premium dark-themed UI.
+- **Live KPI Widgets:** Rapid insights into active challenges, policies, and carbon footprints fetched dynamically via ORM.
+- **Activity Feed:** A chronological feed of recent employee CSR participation to drive social engagement.
+- **Leaderboard & XP Engine:** Top 5 employee leaderboard displaying accumulated XP, Gamification Badges, and total CSR counts, complete with medals (🥇 🥈 🥉).
+- **Dynamic Progress Summaries:** Overall progression tracking for company-wide goals.
 
-### 5. 📊 Executive Dashboard (`ecosphere_dashboard`)
-- **OWL Component Architecture:** Built using Odoo's frontend framework.
-- **Real-Time Analytics:** Integrates Chart.js to visualize historical ESG trend data.
-- **Leaderboards:** Pits departments against each other to foster healthy, sustainable competition.
-- **Alerts:** Flags overdue policies and critical compliance issues directly on the homepage.
-
-### 6. 📄 Reports & Portal (`ecosphere_reports`, `ecosphere_portal`)
-- **Premium PDF Generation:** Custom QWeb PDF templates for generating Official Audit Reports and Department Scorecards.
-- **Public Scorecard:** Exposes an aggregated, read-only ESG scorecard at `/esg` for public transparency.
-- **Whistleblower Portal:** A secure, external web form at `/esg/report` for submitting anonymous compliance and ethics violations.
-
-### 7. 🤖 AI Assistant (`ecosphere_ai`)
-- **OpenAI Integration:** Connect your API key in Settings to unlock the ESG Copilot.
-- **Policy Generator:** Auto-drafts comprehensive governance policies based on a simple prompt directly within the policy form. 
-- *Note: Includes a fallback mock generator for demo environments without API keys.*
+![Gamification Dashboard Top](file:///C:/Users/JHANANISHRI/.gemini/antigravity/brain/tempmediaStorage/media__1783859942738.png)
+![Gamification Dashboard Bottom](file:///C:/Users/JHANANISHRI/.gemini/antigravity/brain/tempmediaStorage/media__1783859947942.png)
 
 ---
 
-## 🛠️ Installation & Setup
+## 🛠️ Technical Implementation Details
+- **Odoo 18 Architecture:** Operates cleanly on `esg_db` with models built entirely on robust Odoo 18 standards (`models.Model`). 
+- **Premium QWeb Frontend:** Leverages Odoo's QWeb templating with HTML5 data bindings and custom CSS for a beautiful glass-morphism aesthetic.
+- **State-Driven UI:** Context-sensitive component rendering controls user flows (e.g., hiding "Join" buttons for already enrolled activities).
+- **Performant ORM Queries:** Analytical dashboard reporting powered by highly optimized `search_count()` and Odoo domain groupings, ensuring near-instant load times with zero hardcoded values.
 
-1. **Clone the Repository** into your Odoo 18 addons path:
-   ```bash
-   git clone https://github.com/Jhananishri-B/ESG-Management.git
-   ```
-2. **Update Odoo Config**
-   Ensure the directory is included in your `addons_path` in `odoo.conf`.
-3. **Install Dependencies**
-   If you have Python dependencies, install them. (EcoSphere relies mostly on native Odoo libraries and bundled JS).
-4. **Update App List**
-   Log into your Odoo database as an Administrator, activate **Developer Mode**, and click **Update Apps List**.
-5. **Install EcoSphere**
-   Search for "EcoSphere" in the Apps menu. You can install all modules at once by installing `ecosphere_dashboard`, or install them modularly as needed.
-   
-*Note: Installing the modules automatically loads rich demo data, allowing you to instantly explore the dashboard, risk registers, and gamification store without manual data entry.*
+## 📊 Mock Data & Demo Readiness
+EcoSphere ships with a comprehensive demo data set for immediate presentation:
+- **6 Environmental Goals** mapped to active Carbon Transactions.
+- **6 Active ESG Policies** aligned with ongoing Audits.
+- **4 Live Compliance Issues** spanning all severity levels.
+- Pre-populated Gamification metrics (Scores, Badges, and CSR Participation) for the Leaderboard.
 
----
+## 🏃 Quick Start / Upgrading
 
-## 🎨 UI/UX Philosophy
-
-EcoSphere completely overhauls the default dark/gray Odoo views. It introduces:
-- **Clean Whitespace:** Bright, white backgrounds with soft `#f3f4f6` bordering.
-- **Premium Typography:** Utilizes native OS sans-serif fonts with distinct font-weights for high legibility.
-- **Dynamic Color Coding:**
-  - 🟢 **Environmental:** Emerald Greens
-  - 🔵 **Social:** Primary Blues
-  - 🟣 **Governance:** Royal Purples
-- **Micro-interactions:** Hover effects, soft shadows, and rounded kanban cards (`border-radius: 12px`).
-
----
-
-## 🔒 Security & Access Rights
-Three core security groups manage access across all modules:
-1. **Employee (Read-Only/Basic):** Can view policies, log volunteer hours, view the reward store, and acknowledge documents.
-2. **Manager (Operational):** Can create policies, conduct audits, approve rewards, and manage department goals.
-3. **Admin (Full Access):** Can access configuration settings, configure AI keys, and delete records.
-
----
-
-*Built with ❤️ for the Odoo Hackathon.*
+To compile and load the latest updates into the Odoo container:
+```bash
+docker exec -u 0 odoo odoo -u ecosphere -d esg_db -r odoo -w odoo --db_host db --stop-after-init
+docker restart odoo
+```
+Navigate to `http://localhost:8069/ecosphere/dashboard` to access the Command Center.
