@@ -1,6 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <!-- Demo records can be added here in the future -->
+        <!-- Departments -->
+        <record id="dep_sales" model="esg.department">
+            <field name="name">Sales &amp; Accounts</field>
+            <field name="code">SLS</field>
+            <field name="head_id" ref="base.user_admin"/>
+            <field name="employee_count">15</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="dep_rd" model="esg.department">
+            <field name="name">Research &amp; Development</field>
+            <field name="code">RD</field>
+            <field name="head_id" ref="base.user_admin"/>
+            <field name="employee_count">20</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="dep_logistics" model="esg.department">
+            <field name="name">Logistics &amp; Warehouse</field>
+            <field name="code">LOG</field>
+            <field name="head_id" ref="base.user_demo"/>
+            <field name="employee_count">10</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="dep_marketing" model="esg.department">
+            <field name="name">Marketing</field>
+            <field name="code">MKT</field>
+            <field name="head_id" ref="base.user_demo"/>
+            <field name="employee_count">12</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="dep_finance" model="esg.department">
+            <field name="name">Finance</field>
+            <field name="code">FIN</field>
+            <field name="head_id" ref="base.user_admin"/>
+            <field name="employee_count">8</field>
+            <field name="status">active</field>
+        </record>
+
+        <!-- Categories -->
+        <record id="cat_env" model="esg.category">
+            <field name="name">Environmental Sustainability</field>
+            <field name="type">challenge</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="cat_csr_volunteer" model="esg.category">
+            <field name="name">Community Volunteering</field>
+            <field name="type">csr</field>
+            <field name="status">active</field>
+        </record>
+
+        <!-- Emission Factors -->
+        <record id="factor_electricity" model="esg.emission.factor">
+            <field name="name">Electricity Grid (Avg)</field>
+            <field name="code">ELEC</field>
+            <field name="factor">0.85</field>
+            <field name="unit">kWh</field>
+        </record>
+
+        <record id="factor_fuel" model="esg.emission.factor">
+            <field name="name">Diesel Generator Fuel</field>
+            <field name="code">DSL</field>
+            <field name="factor">2.68</field>
+            <field name="unit">Liter</field>
+        </record>
+
+        <record id="factor_flight" model="esg.emission.factor">
+            <field name="name">Business Class Air Travel</field>
+            <field name="code">FLT</field>
+            <field name="factor">0.18</field>
+            <field name="unit">km</field>
+        </record>
+
+        <!-- Environmental Goals -->
+        <record id="goal_co2" model="esg.environmental.goal">
+            <field name="name">Reduce Scope 1 &amp; 2 Emissions</field>
+            <field name="target_value">100.0</field>
+            <field name="current_value">40.0</field>
+            <field name="start_date">2026-01-01</field>
+            <field name="end_date">2026-12-31</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="goal_water" model="esg.environmental.goal">
+            <field name="name">Reduce Water Footprint</field>
+            <field name="target_value">50000.0</field>
+            <field name="current_value">45000.0</field>
+            <field name="start_date">2026-01-01</field>
+            <field name="end_date">2026-12-31</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="goal_paper" model="esg.environmental.goal">
+            <field name="name">Transition to Paperless Office</field>
+            <field name="target_value">100.0</field>
+            <field name="current_value">90.0</field>
+            <field name="start_date">2026-01-01</field>
+            <field name="end_date">2026-12-31</field>
+            <field name="status">achieved</field>
+        </record>
+
+        <!-- Carbon Transactions -->
+        <record id="tx_elec_rd" model="esg.carbon.transaction">
+            <field name="name">R&amp;D electricity consumption Q2</field>
+            <field name="date">2026-07-01</field>
+            <field name="source_doc">INV-2026-001</field>
+            <field name="department_id" ref="dep_rd"/>
+            <field name="emission_factor_id" ref="factor_electricity"/>
+            <field name="quantity">12000.0</field>
+            <field name="calculated_co2">10200.0</field>
+            <field name="notes">Calculated from utility electric invoice.</field>
+        </record>
+
+        <record id="tx_fuel_logistics" model="esg.carbon.transaction">
+            <field name="name">Logistics diesel usage wk 27</field>
+            <field name="date">2026-07-02</field>
+            <field name="source_doc">REC-2026-002</field>
+            <field name="department_id" ref="dep_logistics"/>
+            <field name="emission_factor_id" ref="factor_fuel"/>
+            <field name="quantity">500.0</field>
+            <field name="calculated_co2">1340.0</field>
+            <field name="notes">Fuel log from local generator.</field>
+        </record>
+
+        <!-- CSR Activities -->
+        <record id="act_tree" model="esg.csr.activity">
+            <field name="name">Tree Plantation Drive</field>
+            <field name="category_id" ref="cat_csr_volunteer"/>
+            <field name="description">Join us to plant 1000 saplings in the city community forest to offset scope emissions.</field>
+            <field name="date">2026-07-15</field>
+            <field name="points">100</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="act_blood" model="esg.csr.activity">
+            <field name="name">Annual Blood Donation Camp</field>
+            <field name="category_id" ref="cat_csr_volunteer"/>
+            <field name="description">Corporate blood donation camp hosted in collaboration with the Red Cross Society.</field>
+            <field name="date">2026-07-20</field>
+            <field name="points">50</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="act_climate" model="esg.csr.activity">
+            <field name="name">Climate Change Workshop</field>
+            <field name="category_id" ref="cat_csr_volunteer"/>
+            <field name="description">Learn about simple carbon mitigation actions we can adopt inside and outside office premises.</field>
+            <field name="date">2026-07-25</field>
+            <field name="points">30</field>
+            <field name="status">active</field>
+        </record>
+
+        <!-- CSR Activity Participations -->
+        <record id="part_admin_tree" model="esg.employee.participation">
+            <field name="employee_id" ref="base.user_admin"/>
+            <field name="activity_id" ref="act_tree"/>
+            <field name="approval_status">approved</field>
+            <field name="points_earned">100</field>
+        </record>
+
+        <record id="part_demo_blood" model="esg.employee.participation">
+            <field name="employee_id" ref="base.user_demo"/>
+            <field name="activity_id" ref="act_blood"/>
+            <field name="approval_status">approved</field>
+            <field name="points_earned">50</field>
+        </record>
+
+        <!-- Policies -->
+        <record id="policy_conduct" model="esg.policy">
+            <field name="name">Corporate Code of Business Conduct</field>
+            <field name="description">Global rules on legal compliance, anti-bribery, and workplace decorum.</field>
+            <field name="version">2.1</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="policy_env" model="esg.policy">
+            <field name="name">Environmental Sustainability Policy</field>
+            <field name="description">Directives on energy conservation, water footprint management, and waste reduction.</field>
+            <field name="version">1.0</field>
+            <field name="status">active</field>
+        </record>
+
+        <!-- Policy Acknowledgements -->
+        <record id="ack_admin_conduct" model="esg.policy.acknowledgement">
+            <field name="policy_id" ref="policy_conduct"/>
+            <field name="employee_id" ref="base.user_admin"/>
+            <field name="acknowledgement_date">2026-07-12</field>
+            <field name="status">acknowledged</field>
+        </record>
+
+        <record id="ack_demo_env" model="esg.policy.acknowledgement">
+            <field name="policy_id" ref="policy_env"/>
+            <field name="employee_id" ref="base.user_demo"/>
+            <field name="acknowledgement_date">2026-07-12</field>
+            <field name="status">acknowledged</field>
+        </record>
+
+        <!-- Audits -->
+        <record id="audit_annual" model="esg.audit">
+            <field name="name">Annual ESG Compliance Audit</field>
+            <field name="auditor_id" ref="base.user_admin"/>
+            <field name="date">2026-06-15</field>
+            <field name="status">completed</field>
+        </record>
+
+        <!-- Compliance Issues -->
+        <record id="issue_waste" model="esg.compliance.issue">
+            <field name="audit_id" ref="audit_annual"/>
+            <field name="severity">critical</field>
+            <field name="description">Identified minor chemical waste disposal delay behind warehouse B.</field>
+            <field name="owner_id" ref="base.user_demo"/>
+            <field name="due_date">2026-08-31</field>
+            <field name="status">in_progress</field>
+        </record>
+
+        <record id="issue_training" model="esg.compliance.issue">
+            <field name="audit_id" ref="audit_annual"/>
+            <field name="severity">minor</field>
+            <field name="description">Several new hires in the logistics department missed their mandatory compliance training.</field>
+            <field name="owner_id" ref="base.user_admin"/>
+            <field name="due_date">2026-07-31</field>
+            <field name="status">resolved</field>
+        </record>
+
+        <!-- Challenges -->
+        <record id="challenge_sprint" model="esg.challenge">
+            <field name="title">Sustainability Sprint</field>
+            <field name="category_id" ref="cat_env"/>
+            <field name="description">Unplug unused devices and save desk energy consumption for 30 consecutive days.</field>
+            <field name="xp">500</field>
+            <field name="difficulty">easy</field>
+            <field name="evidence_required">0</field>
+            <field name="deadline">2026-07-31</field>
+            <field name="status">active</field>
+        </record>
+
+        <record id="challenge_cycle" model="esg.challenge">
+            <field name="title">Cycle to Work Challenge</field>
+            <field name="category_id" ref="cat_env"/>
+            <field name="description">Use public transit or commute by cycle to office for at least 10 days this month.</field>
+            <field name="xp">800</field>
+            <field name="difficulty">medium</field>
+            <field name="evidence_required">1</field>
+            <field name="deadline">2026-07-31</field>
+            <field name="status">active</field>
+        </record>
+
+        <!-- Challenge Participations -->
+        <record id="part_admin_sprint" model="esg.challenge.participation">
+            <field name="challenge_id" ref="challenge_sprint"/>
+            <field name="employee_id" ref="base.user_admin"/>
+            <field name="progress">100.0</field>
+            <field name="approval_status">approved</field>
+        </record>
     </data>
 </odoo>
