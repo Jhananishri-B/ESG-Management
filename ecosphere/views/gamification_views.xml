@@ -48,10 +48,71 @@
         </field>
     </record>
 
+    <record id="view_esg_challenge_kanban" model="ir.ui.view">
+        <field name="name">esg.challenge.kanban</field>
+        <field name="model">esg.challenge</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="status" class="o_kanban_small_column" create="true" edit="true">
+                <field name="title"/>
+                <field name="difficulty"/>
+                <field name="xp"/>
+                <field name="deadline"/>
+                <field name="status"/>
+                <field name="evidence_required"/>
+                <field name="category_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click p-3">
+                            <!-- Title & Difficulty Row -->
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="o_kanban_record_title fw-bold fs-5">
+                                    <field name="title"/>
+                                </span>
+                                <span t-attf-class="badge rounded-pill bg-#{record.difficulty.raw_value == 'easy' and 'success' or record.difficulty.raw_value == 'medium' and 'warning' or 'danger'}">
+                                    <field name="difficulty"/>
+                                </span>
+                            </div>
+
+                            <!-- Category Row -->
+                            <div class="mb-2 text-muted">
+                                <span class="fw-bold">Category:</span> <field name="category_id"/>
+                            </div>
+
+                            <!-- Evidence Required status -->
+                            <div class="mb-2">
+                                <t t-if="record.evidence_required.raw_value">
+                                    <span class="badge bg-info text-white">Required</span>
+                                </t>
+                                <t t-else="">
+                                    <span class="badge bg-secondary">Not Required</span>
+                                </t>
+                            </div>
+
+                            <!-- Footer / Meta Row -->
+                            <div class="d-flex justify-content-between align-items-center mt-2 pt-2 border-top text-muted">
+                                <div>
+                                    <t t-if="record.deadline.raw_value">
+                                        <i class="fa fa-calendar me-1" title="Deadline"/>
+                                        <field name="deadline"/>
+                                    </t>
+                                </div>
+                                <div>
+                                    <span class="badge bg-primary fw-bold">
+                                        <field name="xp"/> XP
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="action_esg_challenge" model="ir.actions.act_window">
         <field name="name">Challenges</field>
         <field name="res_model">esg.challenge</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">kanban,list,form</field>
     </record>
 
     <!-- ESG Challenge Participation Views -->
