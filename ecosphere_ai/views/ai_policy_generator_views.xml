@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ai_policy_generator_form" model="ir.ui.view">
+        <field name="name">ai.policy.generator.form</field>
+        <field name="model">ai.policy.generator</field>
+        <field name="arch" type="xml">
+            <form string="Generate Policy with AI">
+                <field name="state" invisible="1"/>
+                <field name="policy_id" invisible="1"/>
+                
+                <div class="alert alert-info text-center" role="alert" invisible="state != 'init'">
+                    <i class="fa fa-magic mr-2"></i> Use our AI assistant to draft a comprehensive ESG policy for <strong><field name="policy_name" readonly="1"/></strong>.
+                </div>
+                
+                <group invisible="state != 'init'">
+                    <field name="prompt" placeholder="E.g., Generate a detailed environmental sustainability policy focusing on waste reduction and energy efficiency."/>
+                </group>
+
+                <div invisible="state != 'generated'">
+                    <h3 class="text-primary mb-3"><i class="fa fa-check-circle"></i> AI Generated Policy</h3>
+                    <field name="generated_content" widget="html" options="{'style-inline': true}"/>
+                </div>
+
+                <footer>
+                    <button name="action_generate" string="Generate Draft" type="object" class="btn-primary" icon="fa-magic" invisible="state != 'init'"/>
+                    
+                    <button name="action_apply" string="Apply to Policy" type="object" class="btn-success" icon="fa-check" invisible="state != 'generated'"/>
+                    <button name="action_generate" string="Regenerate" type="object" class="btn-secondary" icon="fa-refresh" invisible="state != 'generated'"/>
+                    
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Add an action and button to esg.policy form view -->
+    <record id="action_ai_policy_generator" model="ir.actions.act_window">
+        <field name="name">Generate via AI</field>
+        <field name="res_model">ai.policy.generator</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="ecosphere_governance.model_esg_policy"/>
+        <field name="binding_view_types">form</field>
+    </record>
+
+    <!-- Inherit ESG Policy view to add the button in the header -->
+    <record id="view_esg_policy_form_inherit_ai" model="ir.ui.view">
+        <field name="name">esg.policy.form.inherit.ai</field>
+        <field name="model">esg.policy</field>
+        <field name="inherit_id" ref="ecosphere_governance.view_esg_policy_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="%(ecosphere_ai.action_ai_policy_generator)d" string="Draft via AI" type="action" class="btn-secondary" icon="fa-magic" invisible="state != 'draft'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
