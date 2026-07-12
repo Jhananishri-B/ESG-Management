@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import re
 from odoo import http, fields
 from odoo.http import request
+from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -11,6 +13,12 @@ class EcoSphereController(http.Controller):
     @http.route('/ecosphere/dashboard', type='http', auth='user', website=True)
     def esg_dashboard(self, **kw):
         env = request.env
+        employee = request.env.user
+        
+        # Capture notification messages
+        success = kw.get('success')
+        warning = kw.get('warning')
+        error = kw.get('error')
         
         # Fetching Data
         dashboard_cards = env['esg.dashboard.card'].search([])
@@ -21,13 +29,113 @@ class EcoSphereController(http.Controller):
         policies = env['esg.policy'].search([])
         audits = env['esg.audit'].search([])
         compliance_issues = env['esg.compliance.issue'].search([])
-        challenges = env['esg.challenge'].search([])
-        badges = env['esg.badge'].search([])
         departments = env['esg.department'].search([])
         
-        # ----------------------------------------------------
-        # Dynamic Score Calculations
-        # ----------------------------------------------------
+        # Gamification: Fetch only active challenges and active rewards
+        challenges = env['esg.challenge'].search([('status', '=', 'active')])
+        if not challenges:
+            challenges = env['esg.challenge'].search([])
+        rewards = env['esg.reward'].search([('status', '=', 'active')])
+        if not rewards:
+            rewards = env['esg.reward'].search([])
+        
+        # Joined Challenges for current employee
+        joined_challenges = env['esg.challenge.participation'].search([
+            ('employee_id', '=', request.uid)
+        ]).mapped('challenge_id.id')
+        
+        # Employee Stats (XP and completions)
+        u_challenges = env['esg.challenge.participation'].search([
+            ('employee_id', '=', request.uid),
+            ('approval_status', '=', 'approved')
+        ])
+        challenge_xp = sum(u_challenges.mapped('xp_awarded'))
+        challenge_count = len(u_challenges)
+        
+        u_csrs = env['esg.employee.participation'].search([
+            ('employee_id', '=', request.uid),
+            ('approval_status', '=', 'approved')
+        ])
+        csr_points = sum(u_csrs.mapped('points_earned'))
+        
+        total_xp = employee.total_xp if hasattr(employee, 'total_xp') else (challenge_xp + csr_points)
+        completed_challenges = employee.completed_challenges if hasattr(employee, 'completed_challenges') else challenge_count
+        
+        # Earned Badges
+        earned_badges = env['esg.badge']
+        if hasattr(employee, 'esg_badge_ids'):
+            earned_badges = employee.esg_badge_ids
+        else:
+            for badge in env['esg.badge'].search([]):
+                if badge.unlock_rule:
+                    match = re.match(r'^(XP|Challenges)\s*(>=|<=|>|<|==|=)\s*(\d+)$', badge.unlock_rule.strip(), re.IGNORECASE)
+                    if match:
+                        metric, op, val_str = match.groups()
+                        val = int(val_str)
+                        current_val = total_xp if metric.upper() == 'XP' else completed_challenges
+                        is_eligible = False
+                        if op == '>=': is_eligible = (current_val >= val)
+                        elif op == '<=': is_eligible = (current_val <= val)
+                        elif op == '>': is_eligible = (current_val > val)
+                        elif op == '<': is_eligible = (current_val < val)
+                        elif op in ('==', '='): is_eligible = (current_val == val)
+                        if is_eligible:
+                            earned_badges |= badge
+                            
+        # Leaderboard (N+1 query avoided)
+        users = env['res.users'].search([('share', '=', False)])
+        all_badges = env['esg.badge'].search([])
+        all_challenge_parts = env['esg.challenge.participation'].search([('approval_status', '=', 'approved')])
+        all_csr_parts = env['esg.employee.participation'].search([('approval_status', '=', 'approved')])
+        
+        challenge_by_user = {}
+        for p in all_challenge_parts:
+            challenge_by_user.setdefault(p.employee_id.id, []).append(p)
+            
+        csr_by_user = {}
+        for p in all_csr_parts:
+            csr_by_user.setdefault(p.employee_id.id, []).append(p)
+            
+        leaderboard_data = []
+        for user in users:
+            u_parts = challenge_by_user.get(user.id, [])
+            u_challenge_xp = sum(p.xp_awarded for p in u_parts)
+            u_challenge_count = len(u_parts)
+            
+            u_csrs = csr_by_user.get(user.id, [])
+            u_csr_points = sum(p.points_earned for p in u_csrs)
+            
+            u_xp = user.total_xp if hasattr(user, 'total_xp') else (u_challenge_xp + u_csr_points)
+            u_comp_challenges = user.completed_challenges if hasattr(user, 'completed_challenges') else u_challenge_count
+            
+            if hasattr(user, 'esg_badge_ids'):
+                badge_count = len(user.esg_badge_ids)
+            else:
+                badge_count = 0
+                for badge in all_badges:
+                    if badge.unlock_rule:
+                        match = re.match(r'^(XP|Challenges)\s*(>=|<=|>|<|==|=)\s*(\d+)$', badge.unlock_rule.strip(), re.IGNORECASE)
+                        if match:
+                            metric, op, val_str = match.groups()
+                            val = int(val_str)
+                            current_val = u_xp if metric.upper() == 'XP' else u_comp_challenges
+                            is_eligible = False
+                            if op == '>=': is_eligible = (current_val >= val)
+                            elif op == '<=': is_eligible = (current_val <= val)
+                            elif op == '>': is_eligible = (current_val > val)
+                            elif op == '<': is_eligible = (current_val < val)
+                            elif op in ('==', '='): is_eligible = (current_val == val)
+                            if is_eligible:
+                                badge_count += 1
+            
+            leaderboard_data.append({
+                'name': user.name,
+                'xp': u_xp,
+                'badge_count': badge_count,
+                'status': 'Active' if user.active else 'Inactive',
+            })
+            
+        leaderboard_data.sort(key=lambda x: x['xp'], reverse=True)
         
         # 1. Environmental Score
         if environmental_goals:
@@ -71,33 +179,6 @@ class EcoSphereController(http.Controller):
         # 4. Overall Score
         overall_score = round((environmental_score + social_score + governance_score) / 3)
 
-        # ----------------------------------------------------
-        # Dynamic Leaderboard Simulation
-        # ----------------------------------------------------
-        users = env['res.users'].search([('share', '=', False)], limit=15)
-        leaderboard = []
-        for user in users:
-            # Sum up points from approved CSR participations
-            csr_points = sum(env['esg.employee.participation'].search([
-                ('employee_id', '=', user.id),
-                ('approval_status', '=', 'approved')
-            ]).mapped('points_earned'))
-            
-            # Sum up XP from approved challenge participations
-            challenge_xp = sum(env['esg.challenge.participation'].search([
-                ('employee_id', '=', user.id),
-                ('approval_status', '=', 'approved')
-            ]).mapped('challenge_id.xp'))
-            
-            total_xp = csr_points + challenge_xp
-            leaderboard.append({
-                'user': user,
-                'xp': total_xp or 100, # default minimum for display aesthetics
-            })
-            
-        # Sort leaderboard by XP descending
-        leaderboard = sorted(leaderboard, key=lambda k: k['xp'], reverse=True)
-
         # Render View
         values = {
             'dashboard_cards': dashboard_cards,
@@ -109,13 +190,19 @@ class EcoSphereController(http.Controller):
             'audits': audits,
             'compliance_issues': compliance_issues,
             'challenges': challenges,
-            'badges': badges,
+            'rewards': rewards,
+            'joined_challenges': joined_challenges,
+            'earned_badges': earned_badges,
+            'leaderboard': leaderboard_data,
             'departments': departments,
-            'leaderboard': leaderboard,
             'environmental_score': environmental_score,
             'social_score': social_score,
             'governance_score': governance_score,
             'overall_score': overall_score,
+            'employee': employee,
+            'success_message': success,
+            'warning_message': warning,
+            'error_message': error,
         }
         return request.render('ecosphere.dashboard_frontend', values)
 
@@ -138,23 +225,70 @@ class EcoSphereController(http.Controller):
             _logger.error("Error joining activity: %s", e)
         return request.redirect('/ecosphere/dashboard#social')
 
-    @http.route('/ecosphere/challenge/join', type='http', auth='user', methods=['POST'], website=True, csrf=False)
-    def join_challenge(self, challenge_id, **kw):
+    @http.route([
+        '/ecosphere/challenge/join',
+        '/ecosphere/challenge/join/<int:challenge_id>'
+    ], type='http', auth='user', methods=['POST', 'GET'], website=True, csrf=False)
+    def join_challenge(self, challenge_id=None, **kw):
         try:
+            if not challenge_id:
+                challenge_id = int(kw.get('challenge_id', 0))
             challenge_id = int(challenge_id)
-            # Check if already joined
-            existing = request.env['esg.challenge.participation'].search([
+            env = request.env
+            challenge = env['esg.challenge'].browse(challenge_id)
+            if not challenge.exists():
+                return request.redirect('/ecosphere/dashboard?error=Challenge not found#gamification')
+
+            existing = env['esg.challenge.participation'].search([
                 ('challenge_id', '=', challenge_id),
                 ('employee_id', '=', request.uid)
             ], limit=1)
-            if not existing:
-                request.env['esg.challenge.participation'].create({
-                    'challenge_id': challenge_id,
-                    'employee_id': request.uid,
-                    'approval_status': 'draft',
-                })
+
+            if existing:
+                return request.redirect('/ecosphere/dashboard?warning=You have already joined this challenge#gamification')
+
+            env['esg.challenge.participation'].create({
+                'challenge_id': challenge_id,
+                'employee_id': request.uid,
+                'progress': 0.0,
+                'approval_status': 'draft',
+                'xp_awarded': 0,
+            })
+            return request.redirect(f'/ecosphere/dashboard?success=Successfully joined {challenge.title}#gamification')
         except Exception as e:
             _logger.error("Error joining challenge: %s", e)
+            return request.redirect('/ecosphere/dashboard?error=An error occurred trying to join the challenge#gamification')
+
+    @http.route('/ecosphere/reward/redeem', type='http', auth='user', methods=['POST'], website=True, csrf=False)
+    def redeem_reward(self, reward_id, **kw):
+        try:
+            reward_id = int(reward_id)
+            env = request.env
+            reward = env['esg.reward'].browse(reward_id)
+            if reward.exists():
+                # Compute actual XP to pass via context as mock_total_xp
+                u_challenges = env['esg.challenge.participation'].search([
+                    ('employee_id', '=', request.uid),
+                    ('approval_status', '=', 'approved')
+                ])
+                challenge_xp = sum(u_challenges.mapped('xp_awarded'))
+                
+                u_csrs = env['esg.employee.participation'].search([
+                    ('employee_id', '=', request.uid),
+                    ('approval_status', '=', 'approved')
+                ])
+                csr_points = sum(u_csrs.mapped('points_earned'))
+                
+                calculated_xp = challenge_xp + csr_points
+                
+                # Pass calculated_xp in context under mock_total_xp
+                reward.with_context(mock_total_xp=calculated_xp).action_redeem_reward(employee=request.env.user)
+                return request.redirect(f'/ecosphere/dashboard?success=Successfully redeemed {reward.name}#gamification')
+        except ValidationError as e:
+            return request.redirect(f'/ecosphere/dashboard?warning={e.name}#gamification')
+        except Exception as e:
+            _logger.error("Error redeeming reward: %s", e)
+            return request.redirect('/ecosphere/dashboard?error=An error occurred trying to redeem the reward#gamification')
         return request.redirect('/ecosphere/dashboard#gamification')
 
     @http.route('/ecosphere/carbon/log', type='http', auth='user', methods=['POST'], website=True, csrf=False)

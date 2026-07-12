@@ -121,9 +121,9 @@
         <field name="model">esg.challenge.participation</field>
         <field name="arch" type="xml">
             <list>
-                <field name="challenge_id"/>
+                <field name="challenge_id" string="Challenge Name"/>
                 <field name="employee_id"/>
-                <field name="progress"/>
+                <field name="progress" string="Progress (%)"/>
                 <field name="xp_awarded"/>
                 <field name="approval_status"/>
             </list>
@@ -136,17 +136,19 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <field name="approval_status" widget="statusbar" statusbar_visible="draft,under_review,approved,rejected"/>
+                    <button name="action_approve_challenge" string="Approve" type="object" class="oe_highlight" invisible="approval_status == 'approved'"/>
+                    <field name="approval_status" widget="statusbar" statusbar_visible="draft,under_review,approved,rejected" options="{'clickable': '1'}"/>
                 </header>
                 <sheet>
                     <group>
                         <group>
                             <field name="challenge_id"/>
                             <field name="employee_id"/>
+                            <field name="progress"/>
                         </group>
                         <group>
-                            <field name="progress"/>
                             <field name="xp_awarded"/>
+                            <field name="create_date" readonly="1" string="Created Date"/>
                         </group>
                     </group>
                     <group>
