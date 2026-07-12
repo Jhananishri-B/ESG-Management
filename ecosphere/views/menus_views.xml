@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root Menu -->
+    <menuitem id="menu_ecosphere_root"
+              name="EcoSphere"
+              web_icon="ecosphere,static/description/icon.png"
+              sequence="10"/>
+
+    <!-- Sub-menus referencing actions defined in their respective view files -->
+    <menuitem id="menu_ecosphere_dashboard"
+              name="Dashboard"
+              parent="menu_ecosphere_root"
+              action="action_esg_dashboard_card"
+              sequence="10"/>
+
+    <menuitem id="menu_ecosphere_environmental"
+              name="Environmental"
+              parent="menu_ecosphere_root"
+              action="action_esg_environment_record"
+              sequence="20"/>
+
+    <menuitem id="menu_ecosphere_social"
+              name="Social"
+              parent="menu_ecosphere_root"
+              action="action_esg_social_record"
+              sequence="30"/>
+
+    <menuitem id="menu_ecosphere_governance"
+              name="Governance"
+              parent="menu_ecosphere_root"
+              action="action_esg_governance_record"
+              sequence="40"/>
+
+    <menuitem id="menu_ecosphere_gamification"
+              name="Gamification"
+              parent="menu_ecosphere_root"
+              action="action_esg_gamification_goal"
+              sequence="50"/>
+
+    <menuitem id="menu_ecosphere_reports"
+              name="Reports"
+              parent="menu_ecosphere_root"
+              action="action_esg_report_config"
+              sequence="60"/>
+
+    <menuitem id="menu_ecosphere_settings"
+              name="Settings"
+              parent="menu_ecosphere_root"
+              action="action_esg_settings"
+              sequence="70"/>
+</odoo>
