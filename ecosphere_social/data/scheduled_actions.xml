@@ -16,7 +16,7 @@ for dept in departments:
     ])
     total_employees = max(dept.employee_count, 1)
     participation_rate = min((approved / (total_employees * 3)) * 100, 100)
-    dept.social_score = round(participation_rate, 2)
+    dept.write({'social_score': round(participation_rate, 2)})
             </field>
             <field name="interval_number">1</field>
             <field name="interval_type">weeks</field>

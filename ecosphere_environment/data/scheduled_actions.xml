@@ -34,7 +34,7 @@ active_goals = model.search([('state', '=', 'active')])
 for goal in active_goals:
     days = (goal.deadline - fields.Date.today()).days if goal.deadline else 0
     if days &lt; 7 and goal.progress &lt; 70:
-        goal.state = 'at_risk'
+        goal.write({'state': 'at_risk'})
             </field>
             <field name="interval_number">1</field>
             <field name="interval_type">days</field>
