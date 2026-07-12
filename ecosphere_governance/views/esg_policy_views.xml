@@ -65,8 +65,7 @@
                         
                         <div class="alert alert-info" role="alert" invisible="state != 'published'">
                             <strong>Acknowledgement Rate:</strong> <field name="ack_rate" nolabel="1"/>% 
-                            (<field name="total_ack" nolabel="1"/> / <field name="total_ack" nolabel="1" class="d-none"/> 
-                            <span t-esc="record.total_ack.raw_value + record.pending_ack.raw_value"/> employees)
+                            (Acknowledged: <field name="total_ack" nolabel="1"/> | Pending: <field name="pending_ack" nolabel="1"/>)
                         </div>
 
                         <group>

@@ -47,7 +47,7 @@
         <record id="demo_risk_supply" model="risk.register">
             <field name="name">Child Labor in Tier 3 Supply Chain</field>
             <field name="risk_category">supply_chain</field>
-            <field name="department_id" ref="ecosphere_core.dept_supplychain"/>
+            <field name="department_id" ref="ecosphere_core.dept_logistics"/>
             <field name="likelihood">2</field>
             <field name="impact">5</field>
             <field name="state">assessed</field>
