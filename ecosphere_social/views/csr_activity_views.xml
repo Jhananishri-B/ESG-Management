@@ -134,8 +134,7 @@
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
-                            <button class="oe_stat_button" icon="fa-users"
-                                    type="object" name="%(action_employee_participation)d">
+                            <button class="oe_stat_button" icon="fa-users" type="action" name="%(action_employee_participation)d">
                                 <field name="participant_count" widget="statinfo" string="Registered"/>
                             </button>
                             <button class="oe_stat_button" icon="fa-check-circle">
