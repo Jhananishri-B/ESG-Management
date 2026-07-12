@@ -19,6 +19,7 @@ along with gamification elements and detailed reports.
         'mail',
         'portal',
         'website',
+        'ecosphere_core',
     ],
     'data': [
         'security/security.xml',
