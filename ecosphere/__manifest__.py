@@ -33,6 +33,7 @@ along with gamification elements and detailed reports.
         'views/settings_views.xml',
         'views/menus_views.xml',
         'views/frontend_templates.xml',
+        'demo/demo_data.xml',
     ],
     'demo': [
         'demo/demo_data.xml',
