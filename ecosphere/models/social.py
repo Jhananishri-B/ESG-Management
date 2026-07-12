@@ -103,7 +103,10 @@ class ESGEmployeeParticipation(models.Model):
                 if 'esg.badge' in self.env:
                     badges = self.env['esg.badge'].search([])
                     for badge in badges:
-                        badge.action_evaluate_badge(employee=employee)
+                        try:
+                            badge.action_evaluate_badge(employee=employee)
+                        except Exception as e:
+                            _logger.warning("Error evaluating badge %s: %s", badge.name, e)
 
             rec.with_context(
                 skip_approval_workflow=True
