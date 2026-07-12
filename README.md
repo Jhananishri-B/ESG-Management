@@ -13,13 +13,16 @@ Monitor your firm's carbon footprint in real-time.
 - **Live Statistics:** At-a-glance KPI cards showing total generated carbon records, active goals, and achieved objectives.
 - **Emission Tips:** Actionable, UI-integrated insights for employees to reduce their daily carbon footprint.
 
-![Environmental Dashboard](file:///C:/Users/JHANANISHRI/.gemini/antigravity/brain/tempmediaStorage/media__1783859444972.png) 
+<img width="1600" height="899" alt="image" src="https://github.com/user-attachments/assets/4f96ef0a-60fc-46f8-bdcb-f5d8d833126e" />
 
 ### 🤝 2. Social: CSR & Employee Engagement
 Foster a culture of giving back to society with interactive CSR campaigns.
 - **CSR Campaigns:** Browse active company-sponsored CSR activities (Tree Plantation, E-Waste Collection, Blood Donation).
 - **One-Click Joining:** Frictionless enrollment via the dashboard with real-time UI updates to "✓ Joined".
 - **Engagement Tracking:** Deep integration into employee profiles to track total hours, challenges joined, and completed activities.
+- 
+- <img width="1600" height="890" alt="image" src="https://github.com/user-attachments/assets/e7a7a915-a3de-4067-acee-63d6658b2cd1" />
+
 
 ### 🛡️ 3. Governance: Policies, Audits & Compliance
 Ensure complete regulatory alignment and risk management.
@@ -27,6 +30,9 @@ Ensure complete regulatory alignment and risk management.
 - **Compliance Audits:** Log tracking for recent internal and external compliance audits across the organization.
 - **Issue Tracking:** Severity-coded compliance issue tracker (Critical, Major, Minor) with resolution statuses and due dates.
 - **Report Generation:** Quick export functionality to generate executive compliance reports.
+- 
+- <img width="1600" height="899" alt="image" src="https://github.com/user-attachments/assets/74bdb490-f347-490a-8575-f093933e4e95" />
+
 
 ### 🎮 4. ESG Gamification Command Center
 Make sustainability deeply engaging through built-in game mechanics and social evidence.
@@ -36,8 +42,9 @@ Make sustainability deeply engaging through built-in game mechanics and social e
 - **Leaderboard & XP Engine:** Top 5 employee leaderboard displaying accumulated XP, Gamification Badges, and total CSR counts, complete with medals (🥇 🥈 🥉).
 - **Dynamic Progress Summaries:** Overall progression tracking for company-wide goals.
 
-![Gamification Dashboard Top](file:///C:/Users/JHANANISHRI/.gemini/antigravity/brain/tempmediaStorage/media__1783859942738.png)
-![Gamification Dashboard Bottom](file:///C:/Users/JHANANISHRI/.gemini/antigravity/brain/tempmediaStorage/media__1783859947942.png)
+<img width="1600" height="899" alt="image" src="https://github.com/user-attachments/assets/f02a127c-c384-48dc-8e1c-6751b13caa4c" />
+<img width="1600" height="899" alt="image" src="https://github.com/user-attachments/assets/a2efd942-b42d-4783-9762-3d5f8f8006c3" />
+
 
 ---
 
