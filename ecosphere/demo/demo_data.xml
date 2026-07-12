@@ -21,7 +21,7 @@
         <record id="dep_logistics" model="esg.department">
             <field name="name">Logistics &amp; Warehouse</field>
             <field name="code">LOG</field>
-            <field name="head_id" ref="base.user_demo"/>
+            <field name="head_id" ref="base.user_admin"/>
             <field name="employee_count">10</field>
             <field name="status">active</field>
         </record>
@@ -29,7 +29,7 @@
         <record id="dep_marketing" model="esg.department">
             <field name="name">Marketing</field>
             <field name="code">MKT</field>
-            <field name="head_id" ref="base.user_demo"/>
+            <field name="head_id" ref="base.user_admin"/>
             <field name="employee_count">12</field>
             <field name="status">active</field>
         </record>
@@ -165,7 +165,7 @@
         </record>
 
         <record id="part_demo_blood" model="esg.employee.participation">
-            <field name="employee_id" ref="base.user_demo"/>
+            <field name="employee_id" ref="base.user_admin"/>
             <field name="activity_id" ref="act_blood"/>
             <field name="approval_status">approved</field>
             <field name="points_earned">50</field>
@@ -196,7 +196,7 @@
 
         <record id="ack_demo_env" model="esg.policy.acknowledgement">
             <field name="policy_id" ref="policy_env"/>
-            <field name="employee_id" ref="base.user_demo"/>
+            <field name="employee_id" ref="base.user_admin"/>
             <field name="acknowledgement_date">2026-07-12</field>
             <field name="status">acknowledged</field>
         </record>
@@ -214,7 +214,7 @@
             <field name="audit_id" ref="audit_annual"/>
             <field name="severity">critical</field>
             <field name="description">Identified minor chemical waste disposal delay behind warehouse B.</field>
-            <field name="owner_id" ref="base.user_demo"/>
+            <field name="owner_id" ref="base.user_admin"/>
             <field name="due_date">2026-08-31</field>
             <field name="status">in_progress</field>
         </record>
