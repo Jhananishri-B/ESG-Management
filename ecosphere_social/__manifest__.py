@@ -24,8 +24,8 @@
     'data': [
         'security/ir.model.access.csv',
         'data/scheduled_actions.xml',
-        'views/csr_activity_views.xml',
         'views/employee_participation_views.xml',
+        'views/csr_activity_views.xml',
         'views/volunteer_hours_views.xml',
         'views/diversity_metric_views.xml',
         'views/menu.xml',
