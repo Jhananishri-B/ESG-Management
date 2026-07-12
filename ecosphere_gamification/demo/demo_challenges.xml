@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Challenges -->
+        <record id="challenge_zero_waste" model="esg.challenge">
+            <field name="name">Zero Waste November</field>
+            <field name="challenge_type">individual</field>
+            <field name="start_date">2024-11-01</field>
+            <field name="end_date">2024-11-30</field>
+            <field name="xp_reward">200</field>
+            <field name="state">active</field>
+            <field name="badge_id" ref="badge_eco_warrior"/>
+            <field name="target_metric">100</field>
+            <field name="metric_uom">% Waste Diverted</field>
+        </record>
+
+        <record id="challenge_step_count" model="esg.challenge">
+            <field name="name">Team Step Challenge: Walk to the Moon</field>
+            <field name="challenge_type">department</field>
+            <field name="start_date">2024-06-01</field>
+            <field name="end_date">2024-06-30</field>
+            <field name="xp_reward">500</field>
+            <field name="state">draft</field>
+            <field name="target_metric">1000000</field>
+            <field name="metric_uom">Steps</field>
+        </record>
+    </data>
+</odoo>

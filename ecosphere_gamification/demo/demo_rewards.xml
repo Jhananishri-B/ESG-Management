@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Rewards -->
+        <record id="reward_hoodie" model="esg.reward">
+            <field name="name">EcoSphere Organic Cotton Hoodie</field>
+            <field name="reward_type">swag</field>
+            <field name="cost">1000</field>
+            <field name="quantity_available">50</field>
+            <field name="is_unlimited">False</field>
+            <field name="description">Premium organic cotton hoodie with embroidered EcoSphere logo.</field>
+        </record>
+
+        <record id="reward_time_off" model="esg.reward">
+            <field name="name">Half-Day Friday</field>
+            <field name="reward_type">time_off</field>
+            <field name="cost">2500</field>
+            <field name="is_unlimited">True</field>
+            <field name="description">Redeem for 4 hours of extra paid time off. Can be used on any Friday.</field>
+        </record>
+
+        <record id="reward_donation" model="esg.reward">
+            <field name="name">$50 Donation to Ocean Cleanup</field>
+            <field name="reward_type">donation</field>
+            <field name="cost">500</field>
+            <field name="is_unlimited">True</field>
+            <field name="description">We will donate $50 in your name to The Ocean Cleanup project.</field>
+        </record>
+    </data>
+</odoo>

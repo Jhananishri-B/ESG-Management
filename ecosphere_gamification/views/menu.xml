@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_gamification_root"
+                  name="Gamification"
+                  parent="ecosphere_core.menu_ecosphere_root"
+                  sequence="50"/>
+
+        <menuitem id="menu_gamification_challenges"
+                  name="Challenges"
+                  parent="menu_gamification_root"
+                  action="action_esg_challenge"
+                  sequence="10"/>
+                  
+        <menuitem id="menu_gamification_badges"
+                  name="Badges"
+                  parent="menu_gamification_root"
+                  action="action_esg_badge"
+                  sequence="20"/>
+
+        <menuitem id="menu_gamification_rewards"
+                  name="Reward Store"
+                  parent="menu_gamification_root"
+                  action="action_esg_reward"
+                  sequence="30"/>
+                  
+        <menuitem id="menu_gamification_redemptions"
+                  name="Redemptions"
+                  parent="menu_gamification_root"
+                  action="action_reward_redemption"
+                  sequence="40"
+                  groups="ecosphere_core.group_ecosphere_manager"/>
+
+        <menuitem id="menu_gamification_xp"
+                  name="XP History"
+                  parent="menu_gamification_root"
+                  action="action_xp_ledger_all"
+                  sequence="50"
+                  groups="ecosphere_core.group_ecosphere_manager"/>
+    </data>
+</odoo>

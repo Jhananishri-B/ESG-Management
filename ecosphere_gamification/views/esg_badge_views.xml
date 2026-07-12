@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Badge Kanban View -->
+        <record id="view_esg_badge_kanban" model="ir.ui.view">
+            <field name="name">esg.badge.kanban</field>
+            <field name="model">esg.badge</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="badge_type"/>
+                    <field name="level"/>
+                    <field name="image_128"/>
+                    <field name="granted_count"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_body d-flex align-items-center">
+                                <div class="mr-3">
+                                    <img t-att-src="kanban_image('esg.badge', 'image_128', record.id.raw_value)" alt="Badge" class="o_image_64_max"/>
+                                </div>
+                                <div>
+                                    <div><span class="text-muted"><field name="level"/></span></div>
+                                    <div><field name="badge_type" widget="badge"/></div>
+                                    <div class="mt-2 text-info"><i class="fa fa-users"></i> Awarded: <field name="granted_count"/> times</div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Badge Form View -->
+        <record id="view_esg_badge_form" model="ir.ui.view">
+            <field name="name">esg.badge.form</field>
+            <field name="model">esg.badge</field>
+            <field name="arch" type="xml">
+                <form string="ESG Badge">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" icon="fa-users">
+                                <field name="granted_count" widget="statinfo" string="Awarded To"/>
+                            </button>
+                        </div>
+                        <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="E.g., Carbon Champion"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="badge_type"/>
+                                <field name="level"/>
+                                <field name="sequence"/>
+                            </group>
+                            <group>
+                                <field name="auto_award"/>
+                                <field name="rule_type" invisible="not auto_award" required="auto_award"/>
+                                <field name="rule_threshold" invisible="not auto_award" required="auto_award"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description" placeholder="Why do you get this badge?"/>
+                            </page>
+                            <page string="Earned By">
+                                <field name="employee_ids" widget="many2many">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="department_id"/>
+                                        <field name="esg_level"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_esg_badge" model="ir.actions.act_window">
+            <field name="name">ESG Badges</field>
+            <field name="res_model">esg.badge</field>
+            <field name="view_mode">kanban,list,form</field>
+        </record>
+    </data>
+</odoo>
