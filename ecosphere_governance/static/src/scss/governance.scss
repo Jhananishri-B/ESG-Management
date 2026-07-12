@@ -1,0 +1,105 @@
+/**
+ * EcoSphere Governance Module — SCSS
+ * Risk Register heat-map kanban styles
+ */
+
+.eco-kanban-risk {
+  .o_kanban_record {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-bottom: 16px;
+  }
+}
+
+.eco-risk-card {
+  background: #ffffff;
+  border-radius: var(--eco-radius-md);
+  border: 1px solid #e5e7eb;
+  padding: 16px;
+  transition: var(--eco-transition);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+  }
+
+  // Risk Level Colors (Heatmap)
+  &.eco-risk-low::before      { background: #10b981; } // Green
+  &.eco-risk-medium::before   { background: #f59e0b; } // Yellow
+  &.eco-risk-high::before     { background: #f97316; } // Orange
+  &.eco-risk-critical::before { background: #ef4444; } // Red
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--eco-shadow-md);
+  }
+
+  .eco-risk-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    .eco-risk-category {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #6b7280;
+      letter-spacing: 0.05em;
+    }
+
+    .eco-risk-score-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #f3f4f6;
+      font-size: 12px;
+      font-weight: 800;
+      color: #374151;
+    }
+  }
+
+  .eco-risk-title {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #111827;
+    margin-bottom: 8px;
+  }
+
+  .eco-risk-meta {
+    font-size: 12px;
+  }
+}
+
+// Form view hero banner for risk score
+.eco-risk-hero {
+  border-radius: var(--eco-radius-md);
+  padding: 16px 24px;
+  margin-bottom: 24px;
+  border: 1px solid transparent;
+
+  &.alert-info    { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+  &.alert-warning { background: #fffbeb; border-color: #fde68a; color: #92400e; }
+  &.alert-danger  { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+}
+
+// Audit Result Banner
+.eco-audit-result-banner {
+  border-radius: var(--eco-radius-md);
+  padding: 16px 24px;
+  margin-bottom: 24px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+}

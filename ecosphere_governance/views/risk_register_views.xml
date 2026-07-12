@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ════ KANBAN (Risk Matrix visualization) ════════════════════ -->
+        <record id="view_risk_register_kanban" model="ir.ui.view">
+            <field name="name">risk.register.kanban</field>
+            <field name="model">risk.register</field>
+            <field name="arch" type="xml">
+                <kanban class="eco-kanban-risk" default_group_by="risk_level">
+                    <field name="name"/>
+                    <field name="risk_level"/>
+                    <field name="risk_category"/>
+                    <field name="department_id"/>
+                    <field name="risk_score"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="card">
+                            <div t-attf-class="eco-risk-card eco-risk-#{record.risk_level.raw_value}">
+                                <div class="eco-risk-header">
+                                    <span class="eco-risk-category"><field name="risk_category"/></span>
+                                    <span class="eco-risk-score-badge" title="Likelihood × Impact">
+                                        <field name="risk_score"/>
+                                    </span>
+                                </div>
+                                <div class="eco-risk-title">
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div class="eco-risk-meta text-muted">
+                                    <i class="fa fa-building-o"/> <field name="department_id"/>
+                                </div>
+                                <div class="eco-risk-footer mt-2">
+                                    <field name="state" widget="badge"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- ════ LIST ════════════════════════════════════════════════ -->
+        <record id="view_risk_register_list" model="ir.ui.view">
+            <field name="name">risk.register.list</field>
+            <field name="model">risk.register</field>
+            <field name="arch" type="xml">
+                <list string="Risk Register"
+                      decoration-danger="risk_level == 'critical'"
+                      decoration-warning="risk_level == 'high'"
+                      decoration-info="risk_level == 'medium'">
+                    <field name="reference"/>
+                    <field name="name"/>
+                    <field name="risk_category"/>
+                    <field name="department_id"/>
+                    <field name="likelihood"/>
+                    <field name="impact"/>
+                    <field name="risk_score" string="Score"/>
+                    <field name="risk_level" widget="badge"
+                           decoration-danger="risk_level == 'critical'"
+                           decoration-warning="risk_level == 'high'"
+                           decoration-info="risk_level == 'medium'"
+                           decoration-success="risk_level == 'low'"/>
+                    <field name="state" widget="badge"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ════ FORM ════════════════════════════════════════════════ -->
+        <record id="view_risk_register_form" model="ir.ui.view">
+            <field name="name">risk.register.form</field>
+            <field name="model">risk.register</field>
+            <field name="arch" type="xml">
+                <form string="Risk">
+                    <header>
+                        <button name="action_assess" string="Assess" type="object" class="btn-primary" invisible="state != 'identified'"/>
+                        <button name="action_mitigate" string="Start Mitigation" type="object" class="btn-primary" invisible="state != 'assessed'"/>
+                        <button name="action_monitor" string="Move to Monitoring" type="object" invisible="state != 'mitigating'"/>
+                        <button name="action_close" string="Close Risk" type="object" class="btn-success" invisible="state not in ('monitored','mitigating')"/>
+                        <button name="action_accept" string="Accept Risk" type="object" class="btn-warning" invisible="state in ('closed','accepted')"/>
+                        <field name="state" widget="statusbar" statusbar_visible="identified,assessed,mitigating,monitored,closed"/>
+                    </header>
+                    <sheet>
+                        
+                        <div t-attf-class="eco-risk-hero alert alert-#{record.risk_level.raw_value == 'critical' ? 'danger' : record.risk_level.raw_value == 'high' ? 'warning' : 'info'}" role="alert" invisible="state == 'identified'">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <strong>Risk Score (L × I): </strong>
+                                    <span style="font-size:1.5em; font-weight:bold;"><field name="risk_score" nolabel="1"/></span>
+                                </div>
+                                <div>
+                                    <field name="risk_level" nolabel="1" widget="badge" style="font-size:1.2em;"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="Describe the risk..." readonly="state in ('closed','accepted')"/></h1>
+                            <h2><field name="reference" readonly="1"/></h2>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="risk_category" readonly="state in ('closed','accepted')"/>
+                                <field name="department_id" readonly="state in ('closed','accepted')"/>
+                                <field name="owner_id" readonly="state in ('closed','accepted')"/>
+                            </group>
+                            <group>
+                                <field name="review_date" readonly="state in ('closed','accepted')"/>
+                            </group>
+                        </group>
+
+                        <group string="Inherent Risk Assessment (Pre-Mitigation)">
+                            <group>
+                                <field name="likelihood" readonly="state in ('closed','accepted')"/>
+                            </group>
+                            <group>
+                                <field name="impact" readonly="state in ('closed','accepted')"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Mitigation &amp; Controls">
+                                <group>
+                                    <field name="existing_controls" readonly="state in ('closed','accepted')"/>
+                                    <field name="mitigation_plan" readonly="state in ('closed','accepted')"/>
+                                    <field name="mitigation_owner_id" readonly="state in ('closed','accepted')"/>
+                                    <field name="mitigation_deadline" readonly="state in ('closed','accepted')"/>
+                                </group>
+                            </page>
+                            <page string="Residual Risk Assessment (Post-Mitigation)" invisible="state in ('identified','assessed')">
+                                <div class="text-muted mb-3">Assess the risk level assuming all mitigation controls are fully effective.</div>
+                                <group>
+                                    <group>
+                                        <field name="residual_likelihood" readonly="state in ('closed','accepted')"/>
+                                    </group>
+                                    <group>
+                                        <field name="residual_impact" readonly="state in ('closed','accepted')"/>
+                                    </group>
+                                </group>
+                                <div class="alert alert-secondary mt-3">
+                                    <strong>Residual Risk Score: </strong> <field name="residual_score" nolabel="1"/>
+                                </div>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search -->
+        <record id="view_risk_register_search" model="ir.ui.view">
+            <field name="name">risk.register.search</field>
+            <field name="model">risk.register</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="owner_id"/>
+                    <filter string="High &amp; Critical" name="high_risk" domain="[('risk_level','in',('high','critical'))]"/>
+                    <filter string="Active Risks" name="active_risk" domain="[('state','not in',('closed','accepted'))]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="grp_cat" string="Category" context="{'group_by':'risk_category'}"/>
+                        <filter name="grp_level" string="Risk Level" context="{'group_by':'risk_level'}"/>
+                        <filter name="grp_dept" string="Department" context="{'group_by':'department_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_risk_register" model="ir.actions.act_window">
+            <field name="name">Risk Register</field>
+            <field name="res_model">risk.register</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="search_view_id" ref="view_risk_register_search"/>
+            <field name="context">{'search_default_active_risk': 1, 'search_default_grp_level': 1}</field>
+        </record>
+    </data>
+</odoo>

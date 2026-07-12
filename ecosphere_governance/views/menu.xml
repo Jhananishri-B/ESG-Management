@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_gov_policies"
+                  name="ESG Policies"
+                  parent="ecosphere_core.menu_ecosphere_governance"
+                  action="action_esg_policy"
+                  sequence="10"/>
+        
+        <menuitem id="menu_gov_audits"
+                  name="ESG Audits"
+                  parent="ecosphere_core.menu_ecosphere_governance"
+                  action="action_esg_audit"
+                  sequence="20"/>
+
+        <menuitem id="menu_gov_compliance"
+                  name="Compliance Issues"
+                  parent="ecosphere_core.menu_ecosphere_governance"
+                  action="action_compliance_issue"
+                  sequence="30"/>
+
+        <menuitem id="menu_gov_risk"
+                  name="Risk Register"
+                  parent="ecosphere_core.menu_ecosphere_governance"
+                  action="action_risk_register"
+                  sequence="40"/>
+    </data>
+</odoo>

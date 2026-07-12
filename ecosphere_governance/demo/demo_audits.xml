@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Audits -->
+        <record id="demo_audit_iso14001" model="esg.audit">
+            <field name="name">ISO 14001 Environmental Management Audit</field>
+            <field name="audit_type">iso</field>
+            <field name="department_id" ref="ecosphere_core.dept_manufacturing"/>
+            <field name="planned_date">2024-05-10</field>
+            <field name="state">reported</field>
+            <field name="priority">2</field>
+            <field name="scope">Review of waste management, energy consumption records, and air emissions in the main production facility.</field>
+            <field name="result">pass_minor</field>
+            <field name="overall_score">85</field>
+            <field name="executive_summary">&lt;p&gt;The facility demonstrates strong adherence to ISO 14001 standards. Two minor non-conformities were found regarding hazardous waste labeling.&lt;/p&gt;</field>
+        </record>
+
+        <!-- Audit Findings -->
+        <record id="demo_finding_1" model="audit.finding">
+            <field name="audit_id" ref="demo_audit_iso14001"/>
+            <field name="name">Improper labeling of hazardous waste containers</field>
+            <field name="severity">minor</field>
+            <field name="area">Waste Storage Area B</field>
+            <field name="description">Three containers were missing the updated hazard warning labels required by Q2 regulations.</field>
+            <field name="corrective_action">Update all labels in Area B and conduct refresher training for waste handlers.</field>
+            <field name="due_date">2024-06-01</field>
+            <field name="closed">False</field>
+        </record>
+
+        <record id="demo_finding_2" model="audit.finding">
+            <field name="audit_id" ref="demo_audit_iso14001"/>
+            <field name="name">Spill kit missing from secondary containment zone</field>
+            <field name="severity">minor</field>
+            <field name="area">Chemical Storage</field>
+            <field name="closed">True</field>
+            <field name="closed_on">2024-05-15</field>
+        </record>
+
+        <record id="demo_audit_internal_social" model="esg.audit">
+            <field name="name">Q3 Internal Social Responsibility Check</field>
+            <field name="audit_type">internal</field>
+            <field name="department_id" ref="ecosphere_core.dept_hr"/>
+            <field name="planned_date">2024-09-01</field>
+            <field name="state">planned</field>
+            <field name="priority">0</field>
+        </record>
+
+    </data>
+</odoo>
