@@ -1,10 +1,10 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_esg_department_employee,esg.department.employee,model_esg_department,group_ecosphere_employee,1,0,0,0
-access_esg_department_manager,esg.department.manager,model_esg_department,group_ecosphere_manager,1,1,1,0
-access_esg_department_admin,esg.department.admin,model_esg_department,group_ecosphere_admin,1,1,1,1
-access_esg_category_employee,esg.category.employee,model_esg_category,group_ecosphere_employee,1,0,0,0
-access_esg_category_manager,esg.category.manager,model_esg_category,group_ecosphere_manager,1,1,1,0
-access_esg_category_admin,esg.category.admin,model_esg_category,group_ecosphere_admin,1,1,1,1
+access_esg_department_employee,esg.department.employee,ecosphere_core.model_esg_department,group_ecosphere_employee,1,0,0,0
+access_esg_department_manager,esg.department.manager,ecosphere_core.model_esg_department,group_ecosphere_manager,1,1,1,0
+access_esg_department_admin,esg.department.admin,ecosphere_core.model_esg_department,group_ecosphere_admin,1,1,1,1
+access_esg_category_employee,esg.category.employee,ecosphere_core.model_esg_category,group_ecosphere_employee,1,0,0,0
+access_esg_category_manager,esg.category.manager,ecosphere_core.model_esg_category,group_ecosphere_manager,1,1,1,0
+access_esg_category_admin,esg.category.admin,ecosphere_core.model_esg_category,group_ecosphere_admin,1,1,1,1
 access_esg_emission_factor_employee,esg.emission.factor.employee,model_esg_emission_factor,group_ecosphere_employee,1,0,0,0
 access_esg_emission_factor_manager,esg.emission.factor.manager,model_esg_emission_factor,group_ecosphere_manager,1,1,1,0
 access_esg_emission_factor_admin,esg.emission.factor.admin,model_esg_emission_factor,group_ecosphere_admin,1,1,1,1
