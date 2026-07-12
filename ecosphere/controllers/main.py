@@ -43,19 +43,17 @@ class EcoSphereController(http.Controller):
         departments = env['esg.department'].search([])
         
         # Gamification: Fetch only active challenges and active rewards
-        challenges = env['esg.challenge'].search([('status', '=', 'active')])
+        challenges = env['esg.challenge'].search([('state', '=', 'active')])
         if not challenges:
             challenges = env['esg.challenge'].search([])
-        rewards = env['esg.reward'].search([('status', '=', 'active')])
-        if not rewards:
-            rewards = env['esg.reward'].search([])
+        rewards = env['esg.reward'].search([('active', '=', True)])
         
         # Joined Challenges for current employee
-        ch_parts = env['esg.challenge.participation'].search([
-            ('employee_id', '=', request.uid)
+        ch_parts = env['challenge.participation'].search([
+            ('employee_id.user_id', '=', request.uid)
         ])
         joined_challenges = ch_parts.mapped('challenge_id.id')
-        challenge_progress = {p.challenge_id.id: p.progress for p in ch_parts}
+        challenge_progress = {p.challenge_id.id: p.progress_pct for p in ch_parts}
         
         # Joined CSR activities for current employee
         csr_parts = env['esg.employee.participation'].search([
@@ -189,22 +187,24 @@ class EcoSphereController(http.Controller):
             if not challenge.exists():
                 return request.redirect('/ecosphere/dashboard?error=Challenge not found#gamification')
 
-            existing = env['esg.challenge.participation'].search([
+            # Find employee record for the current user
+            employee = request.env['hr.employee'].search([('user_id', '=', request.uid)], limit=1)
+            if not employee:
+                return request.redirect('/ecosphere/dashboard?error=No employee profile found for your account#gamification')
+
+            existing = env['challenge.participation'].search([
                 ('challenge_id', '=', challenge_id),
-                ('employee_id', '=', request.uid)
+                ('employee_id', '=', employee.id)
             ], limit=1)
 
             if existing:
                 return request.redirect('/ecosphere/dashboard?warning=You have already joined this challenge#gamification')
 
-            env['esg.challenge.participation'].create({
+            env['challenge.participation'].create({
                 'challenge_id': challenge_id,
-                'employee_id': request.uid,
-                'progress': 0.0,
-                'approval_status': 'draft',
-                'xp_awarded': 0,
+                'employee_id': employee.id,
             })
-            return request.redirect(f'/ecosphere/dashboard?success=Successfully joined {challenge.title}#gamification')
+            return request.redirect(f'/ecosphere/dashboard?success=Successfully joined {challenge.name}#gamification')
         except Exception as e:
             _logger.error("Error joining challenge: %s", e)
             return request.redirect('/ecosphere/dashboard?error=An error occurred trying to join the challenge#gamification')
