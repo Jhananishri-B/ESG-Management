@@ -194,25 +194,25 @@
                             <div class="col-md-3">
                                 <div class="esg-glass-card score-card score-green">
                                     <div class="text-muted">Environmental Score</div>
-                                    <div class="score-value text-success">87 <span class="font-size-sm" style="font-size: 1rem;">/ 100</span></div>
+                                    <div class="score-value text-success"><t t-esc="environmental_score"/> <span class="font-size-sm" style="font-size: 1rem;">/ 100</span></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="esg-glass-card score-card score-blue">
                                     <div class="text-muted">Social Score</div>
-                                    <div class="score-value text-info">74 <span class="font-size-sm" style="font-size: 1rem;">/ 100</span></div>
+                                    <div class="score-value text-info"><t t-esc="social_score"/> <span class="font-size-sm" style="font-size: 1rem;">/ 100</span></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="esg-glass-card score-card score-purple">
                                     <div class="text-muted">Governance Score</div>
-                                    <div class="score-value text-warning">85 <span class="font-size-sm" style="font-size: 1rem;">/ 100</span></div>
+                                    <div class="score-value text-warning"><t t-esc="governance_score"/> <span class="font-size-sm" style="font-size: 1rem;">/ 100</span></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="esg-glass-card score-card score-indigo">
                                     <div class="text-muted">Overall ESG Score</div>
-                                    <div class="score-value text-primary">81 <span class="font-size-sm" style="font-size: 1rem;">/ 100</span></div>
+                                    <div class="score-value text-primary"><t t-esc="overall_score"/> <span class="font-size-sm" style="font-size: 1rem;">/ 100</span></div>
                                 </div>
                             </div>
                         </div>
@@ -348,8 +348,8 @@
                                             <t t-foreach="audits" t-as="audit">
                                                 <tr>
                                                     <td><t t-esc="audit.name"/></td>
-                                                    <td><t t-esc="audit.auditor"/></td>
-                                                    <td><t t-esc="audit.audit_date"/></td>
+                                                    <td><t t-esc="audit.auditor_id.name"/></td>
+                                                    <td><t t-esc="audit.date"/></td>
                                                 </tr>
                                             </t>
                                         </tbody>
@@ -386,15 +386,15 @@
                                     <tr>
                                         <th>Rank</th>
                                         <th>Employee</th>
-                                        <th>Status</th>
+                                        <th>XP</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <t t-foreach="users" t-as="user">
+                                    <t t-foreach="leaderboard" t-as="entry">
                                         <tr>
-                                            <td><t t-esc="user_index + 1"/></td>
-                                            <td><t t-esc="user.name"/></td>
-                                            <td>Active</td>
+                                            <td><t t-esc="entry_index + 1"/></td>
+                                            <td><t t-esc="entry['user'].name"/></td>
+                                            <td><t t-esc="entry['xp']"/> XP</td>
                                         </tr>
                                     </t>
                                 </tbody>
