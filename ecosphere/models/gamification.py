@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from odoo import models, fields
+from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -19,9 +19,11 @@ class ESGBadge(models.Model):
         """Helper to get employee's total XP.
         TODO: Integrate with the ESG Employee Profile module when available.
         """
+        if self.env.context.get('mock_total_xp') is not None:
+            return self.env.context.get('mock_total_xp')
         if hasattr(employee, 'total_xp'):
             return employee.total_xp
-        return self.env.context.get('mock_total_xp', 0)
+        return 0
 
     def _get_completed_challenges(self, employee):
         """Helper to get employee's completed challenges.
@@ -210,15 +212,19 @@ class ESGReward(models.Model):
         """Helper to retrieve employee points/XP.
         TODO: Integrate with the ESG Employee Profile module when available.
         """
+        if self.env.context.get('mock_total_xp') is not None:
+            return self.env.context.get('mock_total_xp')
         if hasattr(employee, 'total_xp'):
             return employee.total_xp
-        return self.env.context.get('mock_total_xp', 0)
+        return 0
 
     def _deduct_employee_xp(self, employee, points):
         """Helper to deduct points from employee.
         TODO: Integrate with the ESG Employee Profile module when available.
         """
-        if hasattr(employee, 'total_xp'):
+        if hasattr(employee, 'spent_xp'):
+            employee.sudo().write({'spent_xp': employee.spent_xp + points})
+        elif hasattr(employee, 'total_xp'):
             employee.total_xp -= points
         else:
             _logger.info("TODO Integration: Deducted %d XP/Points from Employee '%s'.", points, employee.name)
@@ -248,6 +254,10 @@ class ESGReward(models.Model):
 
         # Deduct points
         self._deduct_employee_xp(employee, self.points_required)
+
+        # 4. Increment rewards redeemed count
+        if hasattr(employee, 'rewards_redeemed_count'):
+            employee.rewards_redeemed_count += 1
 
         # 5. Update Stock and Status
         vals = {}
@@ -323,19 +333,15 @@ class ESGChallengeParticipation(models.Model):
         """Helper to award XP to employee.
         TODO: Integrate with the ESG Employee Profile module when available.
         """
-        if hasattr(employee, 'total_xp'):
-            employee.total_xp += xp
-        else:
-            _logger.info("TODO Integration: Awarded %d XP to Employee '%s'.", xp, employee.name)
+        # Recomputed dynamically, no manual update needed
+        pass
 
     def _increment_completed_challenges(self, employee):
         """Helper to increment completed challenges count.
         TODO: Integrate with the ESG Employee Profile module when available.
         """
-        if hasattr(employee, 'completed_challenges'):
-            employee.completed_challenges += 1
-        else:
-            _logger.info("TODO Integration: Incremented completed challenges count for Employee '%s'.", employee.name)
+        # Recomputed dynamically, no manual update needed
+        pass
 
     def action_approve_challenge(self):
         """
@@ -353,30 +359,28 @@ class ESGChallengeParticipation(models.Model):
             if rec.challenge_id.xp <= 0:
                 continue
 
-            vals = {}
-
-            # Mark challenge as approved
-            if rec.approval_status != 'approved':
-                vals['approval_status'] = 'approved'
-
-            # Allocate default challenge XP
             xp_to_award = rec.challenge_id.xp
-            vals['xp_awarded'] = xp_to_award
+            vals = {
+                'approval_status': 'approved',
+                'xp_awarded': xp_to_award
+            }
 
-            # Update employee profile stats (helpers)
+            # Write values FIRST to database to trigger compute dependencies
+            rec.with_context(skip_challenge_workflow=True).write(vals)
+
             employee = rec.employee_id
             if employee:
-                rec._award_employee_xp(employee, xp_to_award)
-                rec._increment_completed_challenges(employee)
+                # Access computed values to force immediate recompute
+                _ = employee.total_xp
+                _ = employee.completed_challenges
 
                 # Trigger badge evaluation engine for the employee
                 badges = self.env['esg.badge'].search([])
                 for badge in badges:
-                    badge.action_evaluate_badge(employee=employee)
-
-            rec.with_context(
-                skip_challenge_workflow=True
-            ).write(vals)
+                    try:
+                        badge.action_evaluate_badge(employee=employee)
+                    except Exception as e:
+                        _logger.warning("Error evaluating badge %s: %s", badge.name, e)
 
             # Record workflow completion in logs
             _logger.info(
@@ -413,4 +417,39 @@ class ESGChallengeParticipation(models.Model):
             ).action_approve_challenge()
 
         return res
+
+
+class ResUsers(models.Model):
+    _inherit = 'res.users'
+
+    challenge_participation_ids = fields.One2many(
+        'esg.challenge.participation', 'employee_id', string='Challenge Participations'
+    )
+    spent_xp = fields.Integer(string='Spent XP', default=0)
+    total_xp = fields.Integer(
+        string='Total XP', compute='_compute_total_xp', store=True, default=0
+    )
+    completed_challenges = fields.Integer(
+        string='Completed Challenges', compute='_compute_completed_challenges', store=True, default=0
+    )
+    rewards_redeemed_count = fields.Integer(string='Rewards Redeemed Count', default=0)
+    esg_badge_ids = fields.Many2many(
+        'esg.badge',
+        'res_users_esg_badge_rel',
+        'user_id',
+        'badge_id',
+        string='Earned Badges'
+    )
+
+    @api.depends('challenge_participation_ids.approval_status', 'challenge_participation_ids.xp_awarded', 'spent_xp')
+    def _compute_total_xp(self):
+        for user in self:
+            approved_xp = sum(user.challenge_participation_ids.filtered(lambda p: p.approval_status == 'approved').mapped('xp_awarded'))
+            user.total_xp = approved_xp - user.spent_xp
+
+    @api.depends('challenge_participation_ids.approval_status')
+    def _compute_completed_challenges(self):
+        for user in self:
+            user.completed_challenges = len(user.challenge_participation_ids.filtered(lambda p: p.approval_status == 'approved'))
+
 
