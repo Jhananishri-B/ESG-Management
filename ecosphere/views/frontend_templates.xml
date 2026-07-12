@@ -333,7 +333,7 @@
                                     <ul class="list-group list-group-flush bg-transparent">
                                         <t t-foreach="policies" t-as="policy">
                                             <li class="list-group-item bg-transparent text-white border-secondary d-flex justify-content-between align-items-center">
-                                                <span><t t-esc="policy.name"/> (<t t-esc="policy.code"/>)</span>
+                                                <span><t t-esc="policy.name"/> (<t t-esc="policy.reference"/>)</span>
                                                 <span class="badge badge-info"><t t-esc="policy.status"/></span>
                                             </li>
                                         </t>
