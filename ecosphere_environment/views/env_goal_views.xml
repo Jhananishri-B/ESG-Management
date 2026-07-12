@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_env_goal_list" model="ir.ui.view">
+            <field name="name">env.goal.list</field>
+            <field name="model">env.goal</field>
+            <field name="arch" type="xml">
+                <list string="Environmental Goals"
+                      decoration-success="state == 'achieved'"
+                      decoration-warning="state == 'at_risk'"
+                      decoration-danger="state == 'failed'">
+                    <field name="priority" widget="priority"/>
+                    <field name="name"/>
+                    <field name="goal_type"/>
+                    <field name="department_id"/>
+                    <field name="responsible_id"/>
+                    <field name="baseline_value" string="Baseline"/>
+                    <field name="current_value" string="Current"/>
+                    <field name="target_value" string="Target"/>
+                    <field name="unit"/>
+                    <field name="progress" widget="progressbar" options="{'editable': false}"/>
+                    <field name="reduction_pct" string="Reduction %"/>
+                    <field name="deadline"/>
+                    <field name="state" widget="badge"
+                           decoration-success="state == 'achieved'"
+                           decoration-warning="state == 'at_risk'"
+                           decoration-danger="state == 'failed'"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_env_goal_form" model="ir.ui.view">
+            <field name="name">env.goal.form</field>
+            <field name="model">env.goal</field>
+            <field name="arch" type="xml">
+                <form string="Environmental Goal">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object"
+                                class="btn-primary" invisible="state != 'draft'"/>
+                        <button name="action_achieve" string="Mark Achieved" type="object"
+                                class="btn-success" invisible="state not in ('active','at_risk')"/>
+                        <button name="action_fail" string="Mark Failed" type="object"
+                                invisible="state not in ('active','at_risk')"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,active,at_risk,achieved"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" placeholder="Environmental Goal Title"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="goal_type"/>
+                                <field name="department_id"/>
+                                <field name="responsible_id"/>
+                                <field name="priority" widget="priority"/>
+                            </group>
+                            <group string="Measurements">
+                                <field name="baseline_value"/>
+                                <field name="target_value"/>
+                                <field name="current_value"/>
+                                <field name="unit"/>
+                                <field name="progress" widget="progressbar" options="{'editable': false}"/>
+                                <field name="reduction_pct" string="Achieved Reduction %"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Timeline">
+                                <field name="start_date"/>
+                                <field name="deadline"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes" nolabel="1" widget="html"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_env_goal" model="ir.actions.act_window">
+            <field name="name">Environmental Goals</field>
+            <field name="res_model">env.goal</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!-- Product ESG Profile views -->
+        <record id="view_product_esg_profile_list" model="ir.ui.view">
+            <field name="name">product.esg.profile.list</field>
+            <field name="model">product.esg.profile</field>
+            <field name="arch" type="xml">
+                <list string="Product ESG Profiles">
+                    <field name="name"/>
+                    <field name="product_tmpl_id"/>
+                    <field name="esg_category" widget="badge"/>
+                    <field name="emission_factor_id"/>
+                    <field name="emission_per_unit" string="Activity/Unit"/>
+                    <field name="carbon_per_unit" string="CO₂e/Unit"/>
+                    <field name="recycled_content_pct" string="Recycled %"/>
+                    <field name="certified" widget="boolean_toggle"/>
+                    <field name="recyclable" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_product_esg_profile_form" model="ir.ui.view">
+            <field name="name">product.esg.profile.form</field>
+            <field name="model">product.esg.profile</field>
+            <field name="arch" type="xml">
+                <form string="Product ESG Profile">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="product_tmpl_id"/>
+                                <field name="esg_category" widget="radio"/>
+                                <field name="lifecycle_stage"/>
+                                <field name="active" widget="boolean_toggle"/>
+                            </group>
+                            <group string="Carbon Calculation">
+                                <field name="emission_factor_id"/>
+                                <field name="emission_per_unit"/>
+                                <field name="carbon_per_unit" readonly="1" string="Carbon per Unit (kg CO₂e)"/>
+                            </group>
+                        </group>
+                        <group string="Sustainability Attributes">
+                            <group>
+                                <field name="recycled_content_pct" string="Recycled Content (%)"/>
+                                <field name="recyclable"/>
+                            </group>
+                            <group>
+                                <field name="certified"/>
+                                <field name="certification_body" invisible="not certified"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_product_esg_profile" model="ir.actions.act_window">
+            <field name="name">Product ESG Profiles</field>
+            <field name="res_model">product.esg.profile</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_emp_participation_list" model="ir.ui.view">
+            <field name="name">employee.participation.list</field>
+            <field name="model">employee.participation</field>
+            <field name="arch" type="xml">
+                <list string="Participations"
+                      decoration-success="state == 'approved'"
+                      decoration-warning="state == 'evidence_uploaded'"
+                      decoration-danger="state == 'rejected'">
+                    <field name="employee_id"/>
+                    <field name="activity_id"/>
+                    <field name="department_id"/>
+                    <field name="registration_date" string="Registered"/>
+                    <field name="state" widget="badge"
+                           decoration-success="state == 'approved'"
+                           decoration-warning="state == 'evidence_uploaded'"
+                           decoration-danger="state == 'rejected'"/>
+                    <field name="xp_granted" string="XP"/>
+                    <field name="hours_credited" string="Hours"/>
+                    <field name="xp_awarded" widget="boolean"/>
+                    <button name="action_approve" string="✓ Approve" type="object"
+                            class="btn-sm btn-success"
+                            invisible="state not in ('registered','attended','evidence_uploaded')"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_emp_participation_form" model="ir.ui.view">
+            <field name="name">employee.participation.form</field>
+            <field name="model">employee.participation</field>
+            <field name="arch" type="xml">
+                <form string="CSR Participation">
+                    <header>
+                        <button name="action_mark_attended" string="Mark Attended" type="object"
+                                invisible="state != 'registered'"/>
+                        <button name="action_upload_evidence" string="Evidence Uploaded" type="object"
+                                invisible="state not in ('registered','attended')"/>
+                        <button name="action_approve" string="Approve" type="object"
+                                class="btn-primary"
+                                invisible="state not in ('registered','attended','evidence_uploaded')"
+                                groups="ecosphere_core.group_ecosphere_dept_manager"/>
+                        <button name="action_reject" string="Reject" type="object"
+                                invisible="state in ('approved','rejected')"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="registered,attended,evidence_uploaded,approved"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="activity_id"/>
+                                <field name="employee_id"/>
+                                <field name="department_id" readonly="1"/>
+                                <field name="registration_date" readonly="1"/>
+                            </group>
+                            <group string="Result">
+                                <field name="xp_granted" readonly="1" string="XP Granted"/>
+                                <field name="xp_awarded" readonly="1"/>
+                                <field name="hours_credited" readonly="1"/>
+                                <field name="reviewer_id" readonly="1"/>
+                                <field name="review_date" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="Evidence">
+                            <field name="evidence_description" nolabel="1"
+                                   placeholder="Describe your participation…"/>
+                            <field name="evidence_attachment_ids" widget="many2many_binary"
+                                   nolabel="1"/>
+                        </group>
+                        <group string="Rejection Reason" invisible="state != 'rejected'">
+                            <field name="rejection_reason" nolabel="1" readonly="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Volunteer Hours views -->
+        <record id="view_volunteer_hours_list" model="ir.ui.view">
+            <field name="name">volunteer.hours.list</field>
+            <field name="model">volunteer.hours</field>
+            <field name="arch" type="xml">
+                <list string="Volunteer Hours" decoration-success="approved == True">
+                    <field name="employee_id"/>
+                    <field name="activity_id"/>
+                    <field name="department_id"/>
+                    <field name="date"/>
+                    <field name="hours" sum="Total Hours"/>
+                    <field name="approved" widget="boolean_toggle"/>
+                    <field name="notes"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_volunteer_hours" model="ir.actions.act_window">
+            <field name="name">Volunteer Hours</field>
+            <field name="res_model">volunteer.hours</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+    </data>
+</odoo>

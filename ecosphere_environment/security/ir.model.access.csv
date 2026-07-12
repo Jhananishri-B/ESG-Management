@@ -1,0 +1,27 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+# ── emission.factor ───────────────────────────────────────────────────────
+access_emission_factor_employee,emission.factor employee,ecosphere_environment.model_emission_factor,ecosphere_core.group_ecosphere_employee,1,0,0,0
+access_emission_factor_manager,emission.factor manager,ecosphere_environment.model_emission_factor,ecosphere_core.group_ecosphere_manager,1,1,1,1
+access_emission_factor_admin,emission.factor admin,ecosphere_environment.model_emission_factor,ecosphere_core.group_ecosphere_admin,1,1,1,1
+access_emission_factor_auditor,emission.factor auditor,ecosphere_environment.model_emission_factor,ecosphere_core.group_ecosphere_auditor,1,0,0,0
+# ── carbon.transaction ────────────────────────────────────────────────────
+access_carbon_transaction_employee,carbon.transaction employee,ecosphere_environment.model_carbon_transaction,ecosphere_core.group_ecosphere_employee,1,0,0,0
+access_carbon_transaction_dept_manager,carbon.transaction dept_manager,ecosphere_environment.model_carbon_transaction,ecosphere_core.group_ecosphere_dept_manager,1,1,0,0
+access_carbon_transaction_manager,carbon.transaction manager,ecosphere_environment.model_carbon_transaction,ecosphere_core.group_ecosphere_manager,1,1,1,1
+access_carbon_transaction_admin,carbon.transaction admin,ecosphere_environment.model_carbon_transaction,ecosphere_core.group_ecosphere_admin,1,1,1,1
+access_carbon_transaction_auditor,carbon.transaction auditor,ecosphere_environment.model_carbon_transaction,ecosphere_core.group_ecosphere_auditor,1,1,0,0
+access_carbon_transaction_executive,carbon.transaction executive,ecosphere_environment.model_carbon_transaction,ecosphere_core.group_ecosphere_executive,1,0,0,0
+# ── env.goal ─────────────────────────────────────────────────────────────
+access_env_goal_employee,env.goal employee,ecosphere_environment.model_env_goal,ecosphere_core.group_ecosphere_employee,1,0,0,0
+access_env_goal_manager,env.goal manager,ecosphere_environment.model_env_goal,ecosphere_core.group_ecosphere_manager,1,1,1,1
+access_env_goal_admin,env.goal admin,ecosphere_environment.model_env_goal,ecosphere_core.group_ecosphere_admin,1,1,1,1
+access_env_goal_executive,env.goal executive,ecosphere_environment.model_env_goal,ecosphere_core.group_ecosphere_executive,1,0,0,0
+# ── product.esg.profile ───────────────────────────────────────────────────
+access_product_esg_profile_employee,product.esg.profile employee,ecosphere_environment.model_product_esg_profile,ecosphere_core.group_ecosphere_employee,1,0,0,0
+access_product_esg_profile_manager,product.esg.profile manager,ecosphere_environment.model_product_esg_profile,ecosphere_core.group_ecosphere_manager,1,1,1,1
+access_product_esg_profile_admin,product.esg.profile admin,ecosphere_environment.model_product_esg_profile,ecosphere_core.group_ecosphere_admin,1,1,1,1
+# ── carbon.forecast ───────────────────────────────────────────────────────
+access_carbon_forecast_employee,carbon.forecast employee,ecosphere_environment.model_carbon_forecast,ecosphere_core.group_ecosphere_employee,1,0,0,0
+access_carbon_forecast_manager,carbon.forecast manager,ecosphere_environment.model_carbon_forecast,ecosphere_core.group_ecosphere_manager,1,1,1,1
+access_carbon_forecast_admin,carbon.forecast admin,ecosphere_environment.model_carbon_forecast,ecosphere_core.group_ecosphere_admin,1,1,1,1
+access_carbon_forecast_executive,carbon.forecast executive,ecosphere_environment.model_carbon_forecast,ecosphere_core.group_ecosphere_executive,1,0,0,0

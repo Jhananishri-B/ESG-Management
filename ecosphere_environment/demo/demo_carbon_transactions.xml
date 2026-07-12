@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Manufacturing — Assembly Line transactions -->
+        <record id="ctx_mfg_electricity_jan" model="carbon.transaction">
+            <field name="name">CTX-2024-00001</field>
+            <field name="date">2024-01-31</field>
+            <field name="source_type">electricity</field>
+            <field name="source_document">ELEC-JAN-2024</field>
+            <field name="emission_factor_id" ref="ecosphere_environment.ef_electricity_in"/>
+            <field name="activity_quantity">85000</field>
+            <field name="department_id" ref="ecosphere_core.dept_manufacturing"/>
+            <field name="description">Manufacturing electricity consumption — January 2024</field>
+            <field name="state">verified</field>
+        </record>
+
+        <record id="ctx_mfg_electricity_feb" model="carbon.transaction">
+            <field name="name">CTX-2024-00002</field>
+            <field name="date">2024-02-29</field>
+            <field name="source_type">electricity</field>
+            <field name="source_document">ELEC-FEB-2024</field>
+            <field name="emission_factor_id" ref="ecosphere_environment.ef_electricity_in"/>
+            <field name="activity_quantity">79000</field>
+            <field name="department_id" ref="ecosphere_core.dept_manufacturing"/>
+            <field name="description">Manufacturing electricity — February 2024</field>
+            <field name="state">verified</field>
+        </record>
+
+        <record id="ctx_mfg_electricity_mar" model="carbon.transaction">
+            <field name="name">CTX-2024-00003</field>
+            <field name="date">2024-03-31</field>
+            <field name="source_type">electricity</field>
+            <field name="source_document">ELEC-MAR-2024</field>
+            <field name="emission_factor_id" ref="ecosphere_environment.ef_electricity_in"/>
+            <field name="activity_quantity">91000</field>
+            <field name="department_id" ref="ecosphere_core.dept_manufacturing"/>
+            <field name="description">Manufacturing electricity — March 2024</field>
+            <field name="state">confirmed</field>
+        </record>
+
+        <!-- Logistics — Fleet transactions -->
+        <record id="ctx_logistics_fleet_jan" model="carbon.transaction">
+            <field name="name">CTX-2024-00010</field>
+            <field name="date">2024-01-31</field>
+            <field name="source_type">fleet</field>
+            <field name="source_document">FLEET-Q1-2024</field>
+            <field name="emission_factor_id" ref="ecosphere_environment.ef_fleet_truck_km"/>
+            <field name="activity_quantity">125000</field>
+            <field name="department_id" ref="ecosphere_core.dept_logistics"/>
+            <field name="description">Logistics fleet — January delivery routes</field>
+            <field name="state">verified</field>
+        </record>
+
+        <record id="ctx_logistics_fleet_feb" model="carbon.transaction">
+            <field name="name">CTX-2024-00011</field>
+            <field name="date">2024-02-29</field>
+            <field name="source_type">fleet</field>
+            <field name="source_document">FLEET-FEB-2024</field>
+            <field name="emission_factor_id" ref="ecosphere_environment.ef_fleet_truck_km"/>
+            <field name="activity_quantity">118000</field>
+            <field name="department_id" ref="ecosphere_core.dept_logistics"/>
+            <field name="description">Logistics fleet — February 2024</field>
+            <field name="state">confirmed</field>
+        </record>
+
+        <!-- Technology — Electricity (data center) -->
+        <record id="ctx_tech_electricity_jan" model="carbon.transaction">
+            <field name="name">CTX-2024-00020</field>
+            <field name="date">2024-01-31</field>
+            <field name="source_type">electricity</field>
+            <field name="source_document">DC-ELEC-JAN-2024</field>
+            <field name="emission_factor_id" ref="ecosphere_environment.ef_electricity_in"/>
+            <field name="activity_quantity">22000</field>
+            <field name="department_id" ref="ecosphere_core.dept_technology"/>
+            <field name="description">Data center electricity — January 2024</field>
+            <field name="state">verified</field>
+        </record>
+
+        <!-- Sales — Air travel -->
+        <record id="ctx_sales_air_q1" model="carbon.transaction">
+            <field name="name">CTX-2024-00030</field>
+            <field name="date">2024-03-31</field>
+            <field name="source_type">air_travel</field>
+            <field name="source_document">TRAVEL-Q1-2024</field>
+            <field name="emission_factor_id" ref="ecosphere_environment.ef_air_travel_km"/>
+            <field name="activity_quantity">85000</field>
+            <field name="department_id" ref="ecosphere_core.dept_sales"/>
+            <field name="description">Sales team air travel — Q1 2024</field>
+            <field name="state">confirmed</field>
+        </record>
+
+        <!-- Facilities — Natural gas heating -->
+        <record id="ctx_facilities_gas_jan" model="carbon.transaction">
+            <field name="name">CTX-2024-00040</field>
+            <field name="date">2024-01-31</field>
+            <field name="source_type">electricity</field>
+            <field name="source_document">GAS-JAN-2024</field>
+            <field name="emission_factor_id" ref="ecosphere_environment.ef_natural_gas_m3"/>
+            <field name="activity_quantity">3200</field>
+            <field name="department_id" ref="ecosphere_core.dept_facilities"/>
+            <field name="description">Facilities natural gas heating — January 2024</field>
+            <field name="state">verified</field>
+        </record>
+
+        <!-- Waste disposal -->
+        <record id="ctx_mfg_waste_q1" model="carbon.transaction">
+            <field name="name">CTX-2024-00050</field>
+            <field name="date">2024-03-31</field>
+            <field name="source_type">waste</field>
+            <field name="source_document">WASTE-Q1-MFG</field>
+            <field name="emission_factor_id" ref="ecosphere_environment.ef_waste_landfill"/>
+            <field name="activity_quantity">12500</field>
+            <field name="department_id" ref="ecosphere_core.dept_manufacturing"/>
+            <field name="description">Manufacturing waste to landfill — Q1 2024</field>
+            <field name="state">confirmed</field>
+        </record>
+
+        <!-- HR — Manual entry -->
+        <record id="ctx_hr_manual_q1" model="carbon.transaction">
+            <field name="name">CTX-2024-00060</field>
+            <field name="date">2024-03-31</field>
+            <field name="source_type">manual</field>
+            <field name="source_document">HR-ESTIMATE-Q1</field>
+            <field name="emission_factor_id" ref="ecosphere_environment.ef_fleet_car_km"/>
+            <field name="activity_quantity">45000</field>
+            <field name="department_id" ref="ecosphere_core.dept_hr"/>
+            <field name="description">HR staff commuting estimate — Q1 2024</field>
+            <field name="state">draft</field>
+        </record>
+
+    </data>
+</odoo>

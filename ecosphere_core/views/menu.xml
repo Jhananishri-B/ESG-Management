@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             TOP-LEVEL ECOSPHERE MENU
+        ═══════════════════════════════════════════════════════════ -->
+        <menuitem id="menu_ecosphere_root"
+                  name="EcoSphere"
+                  web_icon="ecosphere_core,static/description/icon.png"
+                  sequence="200"/>
+
+        <!-- ── Dashboard ─────────────────────────────────────────── -->
+        <menuitem id="menu_ecosphere_dashboard"
+                  name="Dashboard"
+                  parent="menu_ecosphere_root"
+                  sequence="10"/>
+
+        <!-- ── Environmental ─────────────────────────────────────── -->
+        <menuitem id="menu_ecosphere_environment"
+                  name="Environmental"
+                  parent="menu_ecosphere_root"
+                  sequence="20"/>
+
+        <!-- ── Social ────────────────────────────────────────────── -->
+        <menuitem id="menu_ecosphere_social"
+                  name="Social"
+                  parent="menu_ecosphere_root"
+                  sequence="30"/>
+
+        <!-- ── Governance ─────────────────────────────────────────── -->
+        <menuitem id="menu_ecosphere_governance"
+                  name="Governance"
+                  parent="menu_ecosphere_root"
+                  sequence="40"/>
+
+        <!-- ── Gamification ───────────────────────────────────────── -->
+        <menuitem id="menu_ecosphere_gamification"
+                  name="Gamification"
+                  parent="menu_ecosphere_root"
+                  sequence="50"/>
+
+        <!-- ── Reports ────────────────────────────────────────────── -->
+        <menuitem id="menu_ecosphere_reports"
+                  name="Reports"
+                  parent="menu_ecosphere_root"
+                  sequence="60"/>
+
+        <!-- ── AI Copilot ─────────────────────────────────────────── -->
+        <menuitem id="menu_ecosphere_ai"
+                  name="AI Copilot"
+                  parent="menu_ecosphere_root"
+                  sequence="70"/>
+
+        <!-- ── Administration ─────────────────────────────────────── -->
+        <menuitem id="menu_ecosphere_admin"
+                  name="Administration"
+                  parent="menu_ecosphere_root"
+                  sequence="200"
+                  groups="ecosphere_core.group_ecosphere_admin"/>
+
+        <!-- ─── Administration sub-menus (Core) ───────────────────── -->
+        <menuitem id="menu_ecosphere_admin_departments"
+                  name="Departments"
+                  parent="menu_ecosphere_admin"
+                  action="action_esg_department"
+                  sequence="10"/>
+
+        <menuitem id="menu_ecosphere_admin_goals"
+                  name="ESG Goals"
+                  parent="menu_ecosphere_admin"
+                  action="action_esg_goal"
+                  sequence="20"/>
+
+        <menuitem id="menu_ecosphere_admin_categories"
+                  name="ESG Categories"
+                  parent="menu_ecosphere_admin"
+                  action="action_esg_category"
+                  sequence="30"/>
+
+        <menuitem id="menu_ecosphere_admin_weights"
+                  name="ESG Weights"
+                  parent="menu_ecosphere_admin"
+                  action="action_esg_weight_config"
+                  sequence="40"/>
+
+        <menuitem id="menu_ecosphere_admin_settings"
+                  name="Settings"
+                  parent="menu_ecosphere_admin"
+                  action="base_setup.action_general_configuration"
+                  sequence="100"
+                  groups="base.group_system"/>
+
+    </data>
+</odoo>

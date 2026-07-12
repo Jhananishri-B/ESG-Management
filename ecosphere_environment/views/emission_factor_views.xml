@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ════ LIST ════════════════════════════════════════════════ -->
+        <record id="view_emission_factor_list" model="ir.ui.view">
+            <field name="name">emission.factor.list</field>
+            <field name="model">emission.factor</field>
+            <field name="arch" type="xml">
+                <list string="Emission Factors" decoration-success="scope == '2'" decoration-info="scope == '3'" decoration-warning="scope == '1'">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="scope" widget="badge"/>
+                    <field name="category"/>
+                    <field name="factor_value" string="Factor (kg CO₂e/unit)" digits="[10,6]"/>
+                    <field name="unit"/>
+                    <field name="region"/>
+                    <field name="source"/>
+                    <field name="transaction_count" string="Txns"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ════ FORM ════════════════════════════════════════════════ -->
+        <record id="view_emission_factor_form" model="ir.ui.view">
+            <field name="name">emission.factor.form</field>
+            <field name="model">emission.factor</field>
+            <field name="arch" type="xml">
+                <form string="Emission Factor">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="%(action_carbon_transaction)d" type="action"
+                                    class="oe_stat_button" icon="fa-bolt">
+                                <field name="transaction_count" widget="statinfo" string="Transactions"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="Emission Factor Name"/></h1>
+                        </div>
+                        <group>
+                            <group string="Classification">
+                                <field name="code"/>
+                                <field name="scope"/>
+                                <field name="category"/>
+                                <field name="active" widget="boolean_toggle"/>
+                            </group>
+                            <group string="Factor Value">
+                                <field name="factor_value" string="Emission Factor (kg CO₂e / unit)" digits="[10,6]"/>
+                                <field name="unit"/>
+                            </group>
+                        </group>
+                        <group string="Source &amp; Validity">
+                            <group>
+                                <field name="source"/>
+                                <field name="region"/>
+                            </group>
+                            <group>
+                                <field name="valid_from"/>
+                                <field name="valid_to"/>
+                            </group>
+                        </group>
+                        <group string="Description">
+                            <field name="description" nolabel="1" placeholder="Describe what this factor measures…"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ════ SEARCH ══════════════════════════════════════════════ -->
+        <record id="view_emission_factor_search" model="ir.ui.view">
+            <field name="name">emission.factor.search</field>
+            <field name="model">emission.factor</field>
+            <field name="arch" type="xml">
+                <search string="Search Emission Factors">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="source"/>
+                    <separator/>
+                    <filter string="Scope 1" name="scope1" domain="[('scope','=','1')]"/>
+                    <filter string="Scope 2" name="scope2" domain="[('scope','=','2')]"/>
+                    <filter string="Scope 3" name="scope3" domain="[('scope','=','3')]"/>
+                    <separator/>
+                    <filter string="Active" name="active" domain="[('active','=',True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="grp_scope"    string="Scope"    context="{'group_by':'scope'}"/>
+                        <filter name="grp_category" string="Category" context="{'group_by':'category'}"/>
+                        <filter name="grp_region"   string="Region"   context="{'group_by':'region'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_emission_factor" model="ir.actions.act_window">
+            <field name="name">Emission Factors</field>
+            <field name="res_model">emission.factor</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_emission_factor_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+
+    </data>
+</odoo>

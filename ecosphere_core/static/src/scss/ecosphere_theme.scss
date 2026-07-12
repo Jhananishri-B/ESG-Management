@@ -1,0 +1,717 @@
+/**
+ * EcoSphere ESG Platform — Global Theme
+ * A premium enterprise SaaS light theme inspired by Linear, Stripe, and Vercel.
+ * =========================================================================
+ * Design Tokens → Component Styles → Animations → Utilities
+ */
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 1. DESIGN TOKENS
+// ═══════════════════════════════════════════════════════════════════════════
+
+:root {
+  // Brand Palette
+  --eco-blue-50:  #eff6ff;
+  --eco-blue-100: #dbeafe;
+  --eco-blue-200: #bfdbfe;
+  --eco-blue-500: #3b82f6;
+  --eco-blue-600: #2563eb;
+  --eco-blue-700: #1d4ed8;
+
+  --eco-emerald-50:  #ecfdf5;
+  --eco-emerald-100: #d1fae5;
+  --eco-emerald-200: #a7f3d0;
+  --eco-emerald-500: #10b981;
+  --eco-emerald-600: #059669;
+  --eco-emerald-700: #047857;
+
+  --eco-amber-50:  #fffbeb;
+  --eco-amber-500: #f59e0b;
+  --eco-amber-600: #d97706;
+
+  --eco-rose-50:   #fff1f2;
+  --eco-rose-500:  #f43f5e;
+  --eco-rose-600:  #e11d48;
+
+  --eco-violet-500: #8b5cf6;
+  --eco-violet-600: #7c3aed;
+
+  // Neutral Palette
+  --eco-gray-50:  #f9fafb;
+  --eco-gray-100: #f3f4f6;
+  --eco-gray-200: #e5e7eb;
+  --eco-gray-300: #d1d5db;
+  --eco-gray-400: #9ca3af;
+  --eco-gray-500: #6b7280;
+  --eco-gray-600: #4b5563;
+  --eco-gray-700: #374151;
+  --eco-gray-800: #1f2937;
+  --eco-gray-900: #111827;
+
+  // Semantic Colors
+  --eco-bg:          #ffffff;
+  --eco-bg-subtle:   #f9fafb;
+  --eco-bg-surface:  #ffffff;
+  --eco-border:      #e5e7eb;
+  --eco-border-soft: #f3f4f6;
+
+  --eco-text-primary:   #111827;
+  --eco-text-secondary: #6b7280;
+  --eco-text-muted:     #9ca3af;
+  --eco-text-inverse:   #ffffff;
+
+  --eco-accent:         var(--eco-blue-600);
+  --eco-accent-hover:   var(--eco-blue-700);
+  --eco-accent-light:   var(--eco-blue-50);
+  --eco-success:        var(--eco-emerald-600);
+  --eco-success-light:  var(--eco-emerald-50);
+  --eco-warning:        var(--eco-amber-500);
+  --eco-warning-light:  var(--eco-amber-50);
+  --eco-danger:         var(--eco-rose-500);
+  --eco-danger-light:   var(--eco-rose-50);
+
+  // Pillar Colors
+  --eco-env-color:   #10b981; // emerald
+  --eco-soc-color:   #3b82f6; // blue
+  --eco-gov-color:   #8b5cf6; // violet
+
+  // Spacing
+  --eco-space-xs:  4px;
+  --eco-space-sm:  8px;
+  --eco-space-md:  16px;
+  --eco-space-lg:  24px;
+  --eco-space-xl:  32px;
+  --eco-space-2xl: 48px;
+
+  // Border Radius
+  --eco-radius-sm:  6px;
+  --eco-radius-md:  10px;
+  --eco-radius-lg:  14px;
+  --eco-radius-xl:  20px;
+  --eco-radius-full: 9999px;
+
+  // Shadows
+  --eco-shadow-sm:  0 1px 2px 0 rgba(0,0,0,.05);
+  --eco-shadow-md:  0 4px 6px -1px rgba(0,0,0,.07), 0 2px 4px -2px rgba(0,0,0,.05);
+  --eco-shadow-lg:  0 10px 15px -3px rgba(0,0,0,.08), 0 4px 6px -4px rgba(0,0,0,.05);
+  --eco-shadow-xl:  0 20px 25px -5px rgba(0,0,0,.10), 0 8px 10px -6px rgba(0,0,0,.05);
+
+  // Typography
+  --eco-font:        'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --eco-font-mono:   'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --eco-text-xs:   11px;
+  --eco-text-sm:   13px;
+  --eco-text-base: 14px;
+  --eco-text-md:   15px;
+  --eco-text-lg:   18px;
+  --eco-text-xl:   22px;
+  --eco-text-2xl:  28px;
+  --eco-text-3xl:  36px;
+
+  // Transitions
+  --eco-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --eco-transition-fast: all 0.15s ease;
+  --eco-transition-slow: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 2. GOOGLE FONTS IMPORT
+// ═══════════════════════════════════════════════════════════════════════════
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 3. GLOBAL OVERRIDES — Odoo Backend Light Theme
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Force light background on the app body
+.o_web_client {
+  background-color: var(--eco-bg-subtle) !important;
+  font-family: var(--eco-font) !important;
+  font-size: var(--eco-text-base) !important;
+  color: var(--eco-text-primary) !important;
+}
+
+// Top nav bar — clean white
+.o_main_navbar {
+  background: var(--eco-bg) !important;
+  border-bottom: 1px solid var(--eco-border) !important;
+  box-shadow: var(--eco-shadow-sm) !important;
+
+  .o_menu_brand {
+    color: var(--eco-text-primary) !important;
+    font-weight: 700 !important;
+    font-size: var(--eco-text-md) !important;
+    letter-spacing: -0.02em;
+  }
+
+  .o_menu_sections > li > a,
+  .o_menu_sections > li > span {
+    color: var(--eco-text-secondary) !important;
+    font-weight: 500 !important;
+    font-size: var(--eco-text-sm) !important;
+    transition: var(--eco-transition-fast);
+    border-radius: var(--eco-radius-sm);
+    padding: 6px 10px !important;
+
+    &:hover {
+      background: var(--eco-gray-100) !important;
+      color: var(--eco-text-primary) !important;
+    }
+  }
+}
+
+// Control panel
+.o_control_panel {
+  background: var(--eco-bg) !important;
+  border-bottom: 1px solid var(--eco-border) !important;
+  padding: var(--eco-space-md) var(--eco-space-xl) !important;
+
+  .o_control_panel_title {
+    font-size: var(--eco-text-lg) !important;
+    font-weight: 700 !important;
+    color: var(--eco-text-primary) !important;
+    letter-spacing: -0.03em;
+  }
+}
+
+// Primary button — Blue
+.btn-primary {
+  background: var(--eco-blue-600) !important;
+  border-color: var(--eco-blue-600) !important;
+  border-radius: var(--eco-radius-md) !important;
+  font-weight: 600 !important;
+  font-size: var(--eco-text-sm) !important;
+  padding: 8px 18px !important;
+  box-shadow: 0 1px 3px rgba(37,99,235,.3), 0 1px 2px rgba(37,99,235,.2);
+  transition: var(--eco-transition);
+  letter-spacing: 0.01em;
+
+  &:hover {
+    background: var(--eco-blue-700) !important;
+    border-color: var(--eco-blue-700) !important;
+    box-shadow: 0 4px 8px rgba(37,99,235,.3);
+    transform: translateY(-1px);
+  }
+  &:active { transform: translateY(0); }
+}
+
+// Secondary / outline button
+.btn-secondary {
+  background: var(--eco-bg) !important;
+  border-color: var(--eco-border) !important;
+  color: var(--eco-text-secondary) !important;
+  border-radius: var(--eco-radius-md) !important;
+  font-weight: 500 !important;
+  font-size: var(--eco-text-sm) !important;
+  padding: 8px 18px !important;
+  transition: var(--eco-transition);
+
+  &:hover {
+    background: var(--eco-gray-50) !important;
+    border-color: var(--eco-gray-300) !important;
+    color: var(--eco-text-primary) !important;
+  }
+}
+
+// Success button — Emerald
+.btn-success {
+  background: var(--eco-emerald-600) !important;
+  border-color: var(--eco-emerald-600) !important;
+  border-radius: var(--eco-radius-md) !important;
+  font-weight: 600 !important;
+  transition: var(--eco-transition);
+
+  &:hover {
+    background: var(--eco-emerald-700) !important;
+    transform: translateY(-1px);
+  }
+}
+
+// Form view
+.o_form_view {
+  background: var(--eco-bg-subtle) !important;
+
+  .o_form_sheet_bg {
+    background: var(--eco-bg-subtle) !important;
+    padding: var(--eco-space-xl) !important;
+  }
+
+  .o_form_sheet {
+    background: var(--eco-bg) !important;
+    border-radius: var(--eco-radius-lg) !important;
+    border: 1px solid var(--eco-border) !important;
+    box-shadow: var(--eco-shadow-md) !important;
+    padding: var(--eco-space-xl) !important;
+  }
+
+  .o_group {
+    .o_wrap_label {
+      label { font-weight: 600 !important; color: var(--eco-text-secondary) !important; font-size: var(--eco-text-sm) !important; }
+    }
+  }
+}
+
+// List / tree view
+.o_list_view {
+  background: var(--eco-bg) !important;
+  border-radius: var(--eco-radius-lg) !important;
+  border: 1px solid var(--eco-border) !important;
+  box-shadow: var(--eco-shadow-sm) !important;
+  overflow: hidden;
+
+  thead th {
+    background: var(--eco-gray-50) !important;
+    color: var(--eco-text-secondary) !important;
+    font-weight: 600 !important;
+    font-size: var(--eco-text-xs) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--eco-border) !important;
+    padding: 12px 16px !important;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--eco-border-soft) !important;
+    transition: var(--eco-transition-fast);
+
+    &:hover { background: var(--eco-gray-50) !important; }
+    &:last-child { border-bottom: none !important; }
+
+    td { padding: 12px 16px !important; font-size: var(--eco-text-sm) !important; }
+  }
+}
+
+// Kanban view
+.o_kanban_view {
+  background: var(--eco-bg-subtle) !important;
+  padding: var(--eco-space-md) !important;
+}
+
+.o_kanban_group {
+  background: var(--eco-gray-100) !important;
+  border-radius: var(--eco-radius-lg) !important;
+  border: none !important;
+  padding: var(--eco-space-sm) !important;
+
+  .o_kanban_header {
+    background: transparent !important;
+    font-weight: 700 !important;
+    font-size: var(--eco-text-sm) !important;
+    color: var(--eco-text-secondary) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--eco-space-sm) var(--eco-space-md) !important;
+  }
+}
+
+.o_kanban_record {
+  background: var(--eco-bg) !important;
+  border: 1px solid var(--eco-border) !important;
+  border-radius: var(--eco-radius-md) !important;
+  box-shadow: var(--eco-shadow-sm) !important;
+  transition: var(--eco-transition);
+  margin-bottom: var(--eco-space-sm) !important;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: var(--eco-shadow-md) !important;
+    border-color: var(--eco-blue-200) !important;
+    transform: translateY(-2px);
+  }
+}
+
+// Search bar
+.o_searchview {
+  border-radius: var(--eco-radius-md) !important;
+  border: 1px solid var(--eco-border) !important;
+  background: var(--eco-bg) !important;
+
+  .o_searchview_input {
+    font-size: var(--eco-text-sm) !important;
+    color: var(--eco-text-primary) !important;
+  }
+}
+
+// Stat buttons
+.oe_stat_button {
+  border-radius: var(--eco-radius-md) !important;
+  border: 1px solid var(--eco-border) !important;
+  background: var(--eco-bg) !important;
+  transition: var(--eco-transition);
+  font-weight: 600 !important;
+
+  &:hover {
+    background: var(--eco-gray-50) !important;
+    border-color: var(--eco-blue-200) !important;
+  }
+
+  .o_stat_info .o_stat_value {
+    color: var(--eco-blue-600) !important;
+    font-weight: 700 !important;
+    font-size: var(--eco-text-lg) !important;
+  }
+}
+
+// Badges / Tags
+.badge {
+  font-size: var(--eco-text-xs) !important;
+  font-weight: 600 !important;
+  border-radius: var(--eco-radius-full) !important;
+  padding: 3px 10px !important;
+  letter-spacing: 0.03em;
+}
+
+// Chatter
+.o_chatter {
+  background: var(--eco-bg) !important;
+  border-left: 1px solid var(--eco-border) !important;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 4. ECOSPHERE-SPECIFIC COMPONENT STYLES
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ── ESG Score Badge ─────────────────────────────────────────────────────
+.eco-score-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  .eco-score {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: var(--eco-text-sm);
+    padding: 5px 12px;
+    border-radius: var(--eco-radius-full);
+    min-width: 56px;
+    text-align: center;
+    letter-spacing: -0.01em;
+
+    &.eco-score-excellent {
+      background: var(--eco-emerald-50);
+      color: var(--eco-emerald-700);
+      border: 1px solid var(--eco-emerald-200);
+    }
+    &.eco-score-good {
+      background: var(--eco-blue-50);
+      color: var(--eco-blue-700);
+      border: 1px solid var(--eco-blue-200);
+    }
+    &.eco-score-average {
+      background: var(--eco-amber-50);
+      color: var(--eco-amber-600);
+      border: 1px solid #fde68a;
+    }
+    &.eco-score-poor {
+      background: var(--eco-rose-50);
+      color: var(--eco-rose-600);
+      border: 1px solid #fecdd3;
+    }
+  }
+}
+
+// ── ESG Pillar Progress Bars ──────────────────────────────────────────────
+.eco-progress-bar-wrap {
+  width: 100%;
+  height: 6px;
+  background: var(--eco-gray-200);
+  border-radius: var(--eco-radius-full);
+  overflow: hidden;
+  margin: 4px 0;
+}
+
+.eco-progress-bar {
+  height: 100%;
+  border-radius: var(--eco-radius-full);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.eco-env-bar   { background: linear-gradient(90deg, var(--eco-emerald-500), var(--eco-emerald-400)); }
+  &.eco-soc-bar   { background: linear-gradient(90deg, var(--eco-blue-500), var(--eco-blue-400)); }
+  &.eco-gov-bar   { background: linear-gradient(90deg, var(--eco-violet-600), var(--eco-violet-500)); }
+}
+
+// ── Department Kanban Card ─────────────────────────────────────────────────
+.eco-dept-card {
+  background: var(--eco-bg);
+  border-radius: var(--eco-radius-lg);
+  padding: var(--eco-space-md);
+  border: 1px solid var(--eco-border);
+  transition: var(--eco-transition);
+
+  &:hover {
+    box-shadow: var(--eco-shadow-lg);
+    border-color: var(--eco-blue-200);
+    transform: translateY(-2px);
+  }
+}
+
+.eco-dept-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--eco-space-sm);
+  margin-bottom: var(--eco-space-md);
+
+  .eco-dept-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--eco-blue-50);
+    border-radius: var(--eco-radius-md);
+    color: var(--eco-blue-600);
+    font-size: 16px;
+  }
+
+  .eco-dept-title {
+    flex: 1;
+    strong { display: block; font-size: var(--eco-text-sm); font-weight: 700; color: var(--eco-text-primary); }
+    small { font-size: var(--eco-text-xs); color: var(--eco-text-muted); }
+  }
+}
+
+.eco-dept-scores {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: var(--eco-space-sm);
+}
+
+.eco-pillar-score {
+  display: flex;
+  align-items: center;
+  gap: var(--eco-space-sm);
+
+  .eco-pillar-label {
+    font-size: var(--eco-text-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    width: 28px;
+    color: var(--eco-text-muted);
+  }
+
+  .eco-pillar-val {
+    font-size: var(--eco-text-xs);
+    font-weight: 600;
+    width: 36px;
+    text-align: right;
+    color: var(--eco-text-secondary);
+  }
+
+  .eco-progress-bar-wrap { flex: 1; }
+}
+
+.eco-dept-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--eco-space-sm);
+  border-top: 1px solid var(--eco-border-soft);
+
+  .eco-carbon-tag {
+    font-size: var(--eco-text-xs);
+    color: var(--eco-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .eco-delta {
+    font-size: var(--eco-text-xs);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+
+    &.eco-delta-up   { color: var(--eco-emerald-600); }
+    &.eco-delta-down { color: var(--eco-rose-600); }
+  }
+}
+
+// ── Goal Kanban Card ───────────────────────────────────────────────────────
+.eco-goal-card {
+  padding: var(--eco-space-md);
+
+  .eco-goal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--eco-space-sm);
+  }
+
+  .eco-goal-title strong {
+    font-size: var(--eco-text-sm);
+    font-weight: 600;
+    color: var(--eco-text-primary);
+    line-height: 1.4;
+  }
+
+  .eco-goal-dept {
+    font-size: var(--eco-text-xs);
+    color: var(--eco-text-muted);
+    margin: 4px 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .eco-goal-progress-wrap {
+    height: 8px;
+    background: var(--eco-gray-100);
+    border-radius: var(--eco-radius-full);
+    overflow: hidden;
+    margin-bottom: var(--eco-space-sm);
+
+    .eco-goal-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--eco-blue-600), var(--eco-blue-400));
+      border-radius: var(--eco-radius-full);
+      transition: width 0.5s ease;
+    }
+  }
+
+  .eco-goal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .eco-goal-pct { font-size: var(--eco-text-xs); font-weight: 700; color: var(--eco-blue-600); }
+
+    .eco-deadline {
+      font-size: var(--eco-text-xs);
+      color: var(--eco-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      &.eco-deadline-urgent {
+        color: var(--eco-rose-600);
+        background: var(--eco-rose-50);
+        padding: 2px 8px;
+        border-radius: var(--eco-radius-full);
+      }
+    }
+  }
+}
+
+// ── Category Pills ──────────────────────────────────────────────────────────
+.eco-category-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--eco-radius-full);
+  font-size: var(--eco-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+
+  &.eco-cat-E {
+    background: var(--eco-emerald-50);
+    color: var(--eco-emerald-700);
+    border: 1px solid var(--eco-emerald-200);
+  }
+  &.eco-cat-S {
+    background: var(--eco-blue-50);
+    color: var(--eco-blue-700);
+    border: 1px solid var(--eco-blue-200);
+  }
+  &.eco-cat-G {
+    background: #f5f3ff;
+    color: var(--eco-violet-600);
+    border: 1px solid #ddd6fe;
+  }
+}
+
+// ── Text Color Utilities ────────────────────────────────────────────────────
+.eco-text-env { color: var(--eco-env-color) !important; }
+.eco-text-soc { color: var(--eco-soc-color) !important; }
+.eco-text-gov { color: var(--eco-gov-color) !important; }
+
+// ── Weight Info Alert ──────────────────────────────────────────────────────
+.eco-weight-info {
+  background: var(--eco-blue-50) !important;
+  border: 1px solid var(--eco-blue-200) !important;
+  border-radius: var(--eco-radius-md) !important;
+  color: var(--eco-blue-700) !important;
+  font-size: var(--eco-text-sm) !important;
+}
+
+// ── Department Score Summary ──────────────────────────────────────────────
+.eco-dept-score-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--eco-space-md);
+  margin-bottom: var(--eco-space-lg);
+  padding: var(--eco-space-md);
+  background: var(--eco-gray-50);
+  border-radius: var(--eco-radius-lg);
+  border: 1px solid var(--eco-border);
+
+  .eco-score-item {
+    padding: var(--eco-space-md);
+    background: var(--eco-bg);
+    border-radius: var(--eco-radius-md);
+    border: 1px solid var(--eco-border);
+
+    .eco-score-label {
+      font-size: var(--eco-text-xs);
+      font-weight: 700;
+      color: var(--eco-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .eco-score-val {
+      font-size: var(--eco-text-xl);
+      font-weight: 800;
+      color: var(--eco-text-primary);
+      letter-spacing: -0.03em;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 5. ANIMATIONS
+// ═══════════════════════════════════════════════════════════════════════════
+
+@keyframes eco-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes eco-slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes eco-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0.3); }
+  50%       { box-shadow: 0 0 0 8px rgba(37,99,235,0); }
+}
+
+@keyframes eco-progress-fill {
+  from { width: 0; }
+  to   { width: var(--eco-target-width, 100%); }
+}
+
+@keyframes eco-count-up {
+  from { opacity: 0; transform: translateY(10px) scale(0.8); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes eco-badge-pop {
+  0%   { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+  70%  { transform: scale(1.1) rotate(3deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+// Apply fade-in to views
+.o_view_controller { animation: eco-fade-in 0.25s ease; }
+
+// Animate kanban cards on load
+.o_kanban_record { animation: eco-fade-in 0.2s ease both; }

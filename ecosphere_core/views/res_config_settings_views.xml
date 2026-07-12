@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_res_config_settings_ecosphere" model="ir.ui.view">
+            <field name="name">res.config.settings.ecosphere</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base_setup.action_general_configuration"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="before">
+
+                    <!-- ══ EcoSphere ESG Settings ══ -->
+                    <app data-string="EcoSphere ESG" string="EcoSphere ESG" name="ecosphere_core">
+
+                        <!-- Organization Section -->
+                        <block title="Organization" name="ecosphere_org">
+                            <setting id="ecosphere_org_name" string="Organization Name" help="Display name used in ESG reports and dashboards.">
+                                <field name="ecosphere_org_name"/>
+                            </setting>
+                            <setting id="ecosphere_fiscal_year" string="Fiscal Year Start" help="Used for period-based ESG reporting.">
+                                <field name="ecosphere_fiscal_year_start"/>
+                            </setting>
+                            <setting id="ecosphere_carbon_unit" string="Carbon Unit" help="Default unit for carbon emissions across the platform.">
+                                <field name="ecosphere_carbon_unit" widget="radio"/>
+                            </setting>
+                            <setting id="ecosphere_carbon_threshold" string="Carbon Alert Threshold (%)" help="Notify when department carbon exceeds this percentage of its target.">
+                                <field name="ecosphere_carbon_threshold_pct"/>
+                            </setting>
+                        </block>
+
+                        <!-- ESG Score Section -->
+                        <block title="ESG Score Calculation" name="ecosphere_score">
+                            <setting id="ecosphere_score_method" string="Calculation Method" help="How the overall ESG score is computed from pillars.">
+                                <field name="ecosphere_score_calculation" widget="radio"/>
+                            </setting>
+                            <setting id="ecosphere_score_decimals" string="Decimal Places" help="Precision for ESG score display.">
+                                <field name="ecosphere_score_decimal_places"/>
+                            </setting>
+                        </block>
+
+                        <!-- Notifications Section -->
+                        <block title="Notifications" name="ecosphere_notifications">
+                            <setting id="notify_goal" string="Goal Achievement" help="Send a notification when an ESG goal is achieved.">
+                                <field name="ecosphere_notify_goal_achieved"/>
+                            </setting>
+                            <setting id="notify_carbon" string="Carbon Threshold Exceeded" help="Alert when department carbon usage exceeds the threshold.">
+                                <field name="ecosphere_notify_carbon_threshold"/>
+                            </setting>
+                            <setting id="notify_policy" string="Policy Acknowledgement Due" help="Remind employees of pending policy acknowledgements.">
+                                <field name="ecosphere_notify_policy_due"/>
+                            </setting>
+                            <setting id="notify_audit" string="Audit Due" help="Remind managers of upcoming audits.">
+                                <field name="ecosphere_notify_audit_due"/>
+                            </setting>
+                            <setting id="notify_challenge" string="Challenge Deadline" help="Notify participants of approaching challenge deadlines.">
+                                <field name="ecosphere_notify_challenge_deadline"/>
+                            </setting>
+                        </block>
+
+                        <!-- AI Copilot Section -->
+                        <block title="AI Copilot" name="ecosphere_ai">
+                            <setting id="ai_enabled" string="Enable AI Copilot" help="Activate the ESG AI assistant powered by an OpenAI-compatible API.">
+                                <field name="ecosphere_ai_enabled"/>
+                            </setting>
+                            <setting id="ai_provider" string="AI Provider" invisible="not ecosphere_ai_enabled">
+                                <field name="ecosphere_ai_provider" widget="radio"/>
+                            </setting>
+                            <setting id="ai_endpoint" string="API Endpoint" invisible="not ecosphere_ai_enabled"
+                                      help="OpenAI-compatible endpoint URL.">
+                                <field name="ecosphere_ai_endpoint"/>
+                            </setting>
+                            <setting id="ai_api_key" string="API Key" invisible="not ecosphere_ai_enabled">
+                                <field name="ecosphere_ai_api_key" password="True"/>
+                            </setting>
+                            <setting id="ai_model" string="Model" invisible="not ecosphere_ai_enabled"
+                                      help="e.g. gpt-4o-mini, gpt-4o, claude-3-haiku">
+                                <field name="ecosphere_ai_model"/>
+                            </setting>
+                            <setting id="ai_max_tokens" string="Max Tokens" invisible="not ecosphere_ai_enabled">
+                                <field name="ecosphere_ai_max_tokens"/>
+                            </setting>
+                        </block>
+
+                        <!-- Portal Section -->
+                        <block title="Employee Portal" name="ecosphere_portal">
+                            <setting id="portal_enabled" string="Enable Employee Portal" help="Allow employees to access the ESG self-service portal.">
+                                <field name="ecosphere_portal_enabled"/>
+                            </setting>
+                            <setting id="portal_self_join" string="Allow Self-Join on Challenges" invisible="not ecosphere_portal_enabled">
+                                <field name="ecosphere_portal_allow_self_join"/>
+                            </setting>
+                        </block>
+
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
