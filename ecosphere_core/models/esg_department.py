@@ -31,6 +31,13 @@ class EsgDepartment(models.Model):
     manager_id = fields.Many2one(
         'res.users', string='ESG Manager',
         domain="[('share', '=', False)]")
+    code = fields.Char(string='Department Code')
+    head_id = fields.Many2one('res.users', string='Department Head', related='manager_id', readonly=False, store=True)
+    status = fields.Selection([
+        ('draft', 'Draft'),
+        ('active', 'Active'),
+        ('inactive', 'Inactive')
+    ], string='Status', default='active')
     active = fields.Boolean(string='Active', default=True)
     color = fields.Integer(string='Color', default=0)
     sequence = fields.Integer(string='Sequence', default=10)
