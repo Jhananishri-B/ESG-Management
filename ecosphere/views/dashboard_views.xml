@@ -6,7 +6,10 @@
         <field name="model">esg.dashboard.card</field>
         <field name="arch" type="xml">
             <list>
-                <field name="id"/>
+                <field name="name"/>
+                <field name="value"/>
+                <field name="color"/>
+                <field name="sequence"/>
             </list>
         </field>
     </record>
@@ -18,7 +21,10 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="id"/>
+                        <field name="name"/>
+                        <field name="value"/>
+                        <field name="color"/>
+                        <field name="sequence"/>
                     </group>
                 </sheet>
             </form>
@@ -30,7 +36,7 @@
         <field name="model">esg.dashboard.card</field>
         <field name="arch" type="xml">
             <search>
-                <field name="id"/>
+                <field name="name"/>
             </search>
         </field>
     </record>
@@ -48,7 +54,9 @@
         <field name="model">esg.dashboard.metric</field>
         <field name="arch" type="xml">
             <list>
-                <field name="id"/>
+                <field name="name"/>
+                <field name="weight"/>
+                <field name="category"/>
             </list>
         </field>
     </record>
@@ -60,7 +68,9 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="id"/>
+                        <field name="name"/>
+                        <field name="weight"/>
+                        <field name="category"/>
                     </group>
                 </sheet>
             </form>
@@ -72,7 +82,8 @@
         <field name="model">esg.dashboard.metric</field>
         <field name="arch" type="xml">
             <search>
-                <field name="id"/>
+                <field name="name"/>
+                <field name="category"/>
             </search>
         </field>
     </record>
