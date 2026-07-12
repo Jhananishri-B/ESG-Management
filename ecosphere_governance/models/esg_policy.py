@@ -189,7 +189,7 @@ class PolicyAcknowledgement(models.Model):
                                    required=True, ondelete='cascade', index=True)
     department_id = fields.Many2one(
         'esg.department', string='Department',
-        related='policy_id.category_id.name', readonly=True, store=False)
+        related='employee_id.esg_department_id', readonly=True, store=False)
 
     state = fields.Selection([
         ('pending',       'Pending'),

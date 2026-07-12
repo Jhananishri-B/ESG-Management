@@ -20,7 +20,6 @@ for dept in departments:
             </field>
             <field name="interval_number">1</field>
             <field name="interval_type">weeks</field>
-            <field name="numbercall">-1</field>
             <field name="active">True</field>
         </record>
     </data>

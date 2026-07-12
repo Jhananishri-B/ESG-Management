@@ -1,26 +1,21 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-# ── esg.category ──────────────────────────────────────────────────────────
 access_esg_category_employee,esg.category employee,ecosphere_core.model_esg_category,ecosphere_core.group_ecosphere_employee,1,0,0,0
 access_esg_category_manager,esg.category manager,ecosphere_core.model_esg_category,ecosphere_core.group_ecosphere_manager,1,1,1,1
 access_esg_category_admin,esg.category admin,ecosphere_core.model_esg_category,ecosphere_core.group_ecosphere_admin,1,1,1,1
-# ── esg.department ────────────────────────────────────────────────────────
 access_esg_department_employee,esg.department employee,ecosphere_core.model_esg_department,ecosphere_core.group_ecosphere_employee,1,0,0,0
 access_esg_department_dept_manager,esg.department dept_manager,ecosphere_core.model_esg_department,ecosphere_core.group_ecosphere_dept_manager,1,1,0,0
 access_esg_department_manager,esg.department manager,ecosphere_core.model_esg_department,ecosphere_core.group_ecosphere_manager,1,1,1,1
 access_esg_department_admin,esg.department admin,ecosphere_core.model_esg_department,ecosphere_core.group_ecosphere_admin,1,1,1,1
 access_esg_department_executive,esg.department executive,ecosphere_core.model_esg_department,ecosphere_core.group_ecosphere_executive,1,0,0,0
 access_esg_department_auditor,esg.department auditor,ecosphere_core.model_esg_department,ecosphere_core.group_ecosphere_auditor,1,0,0,0
-# ── esg.department.tag ────────────────────────────────────────────────────
 access_esg_department_tag_employee,esg.department.tag employee,ecosphere_core.model_esg_department_tag,ecosphere_core.group_ecosphere_employee,1,0,0,0
 access_esg_department_tag_manager,esg.department.tag manager,ecosphere_core.model_esg_department_tag,ecosphere_core.group_ecosphere_manager,1,1,1,1
-# ── esg.goal ──────────────────────────────────────────────────────────────
 access_esg_goal_employee,esg.goal employee,ecosphere_core.model_esg_goal,ecosphere_core.group_ecosphere_employee,1,0,0,0
 access_esg_goal_dept_manager,esg.goal dept_manager,ecosphere_core.model_esg_goal,ecosphere_core.group_ecosphere_dept_manager,1,1,0,0
 access_esg_goal_manager,esg.goal manager,ecosphere_core.model_esg_goal,ecosphere_core.group_ecosphere_manager,1,1,1,1
 access_esg_goal_admin,esg.goal admin,ecosphere_core.model_esg_goal,ecosphere_core.group_ecosphere_admin,1,1,1,1
 access_esg_goal_auditor,esg.goal auditor,ecosphere_core.model_esg_goal,ecosphere_core.group_ecosphere_auditor,1,0,0,0
 access_esg_goal_executive,esg.goal executive,ecosphere_core.model_esg_goal,ecosphere_core.group_ecosphere_executive,1,0,0,0
-# ── esg.weight.config ─────────────────────────────────────────────────────
 access_esg_weight_config_employee,esg.weight.config employee,ecosphere_core.model_esg_weight_config,ecosphere_core.group_ecosphere_employee,1,0,0,0
 access_esg_weight_config_manager,esg.weight.config manager,ecosphere_core.model_esg_weight_config,ecosphere_core.group_ecosphere_manager,1,1,1,0
 access_esg_weight_config_admin,esg.weight.config admin,ecosphere_core.model_esg_weight_config,ecosphere_core.group_ecosphere_admin,1,1,1,1

@@ -29,11 +29,10 @@
         'views/volunteer_hours_views.xml',
         'views/diversity_metric_views.xml',
         'views/menu.xml',
-    ],
-    'demo': [
         'demo/demo_csr_activities.xml',
         'demo/demo_participation.xml',
     ],
+    'demo': [],
     'assets': {
         'web.assets_backend': [
             'ecosphere_social/static/src/scss/social.scss',

@@ -28,11 +28,10 @@
         'views/esg_challenge_views.xml',
         'views/esg_reward_views.xml',
         'views/menu.xml',
-    ],
-    'demo': [
         'demo/demo_challenges.xml',
         'demo/demo_rewards.xml',
     ],
+    'demo': [],
     'assets': {
         'web.assets_backend': [
             'ecosphere_gamification/static/src/scss/gamification.scss',

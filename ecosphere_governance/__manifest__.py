@@ -19,6 +19,8 @@
     'depends': [
         'ecosphere_core',
         'mail',
+        'hr',
+        'ecosphere_social',
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -28,12 +30,11 @@
         'views/compliance_issue_views.xml',
         'views/risk_register_views.xml',
         'views/menu.xml',
-    ],
-    'demo': [
         'demo/demo_policies.xml',
         'demo/demo_audits.xml',
         'demo/demo_compliance.xml',
     ],
+    'demo': [],
     'assets': {
         'web.assets_backend': [
             'ecosphere_governance/static/src/scss/governance.scss',

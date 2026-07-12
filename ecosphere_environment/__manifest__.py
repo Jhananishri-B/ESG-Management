@@ -19,6 +19,7 @@
         'ecosphere_core',
         'product',       # for product ESG profiles
         'stock',         # for inventory-related emissions
+        'purchase',      # for purchase order ESG integration
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -29,11 +30,10 @@
         'views/env_goal_views.xml',
         'views/product_esg_profile_views.xml',
         'views/menu.xml',
-    ],
-    'demo': [
         'demo/demo_emission_factors.xml',
         'demo/demo_carbon_transactions.xml',
     ],
+    'demo': [],
     'assets': {
         'web.assets_backend': [
             'ecosphere_environment/static/src/scss/environment.scss',

@@ -46,7 +46,6 @@
             <field name="code">model._cron_send_policy_reminders()</field>
             <field name="interval_number">1</field>
             <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
             <field name="active">True</field>
         </record>
 
@@ -58,7 +57,6 @@
             <field name="code">model._cron_mark_overdue()</field>
             <field name="interval_number">1</field>
             <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
             <field name="active">True</field>
         </record>
 
@@ -70,7 +68,6 @@
             <field name="code">model._cron_check_overdue()</field>
             <field name="interval_number">1</field>
             <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
             <field name="active">True</field>
         </record>
 

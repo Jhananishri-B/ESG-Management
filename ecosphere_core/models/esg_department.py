@@ -10,6 +10,7 @@ class EsgDepartment(models.Model):
     and provides department-level hierarchy for ESG reporting.
     """
     _name = 'esg.department'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'ESG Department'
     _parent_name = 'parent_id'
     _parent_store = True

@@ -1,23 +1,18 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-# ── csr.activity ──────────────────────────────────────────────────────────
 access_csr_activity_employee,csr.activity employee,ecosphere_social.model_csr_activity,ecosphere_core.group_ecosphere_employee,1,0,0,0
 access_csr_activity_dept_manager,csr.activity dept_manager,ecosphere_social.model_csr_activity,ecosphere_core.group_ecosphere_dept_manager,1,1,1,0
 access_csr_activity_manager,csr.activity manager,ecosphere_social.model_csr_activity,ecosphere_core.group_ecosphere_manager,1,1,1,1
 access_csr_activity_admin,csr.activity admin,ecosphere_social.model_csr_activity,ecosphere_core.group_ecosphere_admin,1,1,1,1
 access_csr_activity_executive,csr.activity executive,ecosphere_social.model_csr_activity,ecosphere_core.group_ecosphere_executive,1,0,0,0
-# ── csr.activity.tag ─────────────────────────────────────────────────────
 access_csr_tag_employee,csr.activity.tag employee,ecosphere_social.model_csr_activity_tag,ecosphere_core.group_ecosphere_employee,1,0,0,0
 access_csr_tag_manager,csr.activity.tag manager,ecosphere_social.model_csr_activity_tag,ecosphere_core.group_ecosphere_manager,1,1,1,1
-# ── employee.participation ────────────────────────────────────────────────
 access_emp_part_employee,employee.participation employee,ecosphere_social.model_employee_participation,ecosphere_core.group_ecosphere_employee,1,1,1,0
 access_emp_part_dept_manager,employee.participation dept_manager,ecosphere_social.model_employee_participation,ecosphere_core.group_ecosphere_dept_manager,1,1,1,0
 access_emp_part_manager,employee.participation manager,ecosphere_social.model_employee_participation,ecosphere_core.group_ecosphere_manager,1,1,1,1
 access_emp_part_admin,employee.participation admin,ecosphere_social.model_employee_participation,ecosphere_core.group_ecosphere_admin,1,1,1,1
-# ── volunteer.hours ───────────────────────────────────────────────────────
 access_volunteer_hours_employee,volunteer.hours employee,ecosphere_social.model_volunteer_hours,ecosphere_core.group_ecosphere_employee,1,0,0,0
 access_volunteer_hours_manager,volunteer.hours manager,ecosphere_social.model_volunteer_hours,ecosphere_core.group_ecosphere_manager,1,1,1,1
 access_volunteer_hours_admin,volunteer.hours admin,ecosphere_social.model_volunteer_hours,ecosphere_core.group_ecosphere_admin,1,1,1,1
-# ── diversity.metric ──────────────────────────────────────────────────────
 access_diversity_metric_employee,diversity.metric employee,ecosphere_social.model_diversity_metric,ecosphere_core.group_ecosphere_employee,1,0,0,0
 access_diversity_metric_manager,diversity.metric manager,ecosphere_social.model_diversity_metric,ecosphere_core.group_ecosphere_manager,1,1,1,1
 access_diversity_metric_admin,diversity.metric admin,ecosphere_social.model_diversity_metric,ecosphere_core.group_ecosphere_admin,1,1,1,1

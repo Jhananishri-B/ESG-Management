@@ -27,17 +27,16 @@
         'data/esg_weight_config_data.xml',
         # Views
         'views/esg_category_views.xml',
-        'views/esg_department_views.xml',
         'views/esg_goal_views.xml',
+        'views/esg_department_views.xml',
         'views/esg_weight_config_views.xml',
         'views/res_config_settings_views.xml',
         # Menus (load last)
         'views/menu.xml',
-    ],
-    'demo': [
         'demo/demo_departments.xml',
         'demo/demo_goals.xml',
     ],
+    'demo': [],
     'assets': {
         'web.assets_backend': [
             'ecosphere_core/static/src/scss/ecosphere_theme.scss',

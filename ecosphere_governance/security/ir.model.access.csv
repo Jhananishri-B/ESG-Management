@@ -1,27 +1,21 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-# ── esg.policy ────────────────────────────────────────────────────────────
 access_esg_policy_employee,esg.policy employee,ecosphere_governance.model_esg_policy,ecosphere_core.group_ecosphere_employee,1,0,0,0
 access_esg_policy_manager,esg.policy manager,ecosphere_governance.model_esg_policy,ecosphere_core.group_ecosphere_manager,1,1,1,1
 access_esg_policy_admin,esg.policy admin,ecosphere_governance.model_esg_policy,ecosphere_core.group_ecosphere_admin,1,1,1,1
-# ── policy.acknowledgement ────────────────────────────────────────────────
 access_policy_ack_employee,policy.acknowledgement employee,ecosphere_governance.model_policy_acknowledgement,ecosphere_core.group_ecosphere_employee,1,1,1,0
 access_policy_ack_manager,policy.acknowledgement manager,ecosphere_governance.model_policy_acknowledgement,ecosphere_core.group_ecosphere_manager,1,1,1,1
 access_policy_ack_admin,policy.acknowledgement admin,ecosphere_governance.model_policy_acknowledgement,ecosphere_core.group_ecosphere_admin,1,1,1,1
-# ── esg.audit ─────────────────────────────────────────────────────────────
 access_esg_audit_employee,esg.audit employee,ecosphere_governance.model_esg_audit,ecosphere_core.group_ecosphere_employee,1,0,0,0
 access_esg_audit_auditor,esg.audit auditor,ecosphere_governance.model_esg_audit,ecosphere_core.group_ecosphere_auditor,1,1,1,1
 access_esg_audit_manager,esg.audit manager,ecosphere_governance.model_esg_audit,ecosphere_core.group_ecosphere_manager,1,0,0,0
 access_esg_audit_admin,esg.audit admin,ecosphere_governance.model_esg_audit,ecosphere_core.group_ecosphere_admin,1,1,1,1
-# ── audit.finding ─────────────────────────────────────────────────────────
 access_audit_finding_employee,audit.finding employee,ecosphere_governance.model_audit_finding,ecosphere_core.group_ecosphere_employee,1,0,0,0
 access_audit_finding_auditor,audit.finding auditor,ecosphere_governance.model_audit_finding,ecosphere_core.group_ecosphere_auditor,1,1,1,1
 access_audit_finding_manager,audit.finding manager,ecosphere_governance.model_audit_finding,ecosphere_core.group_ecosphere_manager,1,1,0,0
 access_audit_finding_admin,audit.finding admin,ecosphere_governance.model_audit_finding,ecosphere_core.group_ecosphere_admin,1,1,1,1
-# ── compliance.issue ──────────────────────────────────────────────────────
 access_compliance_issue_employee,compliance.issue employee,ecosphere_governance.model_compliance_issue,ecosphere_core.group_ecosphere_employee,1,1,1,0
 access_compliance_issue_manager,compliance.issue manager,ecosphere_governance.model_compliance_issue,ecosphere_core.group_ecosphere_manager,1,1,1,1
 access_compliance_issue_admin,compliance.issue admin,ecosphere_governance.model_compliance_issue,ecosphere_core.group_ecosphere_admin,1,1,1,1
-# ── risk.register ─────────────────────────────────────────────────────────
 access_risk_register_employee,risk.register employee,ecosphere_governance.model_risk_register,ecosphere_core.group_ecosphere_employee,1,0,0,0
 access_risk_register_manager,risk.register manager,ecosphere_governance.model_risk_register,ecosphere_core.group_ecosphere_manager,1,1,1,1
 access_risk_register_admin,risk.register admin,ecosphere_governance.model_risk_register,ecosphere_core.group_ecosphere_admin,1,1,1,1
