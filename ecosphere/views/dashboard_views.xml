@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ESG Dashboard Card Views -->
+    <record id="view_esg_dashboard_card_list" model="ir.ui.view">
+        <field name="name">esg.dashboard.card.list</field>
+        <field name="model">esg.dashboard.card</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_esg_dashboard_card_form" model="ir.ui.view">
+        <field name="name">esg.dashboard.card.form</field>
+        <field name="model">esg.dashboard.card</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_esg_dashboard_card_search" model="ir.ui.view">
+        <field name="name">esg.dashboard.card.search</field>
+        <field name="model">esg.dashboard.card</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esg_dashboard_card" model="ir.actions.act_window">
+        <field name="name">Dashboard Cards</field>
+        <field name="res_model">esg.dashboard.card</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_esg_dashboard_card_search"/>
+    </record>
+
+    <!-- ESG Dashboard Metric Views -->
+    <record id="view_esg_dashboard_metric_list" model="ir.ui.view">
+        <field name="name">esg.dashboard.metric.list</field>
+        <field name="model">esg.dashboard.metric</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_esg_dashboard_metric_form" model="ir.ui.view">
+        <field name="name">esg.dashboard.metric.form</field>
+        <field name="model">esg.dashboard.metric</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_esg_dashboard_metric_search" model="ir.ui.view">
+        <field name="name">esg.dashboard.metric.search</field>
+        <field name="model">esg.dashboard.metric</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esg_dashboard_metric" model="ir.actions.act_window">
+        <field name="name">Dashboard Metrics</field>
+        <field name="res_model">esg.dashboard.metric</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_esg_dashboard_metric_search"/>
+    </record>
+</odoo>

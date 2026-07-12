@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ESG Social Record Views -->
+    <record id="view_esg_social_record_list" model="ir.ui.view">
+        <field name="name">esg.social.record.list</field>
+        <field name="model">esg.social.record</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_esg_social_record_form" model="ir.ui.view">
+        <field name="name">esg.social.record.form</field>
+        <field name="model">esg.social.record</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_esg_social_record_search" model="ir.ui.view">
+        <field name="name">esg.social.record.search</field>
+        <field name="model">esg.social.record</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esg_social_record" model="ir.actions.act_window">
+        <field name="name">Social Records</field>
+        <field name="res_model">esg.social.record</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_esg_social_record_search"/>
+    </record>
+
+    <!-- ESG Employee Wellbeing Views -->
+    <record id="view_esg_employee_wellbeing_list" model="ir.ui.view">
+        <field name="name">esg.employee.wellbeing.list</field>
+        <field name="model">esg.employee.wellbeing</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_esg_employee_wellbeing_form" model="ir.ui.view">
+        <field name="name">esg.employee.wellbeing.form</field>
+        <field name="model">esg.employee.wellbeing</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_esg_employee_wellbeing_search" model="ir.ui.view">
+        <field name="name">esg.employee.wellbeing.search</field>
+        <field name="model">esg.employee.wellbeing</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esg_employee_wellbeing" model="ir.actions.act_window">
+        <field name="name">Employee Wellbeing</field>
+        <field name="res_model">esg.employee.wellbeing</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_esg_employee_wellbeing_search"/>
+    </record>
+
+    <!-- ESG Community Engagement Views -->
+    <record id="view_esg_community_engagement_list" model="ir.ui.view">
+        <field name="name">esg.community.engagement.list</field>
+        <field name="model">esg.community.engagement</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_esg_community_engagement_form" model="ir.ui.view">
+        <field name="name">esg.community.engagement.form</field>
+        <field name="model">esg.community.engagement</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_esg_community_engagement_search" model="ir.ui.view">
+        <field name="name">esg.community.engagement.search</field>
+        <field name="model">esg.community.engagement</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esg_community_engagement" model="ir.actions.act_window">
+        <field name="name">Community Engagement</field>
+        <field name="res_model">esg.community.engagement</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_esg_community_engagement_search"/>
+    </record>
+</odoo>

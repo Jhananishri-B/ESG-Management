@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ESG Gamification Goal Views -->
+    <record id="view_esg_gamification_goal_list" model="ir.ui.view">
+        <field name="name">esg.gamification.goal.list</field>
+        <field name="model">esg.gamification.goal</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_esg_gamification_goal_form" model="ir.ui.view">
+        <field name="name">esg.gamification.goal.form</field>
+        <field name="model">esg.gamification.goal</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_esg_gamification_goal_search" model="ir.ui.view">
+        <field name="name">esg.gamification.goal.search</field>
+        <field name="model">esg.gamification.goal</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esg_gamification_goal" model="ir.actions.act_window">
+        <field name="name">Gamification Goals</field>
+        <field name="res_model">esg.gamification.goal</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_esg_gamification_goal_search"/>
+    </record>
+
+    <!-- ESG Gamification Badge Views -->
+    <record id="view_esg_gamification_badge_list" model="ir.ui.view">
+        <field name="name">esg.gamification.badge.list</field>
+        <field name="model">esg.gamification.badge</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_esg_gamification_badge_form" model="ir.ui.view">
+        <field name="name">esg.gamification.badge.form</field>
+        <field name="model">esg.gamification.badge</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_esg_gamification_badge_search" model="ir.ui.view">
+        <field name="name">esg.gamification.badge.search</field>
+        <field name="model">esg.gamification.badge</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esg_gamification_badge" model="ir.actions.act_window">
+        <field name="name">Gamification Badges</field>
+        <field name="res_model">esg.gamification.badge</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_esg_gamification_badge_search"/>
+    </record>
+</odoo>

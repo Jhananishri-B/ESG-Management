@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ESG Department Views -->
+    <record id="view_esg_department_list" model="ir.ui.view">
+        <field name="name">esg.department.list</field>
+        <field name="model">esg.department</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_esg_department_form" model="ir.ui.view">
+        <field name="name">esg.department.form</field>
+        <field name="model">esg.department</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_esg_department_search" model="ir.ui.view">
+        <field name="name">esg.department.search</field>
+        <field name="model">esg.department</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esg_department" model="ir.actions.act_window">
+        <field name="name">ESG Departments</field>
+        <field name="res_model">esg.department</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_esg_department_search"/>
+    </record>
+
+    <!-- ESG Category Views -->
+    <record id="view_esg_category_list" model="ir.ui.view">
+        <field name="name">esg.category.list</field>
+        <field name="model">esg.category</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_esg_category_form" model="ir.ui.view">
+        <field name="name">esg.category.form</field>
+        <field name="model">esg.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_esg_category_search" model="ir.ui.view">
+        <field name="name">esg.category.search</field>
+        <field name="model">esg.category</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esg_category" model="ir.actions.act_window">
+        <field name="name">ESG Categories</field>
+        <field name="res_model">esg.category</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_esg_category_search"/>
+    </record>
+
+    <!-- ESG Metric Views -->
+    <record id="view_esg_metric_list" model="ir.ui.view">
+        <field name="name">esg.metric.list</field>
+        <field name="model">esg.metric</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_esg_metric_form" model="ir.ui.view">
+        <field name="name">esg.metric.form</field>
+        <field name="model">esg.metric</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_esg_metric_search" model="ir.ui.view">
+        <field name="name">esg.metric.search</field>
+        <field name="model">esg.metric</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_esg_metric" model="ir.actions.act_window">
+        <field name="name">ESG Metrics</field>
+        <field name="res_model">esg.metric</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_esg_metric_search"/>
+    </record>
+</odoo>
