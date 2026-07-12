@@ -1,0 +1,30 @@
+/**
+ * EcoSphere Gamification Module — SCSS
+ */
+
+.eco-employee-gamification {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.eco-progress-wrapper {
+  .o_progressbar {
+    background-color: #e2e8f0;
+    
+    .o_progress {
+      background: linear-gradient(90deg, #3b82f6 0%, #10b981 100%);
+      border-radius: 6px;
+    }
+  }
+}
+
+.eco-reward-kanban {
+  .o_kanban_record {
+    border-radius: var(--eco-radius-md);
+    transition: transform 0.2s, box-shadow 0.2s;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--eco-shadow-md);
+    }
+  }
+}

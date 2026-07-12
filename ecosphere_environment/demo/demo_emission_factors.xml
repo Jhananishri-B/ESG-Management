@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Additional demo emission factors (region-specific) -->
+        <record id="ef_demo_electricity_us" model="emission.factor">
+            <field name="name">Electricity — US Grid Average</field>
+            <field name="code">GRID_US</field>
+            <field name="scope">2</field>
+            <field name="category">electricity</field>
+            <field name="factor_value">0.38600</field>
+            <field name="unit">kWh</field>
+            <field name="source">EPA eGRID 2023</field>
+            <field name="region">US</field>
+        </record>
+
+        <record id="ef_demo_coal_kg" model="emission.factor">
+            <field name="name">Coal Combustion</field>
+            <field name="code">COAL_KG</field>
+            <field name="scope">1</field>
+            <field name="category">fuel</field>
+            <field name="factor_value">2.42000</field>
+            <field name="unit">kg</field>
+            <field name="source">IPCC 2021</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_demo_refrigerant_r410a" model="emission.factor">
+            <field name="name">Refrigerant R-410A (leakage)</field>
+            <field name="code">REFRIG_R410A</field>
+            <field name="scope">1</field>
+            <field name="category">refrigerant</field>
+            <field name="factor_value">2088.0</field>
+            <field name="unit">kg</field>
+            <field name="source">IPCC AR6 2021</field>
+            <field name="region">Global</field>
+        </record>
+    </data>
+</odoo>

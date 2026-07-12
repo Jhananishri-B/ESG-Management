@@ -1,0 +1,217 @@
+/**
+ * EcoSphere Social Module — SCSS
+ * CSR Activity cards, participation timeline, engagement widgets
+ */
+
+// ── CSR Activity Kanban Card ───────────────────────────────────────────────
+.eco-csr-card {
+  padding: 14px;
+  border-radius: var(--eco-radius-md);
+  transition: var(--eco-transition);
+
+  .eco-csr-type-pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+  }
+
+  .eco-csr-title strong {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+    display: block;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+
+  .eco-csr-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 12px;
+
+    span { display: flex; align-items: center; gap: 4px; }
+  }
+
+  .eco-csr-stats {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+
+    .eco-csr-stat {
+      font-size: 12px;
+      font-weight: 600;
+      color: #374151;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      &.eco-xp-tag {
+        background: #fffbeb;
+        color: #d97706;
+        border: 1px solid #fde68a;
+        padding: 2px 8px;
+        border-radius: 9999px;
+      }
+    }
+  }
+
+  .eco-csr-full-banner {
+    font-size: 12px;
+    font-weight: 700;
+    color: #7f1d1d;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .eco-csr-actions { text-align: right; }
+}
+
+// ── CSR Reward Bar (form view) ─────────────────────────────────────────────
+.eco-csr-reward-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  .eco-xp-pill {
+    background: #fffbeb;
+    color: #b45309;
+    border: 1px solid #fde68a;
+    padding: 6px 16px;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  .eco-hours-pill {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #86efac;
+    padding: 6px 16px;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 13px;
+  }
+}
+
+// ── Participation Timeline ─────────────────────────────────────────────────
+.eco-participation-timeline {
+  position: relative;
+  padding-left: 32px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #e5e7eb;
+  }
+
+  .eco-timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -26px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #3b82f6;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px #bfdbfe;
+    }
+
+    &.approved::before   { background: #10b981; box-shadow: 0 0 0 2px #a7f3d0; }
+    &.rejected::before   { background: #f43f5e; box-shadow: 0 0 0 2px #fecdd3; }
+    &.pending::before    { background: #f59e0b; box-shadow: 0 0 0 2px #fde68a; }
+
+    .eco-timeline-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: var(--eco-radius-md);
+      padding: 12px 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.05);
+
+      .eco-timeline-title {
+        font-weight: 700;
+        font-size: 14px;
+        color: #111827;
+        margin-bottom: 4px;
+      }
+      .eco-timeline-meta {
+        font-size: 12px;
+        color: #6b7280;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+    }
+  }
+}
+
+// ── Engagement Score Widget ────────────────────────────────────────────────
+.eco-engagement-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  text-align: center;
+
+  .eco-engagement-circle {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: conic-gradient(
+      #10b981 0% var(--score-pct, 0%),
+      #e5e7eb var(--score-pct, 0%) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .eco-engagement-value {
+      position: absolute;
+      z-index: 1;
+      font-size: 20px;
+      font-weight: 800;
+      color: #111827;
+    }
+  }
+
+  .eco-engagement-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_compliance_issue_list" model="ir.ui.view">
+            <field name="name">compliance.issue.list</field>
+            <field name="model">compliance.issue</field>
+            <field name="arch" type="xml">
+                <list string="Compliance Issues"
+                      decoration-danger="severity in ('high','critical') and state not in ('resolved','closed')"
+                      decoration-warning="severity == 'medium' and state not in ('resolved','closed')"
+                      decoration-muted="state in ('resolved','closed')">
+                    <field name="reference"/>
+                    <field name="name"/>
+                    <field name="issue_type"/>
+                    <field name="department_id"/>
+                    <field name="severity" widget="badge"
+                           decoration-danger="severity == 'critical'"
+                           decoration-warning="severity == 'high'"
+                           decoration-info="severity == 'medium'"
+                           decoration-success="severity == 'low'"/>
+                    <field name="reported_date"/>
+                    <field name="due_date"/>
+                    <field name="days_open"/>
+                    <field name="state" widget="badge"
+                           decoration-success="state == 'resolved'"
+                           decoration-danger="state == 'escalated'"
+                           decoration-info="state == 'in_progress'"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_compliance_issue_form" model="ir.ui.view">
+            <field name="name">compliance.issue.form</field>
+            <field name="model">compliance.issue</field>
+            <field name="arch" type="xml">
+                <form string="Compliance Issue">
+                    <header>
+                        <button name="action_start" string="Start Investigation" type="object"
+                                class="btn-primary" invisible="state != 'open'"/>
+                        <button name="action_submit_review" string="Submit for Review" type="object"
+                                class="btn-primary" invisible="state != 'in_progress'"/>
+                        <button name="action_resolve" string="Resolve" type="object"
+                                class="btn-success" invisible="state != 'pending_review'"
+                                groups="ecosphere_core.group_ecosphere_manager"/>
+                        <button name="action_escalate" string="Escalate" type="object"
+                                class="btn-danger" invisible="state in ('resolved','closed','escalated')"/>
+                        <button name="action_close" string="Close" type="object"
+                                invisible="state != 'resolved'"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="open,in_progress,pending_review,resolved"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="Issue Title" readonly="state in ('resolved','closed')"/></h1>
+                            <h2><field name="reference" readonly="1"/></h2>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="issue_type" readonly="state in ('resolved','closed')"/>
+                                <field name="severity" readonly="state in ('resolved','closed')"/>
+                                <field name="department_id" readonly="state in ('resolved','closed')"/>
+                                <field name="policy_id" readonly="state in ('resolved','closed')"/>
+                            </group>
+                            <group>
+                                <field name="reported_by" readonly="state in ('resolved','closed')"/>
+                                <field name="assigned_to" readonly="state in ('resolved','closed')"/>
+                                <field name="reported_date" readonly="state in ('resolved','closed')"/>
+                                <field name="due_date" readonly="state in ('resolved','closed')"/>
+                                <field name="resolved_date" readonly="1"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Details &amp; Action Plan">
+                                <group>
+                                    <field name="description" readonly="state in ('resolved','closed')"/>
+                                    <field name="root_cause" readonly="state in ('resolved','closed')"/>
+                                    <field name="corrective_action" readonly="state in ('resolved','closed')"/>
+                                    <field name="preventive_action" readonly="state in ('resolved','closed')"/>
+                                </group>
+                            </page>
+                            <page string="Regulatory &amp; Financial Impact">
+                                <group>
+                                    <group>
+                                        <field name="regulation_name" readonly="state in ('resolved','closed')"/>
+                                        <field name="regulatory_body" readonly="state in ('resolved','closed')"/>
+                                    </group>
+                                    <group>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="fine_amount" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="state in ('resolved','closed')"/>
+                                        <field name="financial_impact" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Resolution">
+                                <group>
+                                    <field name="resolution_notes" readonly="state == 'closed'"/>
+                                    <field name="attachment_ids" widget="many2many_binary" string="Evidence" readonly="state == 'closed'"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_compliance_issue" model="ir.actions.act_window">
+            <field name="name">Compliance Issues</field>
+            <field name="res_model">compliance.issue</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'search_default_open': 1}</field>
+        </record>
+    </data>
+</odoo>

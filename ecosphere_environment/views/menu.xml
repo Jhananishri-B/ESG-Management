@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ── Environmental sub-menu under EcoSphere ──────────────── -->
+        <menuitem id="menu_env_dashboard"
+                  name="Overview"
+                  parent="ecosphere_core.menu_ecosphere_environment"
+                  action="action_carbon_transaction"
+                  sequence="10"/>
+
+        <menuitem id="menu_env_transactions"
+                  name="Carbon Transactions"
+                  parent="ecosphere_core.menu_ecosphere_environment"
+                  action="action_carbon_transaction"
+                  sequence="20"/>
+
+        <menuitem id="menu_env_goals"
+                  name="Environmental Goals"
+                  parent="ecosphere_core.menu_ecosphere_environment"
+                  action="action_env_goal"
+                  sequence="30"/>
+
+        <menuitem id="menu_env_products"
+                  name="Product Profiles"
+                  parent="ecosphere_core.menu_ecosphere_environment"
+                  action="action_product_esg_profile"
+                  sequence="40"/>
+
+        <!-- Configuration sub-menu -->
+        <menuitem id="menu_env_config"
+                  name="Configuration"
+                  parent="ecosphere_core.menu_ecosphere_environment"
+                  sequence="90"
+                  groups="ecosphere_core.group_ecosphere_manager"/>
+
+        <menuitem id="menu_env_emission_factors"
+                  name="Emission Factors"
+                  parent="menu_env_config"
+                  action="action_emission_factor"
+                  sequence="10"/>
+
+    </data>
+</odoo>

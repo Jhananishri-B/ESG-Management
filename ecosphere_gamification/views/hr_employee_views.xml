@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_employee_form_gamification" model="ir.ui.view">
+            <field name="name">hr.employee.form.gamification</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="%(ecosphere_gamification.action_esg_reward)d" string="Redeem Rewards" type="action" class="btn-primary"/>
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button class="oe_stat_button" name="%(ecosphere_gamification.action_xp_ledger_employee)d" type="action" icon="fa-star">
+                        <field name="esg_xp" widget="statinfo" string="Total XP"/>
+                    </button>
+                    <button class="oe_stat_button" name="%(ecosphere_gamification.action_xp_ledger_employee)d" type="action" icon="fa-gift">
+                        <field name="available_points" widget="statinfo" string="Reward Points"/>
+                    </button>
+                </xpath>
+                <xpath expr="//sheet" position="inside">
+                    <notebook position="inside">
+                        <page string="ESG Gamification">
+                            <div class="eco-employee-gamification p-3 mb-4 rounded border" style="background-color: #f8fafc;">
+                                <div class="d-flex align-items-center mb-2">
+                                    <h2 class="mb-0 mr-3" style="color: #1e3a8a;">
+                                        <i class="fa fa-trophy mr-2"></i> Level <field name="esg_level" nolabel="1"/>
+                                    </h2>
+                                </div>
+                                <div class="eco-progress-wrapper mt-3">
+                                    <div class="d-flex justify-content-between mb-1" style="font-size: 12px; font-weight: bold; color: #64748b;">
+                                        <span>Current XP: <field name="esg_xp" nolabel="1"/></span>
+                                        <span>Next Level: <field name="next_level_xp" nolabel="1"/></span>
+                                    </div>
+                                    <field name="xp_progress" widget="progressbar" options="{'editable': false}" nolabel="1" style="height: 12px; border-radius: 6px;"/>
+                                </div>
+                            </div>
+                            
+                            <group string="Earned Badges">
+                                <field name="badge_ids" nolabel="1">
+                                    <kanban>
+                                        <field name="name"/>
+                                        <field name="image_128"/>
+                                        <field name="level"/>
+                                        <templates>
+                                            <t t-name="card">
+                                                <div class="d-flex flex-column align-items-center text-center p-2">
+                                                    <img t-att-src="kanban_image('esg.badge', 'image_128', record.id.raw_value)" alt="Badge" style="max-height: 80px; max-width: 80px;" class="mb-2"/>
+                                                    <strong><field name="name"/></strong>
+                                                    <span class="text-muted" style="font-size: 11px; text-transform: uppercase;"><field name="level"/></span>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </group>
+                            
+                            <group string="Recent XP Transactions">
+                                <field name="xp_ledger_ids" nolabel="1" readonly="1">
+                                    <list>
+                                        <field name="date"/>
+                                        <field name="amount" decoration-success="amount &gt; 0" decoration-danger="amount &lt; 0" string="Amount"/>
+                                        <field name="reason"/>
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

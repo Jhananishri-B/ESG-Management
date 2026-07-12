@@ -1,0 +1,182 @@
+/**
+ * EcoSphere Environment Module — SCSS
+ * Carbon transaction cards, hotspot visualization, forecast widgets
+ */
+
+// ── Carbon Hero Display ─────────────────────────────────────────────────────
+.eco-carbon-hero {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe) !important;
+  border: 1px solid #bfdbfe !important;
+  border-radius: var(--eco-radius-lg) !important;
+  padding: 20px 24px !important;
+  margin-bottom: 24px;
+
+  .eco-carbon-hero-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .eco-icon-lg {
+    font-size: 28px;
+    color: #3b82f6;
+  }
+
+  .eco-carbon-kg-display {
+    font-size: 28px;
+    font-weight: 800;
+    color: #1e3a8a;
+    letter-spacing: -0.03em;
+  }
+
+  .eco-carbon-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #fdba74;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    margin-left: auto;
+  }
+}
+
+// ── Carbon Kanban Card ─────────────────────────────────────────────────────
+.eco-carbon-card {
+  padding: 14px;
+
+  .eco-carbon-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .eco-carbon-amount {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1f2937;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+
+    &::after { content: ' kg CO₂e'; font-size: 11px; font-weight: 600; color: #6b7280; }
+  }
+
+  .eco-carbon-meta {
+    font-size: 12px;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+// Source badge colors
+.eco-source-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  text-transform: capitalize;
+
+  &.eco-src-electricity { background: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+  &.eco-src-fleet       { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+  &.eco-src-air_travel  { background: #eff6ff; color: #1d4ed8; border: 1px solid #93c5fd; }
+  &.eco-src-purchase    { background: #fdf4ff; color: #7e22ce; border: 1px solid #d8b4fe; }
+  &.eco-src-waste       { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+  &.eco-src-manual      { background: #f9fafb; color: #374151; border: 1px solid #d1d5db; }
+}
+
+// ── Scope Badge Colors ────────────────────────────────────────────────────
+.badge[data-value="1"] { background-color: #fef3c7 !important; color: #92400e !important; }
+.badge[data-value="2"] { background-color: #dbeafe !important; color: #1e40af !important; }
+.badge[data-value="3"] { background-color: #ede9fe !important; color: #5b21b6 !important; }
+
+// ── Hotspot Heatmap (placeholder for OWL widget) ───────────────────────────
+.eco-carbon-hotspot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  padding: 16px;
+
+  .eco-hotspot-cell {
+    border-radius: var(--eco-radius-md);
+    padding: 16px;
+    text-align: center;
+    border: 1px solid rgba(0,0,0,.05);
+    transition: var(--eco-transition);
+    cursor: pointer;
+
+    &:hover { transform: scale(1.03); box-shadow: var(--eco-shadow-lg); }
+
+    .eco-hotspot-name { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+    .eco-hotspot-value { font-size: 20px; font-weight: 800; letter-spacing: -0.03em; }
+    .eco-hotspot-unit  { font-size: 10px; font-weight: 600; opacity: .7; }
+
+    // Color gradient by intensity
+    &.level-1 { background: #ecfdf5; color: #064e3b; }
+    &.level-2 { background: #d1fae5; color: #065f46; }
+    &.level-3 { background: #fef9c3; color: #78350f; }
+    &.level-4 { background: #fed7aa; color: #7c2d12; }
+    &.level-5 { background: #fecaca; color: #7f1d1d; }
+  }
+}
+
+// ── Forecast Widget ────────────────────────────────────────────────────────
+.eco-forecast-card {
+  background: var(--eco-bg);
+  border: 1px solid var(--eco-border);
+  border-radius: var(--eco-radius-lg);
+  padding: 24px;
+
+  .eco-forecast-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    h3 { margin: 0; font-size: 16px; font-weight: 700; color: #111827; }
+
+    .eco-on-track-badge {
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+
+      &.on-track    { background: #d1fae5; color: #065f46; }
+      &.not-on-track { background: #fecaca; color: #7f1d1d; }
+    }
+  }
+
+  .eco-forecast-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+
+    .eco-forecast-metric {
+      text-align: center;
+      padding: 12px;
+      background: #f9fafb;
+      border-radius: var(--eco-radius-md);
+      border: 1px solid #e5e7eb;
+
+      .eco-fm-label { font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+      .eco-fm-value { font-size: 18px; font-weight: 800; color: #111827; letter-spacing: -0.03em; }
+    }
+  }
+
+  .eco-forecast-notes {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: var(--eco-radius-md);
+    border-left: 3px solid #3b82f6;
+    white-space: pre-line;
+  }
+}

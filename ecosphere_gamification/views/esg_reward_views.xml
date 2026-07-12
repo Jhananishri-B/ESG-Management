@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Reward Kanban View -->
+        <record id="view_esg_reward_kanban" model="ir.ui.view">
+            <field name="name">esg.reward.kanban</field>
+            <field name="model">esg.reward</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile eco-reward-kanban">
+                    <field name="name"/>
+                    <field name="cost"/>
+                    <field name="reward_type"/>
+                    <field name="image"/>
+                    <field name="quantity_available"/>
+                    <field name="is_unlimited"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="o_kanban_record_top">
+                                <strong class="o_kanban_record_title"><field name="name"/></strong>
+                            </div>
+                            <div class="o_kanban_record_body d-flex mt-2">
+                                <div class="mr-3">
+                                    <img t-att-src="kanban_image('esg.reward', 'image', record.id.raw_value)" class="o_image_64_max rounded border" alt="Reward"/>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="font-weight-bold text-primary mb-1">
+                                        <i class="fa fa-star text-warning"></i> <field name="cost"/> XP
+                                    </div>
+                                    <div class="text-muted small mb-1"><field name="reward_type" widget="badge"/></div>
+                                    <div class="small">
+                                        <t t-if="record.is_unlimited.raw_value">
+                                            <span class="text-success">Unlimited Stock</span>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-attf-class="#{record.quantity_available.raw_value &lt;= 5 ? 'text-danger' : 'text-muted'}">
+                                                <field name="quantity_available"/> left
+                                            </span>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Reward Form View -->
+        <record id="view_esg_reward_form" model="ir.ui.view">
+            <field name="name">esg.reward.form</field>
+            <field name="model">esg.reward</field>
+            <field name="arch" type="xml">
+                <form string="ESG Reward">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" icon="fa-shopping-cart">
+                                <field name="total_redeemed" widget="statinfo" string="Redeemed"/>
+                            </button>
+                        </div>
+                        <field name="image" widget="image" class="oe_avatar"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="E.g., Eco-friendly Water Bottle"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="reward_type"/>
+                                <field name="cost"/>
+                            </group>
+                            <group>
+                                <field name="is_unlimited"/>
+                                <field name="quantity_available" invisible="is_unlimited"/>
+                                <field name="active" widget="boolean_toggle"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description" placeholder="Description of the reward..."/>
+                            </page>
+                            <page string="Redemption History">
+                                <field name="redemption_ids" readonly="1">
+                                    <list decoration-muted="state == 'cancelled'" decoration-success="state == 'fulfilled'">
+                                        <field name="date"/>
+                                        <field name="employee_id"/>
+                                        <field name="cost"/>
+                                        <field name="state" widget="badge"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Reward Redemptions (Admin View) -->
+        <record id="view_reward_redemption_list" model="ir.ui.view">
+            <field name="name">reward.redemption.list</field>
+            <field name="model">reward.redemption</field>
+            <field name="arch" type="xml">
+                <list string="Reward Redemptions" decoration-success="state == 'fulfilled'" decoration-muted="state == 'cancelled'">
+                    <field name="date"/>
+                    <field name="employee_id"/>
+                    <field name="reward_id"/>
+                    <field name="cost"/>
+                    <field name="state" widget="badge"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_esg_reward" model="ir.actions.act_window">
+            <field name="name">Reward Store</field>
+            <field name="res_model">esg.reward</field>
+            <field name="view_mode">kanban,list,form</field>
+        </record>
+        
+        <record id="action_reward_redemption" model="ir.actions.act_window">
+            <field name="name">Redemptions</field>
+            <field name="res_model">reward.redemption</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>

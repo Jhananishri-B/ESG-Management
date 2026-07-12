@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_ecosphere_ai" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.ecosphere.ai</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="EcoSphere ESG" string="EcoSphere ESG" name="ecosphere_core">
+                    <block title="AI Integration" name="ecosphere_ai_settings">
+                        <setting id="openai_api_key_setting" help="Configure OpenAI API Key for AI policy generation">
+                            <field name="ecosphere_openai_api_key" password="True"/>
+                            <div class="text-muted mt-2">
+                                <small>Leave blank to use the mock AI generator for demo purposes.</small>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Menu action for configuration -->
+    <record id="action_ecosphere_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'ecosphere_core'}</field>
+    </record>
+
+    <menuitem id="menu_ecosphere_configuration"
+              name="Configuration"
+              parent="ecosphere_core.menu_ecosphere_root"
+              sequence="100"
+              groups="ecosphere_core.group_ecosphere_admin"/>
+              
+    <menuitem id="menu_ecosphere_settings"
+              name="Settings"
+              parent="menu_ecosphere_configuration"
+              action="action_ecosphere_config_settings"
+              sequence="10"/>
+</odoo>

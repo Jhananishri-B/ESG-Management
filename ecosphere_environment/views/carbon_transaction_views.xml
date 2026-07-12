@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ════ LIST ════════════════════════════════════════════════ -->
+        <record id="view_carbon_transaction_list" model="ir.ui.view">
+            <field name="name">carbon.transaction.list</field>
+            <field name="model">carbon.transaction</field>
+            <field name="arch" type="xml">
+                <list string="Carbon Transactions"
+                      decoration-success="state == 'verified'"
+                      decoration-info="state == 'confirmed'"
+                      decoration-muted="state == 'cancelled'"
+                      decoration-warning="exceeds_threshold == True">
+                    <field name="name" string="Reference"/>
+                    <field name="date"/>
+                    <field name="department_id"/>
+                    <field name="source_type" widget="badge"/>
+                    <field name="emission_factor_id" string="Factor"/>
+                    <field name="scope" widget="badge"/>
+                    <field name="activity_quantity" string="Quantity"/>
+                    <field name="activity_unit" string="Unit"/>
+                    <field name="carbon_kg" string="Carbon (kg CO₂e)" sum="Total CO₂e"/>
+                    <field name="state" widget="badge"
+                           decoration-success="state == 'verified'"
+                           decoration-info="state == 'confirmed'"
+                           decoration-warning="state == 'draft'"
+                           decoration-danger="state == 'cancelled'"/>
+                    <field name="exceeds_threshold" widget="boolean" optional="hide"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ════ FORM ════════════════════════════════════════════════ -->
+        <record id="view_carbon_transaction_form" model="ir.ui.view">
+            <field name="name">carbon.transaction.form</field>
+            <field name="model">carbon.transaction</field>
+            <field name="arch" type="xml">
+                <form string="Carbon Transaction">
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object"
+                                class="btn-primary" invisible="state != 'draft'"/>
+                        <button name="action_verify" string="Verify" type="object"
+                                class="btn-success" invisible="state != 'confirmed'"
+                                groups="ecosphere_core.group_ecosphere_auditor"/>
+                        <button name="action_cancel" string="Cancel" type="object"
+                                invisible="state in ('verified', 'cancelled')"/>
+                        <button name="action_reset_draft" string="Reset to Draft" type="object"
+                                invisible="state != 'cancelled'"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,confirmed,verified"/>
+                    </header>
+                    <sheet>
+                        <!-- Carbon amount hero display -->
+                        <div class="eco-carbon-hero alert alert-info" role="status"
+                             invisible="carbon_kg == 0">
+                            <div class="eco-carbon-hero-content">
+                                <i class="fa fa-cloud eco-icon-lg"/> 
+                                <span class="eco-carbon-kg-display">
+                                    <field name="carbon_kg" widget="float" options="{'digits': [10,2]}"/> kg CO₂e
+                                </span>
+                                <span class="eco-carbon-badge" invisible="not exceeds_threshold">
+                                    ⚠️ Exceeds Department Threshold
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" readonly="state != 'draft'"/></h1>
+                        </div>
+
+                        <group>
+                            <group string="Transaction Details">
+                                <field name="date" readonly="state != 'draft'"/>
+                                <field name="source_type" readonly="state != 'draft'"/>
+                                <field name="source_purchase_id"
+                                       invisible="source_type != 'purchase'"
+                                       readonly="state != 'draft'"/>
+                                <field name="source_document" readonly="state != 'draft'"
+                                       invisible="source_type == 'purchase'"/>
+                                <field name="department_id" readonly="state != 'draft'"/>
+                            </group>
+                            <group string="Carbon Calculation">
+                                <field name="emission_factor_id" readonly="state != 'draft'"/>
+                                <field name="scope" readonly="1"/>
+                                <field name="activity_quantity" readonly="state != 'draft'"/>
+                                <field name="activity_unit" readonly="1"/>
+                                <field name="factor_value" readonly="1" string="Factor (kg CO₂e/unit)"/>
+                                <field name="carbon_kg" readonly="1" string="Carbon (kg CO₂e)"/>
+                            </group>
+                        </group>
+
+                        <group string="Verification" invisible="state not in ('verified',)">
+                            <field name="verified_by" readonly="1"/>
+                            <field name="verified_on" readonly="1"/>
+                        </group>
+
+                        <group string="Notes">
+                            <field name="notes" nolabel="1" placeholder="Optional notes…"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- ════ KANBAN (Dashboard summary) ═════════════════════════ -->
+        <record id="view_carbon_transaction_kanban" model="ir.ui.view">
+            <field name="name">carbon.transaction.kanban</field>
+            <field name="model">carbon.transaction</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="department_id" class="eco-kanban-carbon">
+                    <field name="name"/>
+                    <field name="carbon_kg"/>
+                    <field name="source_type"/>
+                    <field name="state"/>
+                    <field name="date"/>
+                    <field name="department_id"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="eco-carbon-card">
+                                <div class="eco-carbon-card-header">
+                                    <span t-attf-class="eco-source-badge eco-src-#{record.source_type.raw_value}">
+                                        <field name="source_type"/>
+                                    </span>
+                                    <span t-attf-class="badge #{record.state.raw_value == 'verified' ? 'bg-success' : record.state.raw_value == 'confirmed' ? 'bg-primary' : 'bg-secondary'}">
+                                        <field name="state"/>
+                                    </span>
+                                </div>
+                                <div class="eco-carbon-amount">
+                                    <field name="carbon_kg" widget="float" options="{'digits': [10,1]}"/> kg
+                                </div>
+                                <div class="eco-carbon-meta text-muted">
+                                    <i class="fa fa-calendar-o"/> <field name="date"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- ════ SEARCH ══════════════════════════════════════════════ -->
+        <record id="view_carbon_transaction_search" model="ir.ui.view">
+            <field name="name">carbon.transaction.search</field>
+            <field name="model">carbon.transaction</field>
+            <field name="arch" type="xml">
+                <search string="Search Carbon Transactions">
+                    <field name="name" string="Reference"/>
+                    <field name="department_id"/>
+                    <field name="emission_factor_id"/>
+                    <field name="source_document"/>
+                    <separator/>
+                    <filter string="Draft"     name="draft"     domain="[('state','=','draft')]"/>
+                    <filter string="Confirmed" name="confirmed" domain="[('state','=','confirmed')]"/>
+                    <filter string="Verified"  name="verified"  domain="[('state','=','verified')]"/>
+                    <filter string="Over Threshold" name="threshold" domain="[('exceeds_threshold','=',True)]"/>
+                    <separator/>
+                    <filter string="Scope 1" name="s1" domain="[('scope','=','1')]"/>
+                    <filter string="Scope 2" name="s2" domain="[('scope','=','2')]"/>
+                    <filter string="Scope 3" name="s3" domain="[('scope','=','3')]"/>
+                    <separator/>
+                    <filter string="This Month" name="this_month"
+                            domain="[('date','&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="grp_dept"   string="Department"   context="{'group_by':'department_id'}"/>
+                        <filter name="grp_source" string="Source Type"  context="{'group_by':'source_type'}"/>
+                        <filter name="grp_scope"  string="GHG Scope"    context="{'group_by':'scope'}"/>
+                        <filter name="grp_month"  string="Month"        context="{'group_by':'date:month'}"/>
+                        <filter name="grp_state"  string="Status"       context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_carbon_transaction" model="ir.actions.act_window">
+            <field name="name">Carbon Transactions</field>
+            <field name="res_model">carbon.transaction</field>
+            <field name="view_mode">list,kanban,form</field>
+            <field name="search_view_id" ref="view_carbon_transaction_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">No carbon transactions yet</p>
+                <p>Carbon transactions are created automatically from purchase orders and manufacturing, or can be entered manually.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

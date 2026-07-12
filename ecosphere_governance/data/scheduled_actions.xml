@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_esg_policy" model="ir.sequence">
+            <field name="name">ESG Policy</field>
+            <field name="code">esg.policy</field>
+            <field name="prefix">POL-%(year)s-</field>
+            <field name="padding">3</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_esg_audit" model="ir.sequence">
+            <field name="name">ESG Audit</field>
+            <field name="code">esg.audit</field>
+            <field name="prefix">AUD-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_compliance_issue" model="ir.sequence">
+            <field name="name">Compliance Issue</field>
+            <field name="code">compliance.issue</field>
+            <field name="prefix">COMP-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_risk_register" model="ir.sequence">
+            <field name="name">Risk Register</field>
+            <field name="code">risk.register</field>
+            <field name="prefix">RSK-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <!-- Cron: Send Policy Acknowledgement Reminders (Daily) -->
+        <record id="cron_policy_ack_reminders" model="ir.cron">
+            <field name="name">EcoSphere: Policy Acknowledgement Reminders</field>
+            <field name="model_id" ref="ecosphere_governance.model_esg_policy"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_send_policy_reminders()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+
+        <!-- Cron: Mark Overdue Acknowledgements (Daily) -->
+        <record id="cron_policy_ack_overdue" model="ir.cron">
+            <field name="name">EcoSphere: Mark Overdue Acknowledgements</field>
+            <field name="model_id" ref="ecosphere_governance.model_policy_acknowledgement"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_mark_overdue()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+
+        <!-- Cron: Escalate Compliance Issues (Daily) -->
+        <record id="cron_compliance_escalate" model="ir.cron">
+            <field name="name">EcoSphere: Auto-escalate Overdue Compliance Issues</field>
+            <field name="model_id" ref="ecosphere_governance.model_compliance_issue"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_check_overdue()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+
+    </data>
+</odoo>

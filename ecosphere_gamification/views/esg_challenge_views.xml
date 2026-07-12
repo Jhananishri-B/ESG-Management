@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ESG Challenge Views -->
+        <record id="view_esg_challenge_list" model="ir.ui.view">
+            <field name="name">esg.challenge.list</field>
+            <field name="model">esg.challenge</field>
+            <field name="arch" type="xml">
+                <list string="ESG Challenges">
+                    <field name="name"/>
+                    <field name="challenge_type"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="xp_reward"/>
+                    <field name="participant_count"/>
+                    <field name="state" widget="badge"
+                           decoration-success="state == 'active'"
+                           decoration-info="state == 'completed'"
+                           decoration-muted="state in ('draft', 'cancelled')"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_esg_challenge_form" model="ir.ui.view">
+            <field name="name">esg.challenge.form</field>
+            <field name="model">esg.challenge</field>
+            <field name="arch" type="xml">
+                <form string="ESG Challenge">
+                    <header>
+                        <button name="action_start" string="Start Challenge" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                        <button name="action_complete" string="Complete Challenge" type="object" class="btn-success" invisible="state != 'active'"/>
+                        <button name="action_cancel" string="Cancel" type="object" invisible="state in ('completed', 'cancelled')"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,active,completed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" icon="fa-users">
+                                <field name="participant_count" widget="statinfo" string="Participants"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="e.g. Zero Waste Month"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="challenge_type"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </group>
+                            <group>
+                                <field name="xp_reward"/>
+                                <field name="badge_id"/>
+                                <field name="target_metric"/>
+                                <field name="metric_uom"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description"/>
+                            </page>
+                            <page string="Participants">
+                                <field name="participation_ids">
+                                    <list editable="bottom">
+                                        <field name="employee_id" invisible="parent.challenge_type == 'department'"/>
+                                        <field name="department_id" invisible="parent.challenge_type == 'individual'"/>
+                                        <field name="current_metric"/>
+                                        <field name="target_metric" readonly="1"/>
+                                        <field name="progress_pct" widget="progressbar"/>
+                                        <field name="state" widget="badge"/>
+                                        <button name="action_complete" string="Complete" type="object" icon="fa-check" invisible="state == 'completed'"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_esg_challenge" model="ir.actions.act_window">
+            <field name="name">ESG Challenges</field>
+            <field name="res_model">esg.challenge</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>

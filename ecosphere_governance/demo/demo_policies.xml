@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Policies -->
+        <record id="demo_policy_env" model="esg.policy">
+            <field name="name">Global Environmental Sustainability Policy</field>
+            <field name="policy_type">environmental</field>
+            <field name="summary">Commitment to reducing carbon footprint, zero waste to landfill, and sustainable sourcing.</field>
+            <field name="description">&lt;h2&gt;Scope&lt;/h2&gt;&lt;p&gt;Applies to all global operations...&lt;/p&gt;</field>
+            <field name="effective_date">2024-01-01</field>
+            <field name="acknowledgement_deadline">2024-02-15</field>
+            <field name="review_date">2025-01-01</field>
+            <field name="state">published</field>
+            <field name="version">2.1</field>
+            <field name="priority">2</field>
+        </record>
+
+        <record id="demo_policy_social" model="esg.policy">
+            <field name="name">Human Rights &amp; Labor Policy</field>
+            <field name="policy_type">hr</field>
+            <field name="summary">Ensuring fair labor practices, anti-discrimination, and living wages across our supply chain.</field>
+            <field name="effective_date">2024-03-01</field>
+            <field name="acknowledgement_deadline">2024-04-30</field>
+            <field name="state">under_review</field>
+            <field name="priority">1</field>
+        </record>
+
+        <record id="demo_policy_gov" model="esg.policy">
+            <field name="name">Anti-Bribery &amp; Corruption (ABC) Policy</field>
+            <field name="policy_type">anti_bribery</field>
+            <field name="summary">Zero-tolerance approach to bribery and corruption. Rules on gifts and hospitality.</field>
+            <field name="effective_date">2023-01-01</field>
+            <field name="acknowledgement_deadline">2023-02-28</field>
+            <field name="state">published</field>
+            <field name="priority">2</field>
+        </record>
+
+    </data>
+</odoo>

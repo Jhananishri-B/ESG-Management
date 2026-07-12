@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- stub — product_esg_profile views defined in env_goal_views.xml -->
+    </data>
+</odoo>

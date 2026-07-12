@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ════ LIST ════════════════════════════════════════════════ -->
+        <record id="view_esg_audit_list" model="ir.ui.view">
+            <field name="name">esg.audit.list</field>
+            <field name="model">esg.audit</field>
+            <field name="arch" type="xml">
+                <list string="ESG Audits"
+                      decoration-success="state in ('completed','reported','closed')"
+                      decoration-warning="state == 'in_progress'"
+                      decoration-muted="state == 'cancelled'">
+                    <field name="reference"/>
+                    <field name="name"/>
+                    <field name="audit_type" widget="badge"/>
+                    <field name="department_id"/>
+                    <field name="lead_auditor_id"/>
+                    <field name="planned_date"/>
+                    <field name="days_to_audit"/>
+                    <field name="finding_count" string="Findings"/>
+                    <field name="overall_score" string="Score" widget="progressbar"/>
+                    <field name="result" widget="badge"
+                           decoration-success="result in ('pass', 'pass_minor')"
+                           decoration-warning="result == 'conditional'"
+                           decoration-danger="result == 'fail'"/>
+                    <field name="state" widget="badge"
+                           decoration-success="state in ('completed','reported','closed')"
+                           decoration-info="state == 'in_progress'"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ════ FORM ════════════════════════════════════════════════ -->
+        <record id="view_esg_audit_form" model="ir.ui.view">
+            <field name="name">esg.audit.form</field>
+            <field name="model">esg.audit</field>
+            <field name="arch" type="xml">
+                <form string="ESG Audit">
+                    <header>
+                        <button name="action_start" string="Start Audit" type="object"
+                                class="btn-primary" invisible="state != 'planned'"/>
+                        <button name="action_complete" string="Complete Audit" type="object"
+                                class="btn-primary" invisible="state != 'in_progress'"/>
+                        <button name="action_report" string="Issue Report" type="object"
+                                class="btn-success" invisible="state != 'completed'"/>
+                        <button name="action_close" string="Close Audit" type="object"
+                                invisible="state != 'reported'"/>
+                        <button name="action_cancel" string="Cancel" type="object"
+                                invisible="state in ('closed', 'cancelled')"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="planned,in_progress,completed,reported,closed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" icon="fa-exclamation-triangle">
+                                <field name="finding_count" widget="statinfo" string="Total Findings"/>
+                            </button>
+                            <button class="oe_stat_button" icon="fa-bomb" style="color:#d9534f;">
+                                <field name="critical_count" widget="statinfo" string="Critical"/>
+                            </button>
+                        </div>
+                        
+                        <div class="eco-audit-result-banner alert alert-info" role="alert" invisible="state in ('planned','in_progress','cancelled')">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <strong>Overall Score: </strong> 
+                                    <span style="font-size:1.2em; font-weight:bold;"><field name="overall_score" nolabel="1"/> / 100</span>
+                                </div>
+                                <div>
+                                    <strong>Result: </strong> <field name="result" nolabel="1" widget="badge"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="Audit Title" readonly="state in ('reported','closed','cancelled')"/></h1>
+                            <h2><field name="reference" readonly="1"/></h2>
+                        </div>
+
+                        <group>
+                            <group string="Audit Details">
+                                <field name="audit_type" readonly="state in ('reported','closed','cancelled')"/>
+                                <field name="category_id" readonly="state in ('reported','closed','cancelled')"/>
+                                <field name="department_id" readonly="state in ('reported','closed','cancelled')"/>
+                                <field name="priority" widget="priority" readonly="state in ('reported','closed','cancelled')"/>
+                            </group>
+                            <group string="Team">
+                                <field name="lead_auditor_id" readonly="state in ('reported','closed','cancelled')"/>
+                                <field name="auditor_ids" widget="many2many_tags" readonly="state in ('reported','closed','cancelled')"/>
+                                <field name="auditee_id" readonly="state in ('reported','closed','cancelled')"/>
+                            </group>
+                        </group>
+
+                        <group string="Schedule">
+                            <group>
+                                <field name="planned_date" readonly="state in ('reported','closed','cancelled')"/>
+                                <field name="report_due_date" readonly="state in ('reported','closed','cancelled')"/>
+                                <field name="days_to_audit" invisible="state != 'planned'"/>
+                            </group>
+                            <group>
+                                <field name="start_date" readonly="1"/>
+                                <field name="end_date" readonly="1"/>
+                            </group>
+                        </group>
+                        
+                        <group string="Scope">
+                            <field name="scope" nolabel="1" placeholder="Define the boundaries and focus areas of this audit..." readonly="state in ('reported','closed','cancelled')"/>
+                        </group>
+
+                        <notebook>
+                            <page string="Findings &amp; Non-Conformities">
+                                <field name="finding_ids" context="{'default_audit_id': id}" readonly="state in ('reported','closed','cancelled')">
+                                    <list decoration-danger="severity in ('critical','major')"
+                                          decoration-warning="severity == 'minor'"
+                                          decoration-muted="closed == True">
+                                        <field name="name"/>
+                                        <field name="severity" widget="badge" 
+                                               decoration-danger="severity == 'critical'"
+                                               decoration-warning="severity == 'major'"
+                                               decoration-info="severity == 'minor'"
+                                               decoration-muted="severity == 'observation'"/>
+                                        <field name="area"/>
+                                        <field name="responsible_id"/>
+                                        <field name="due_date"/>
+                                        <field name="closed" widget="boolean_toggle"/>
+                                    </list>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="name"/>
+                                                    <field name="severity"/>
+                                                    <field name="area"/>
+                                                </group>
+                                                <group>
+                                                    <field name="responsible_id"/>
+                                                    <field name="due_date"/>
+                                                    <field name="closed"/>
+                                                    <field name="closed_on" invisible="not closed"/>
+                                                </group>
+                                            </group>
+                                            <group string="Details">
+                                                <field name="description"/>
+                                                <field name="corrective_action"/>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Audit Report" invisible="state in ('planned','in_progress')">
+                                <group>
+                                    <field name="executive_summary" widget="html"/>
+                                    <field name="recommendations" widget="html"/>
+                                    <field name="report_attachment_ids" widget="many2many_binary" string="Report Files"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search -->
+        <record id="view_esg_audit_search" model="ir.ui.view">
+            <field name="name">esg.audit.search</field>
+            <field name="model">esg.audit</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="reference"/>
+                    <field name="department_id"/>
+                    <field name="lead_auditor_id"/>
+                    <filter string="Planned" name="planned" domain="[('state','=','planned')]"/>
+                    <filter string="In Progress" name="in_progress" domain="[('state','=','in_progress')]"/>
+                    <filter string="Completed / Reported" name="done" domain="[('state','in',('completed','reported'))]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="grp_type" string="Audit Type" context="{'group_by':'audit_type'}"/>
+                        <filter name="grp_dept" string="Department" context="{'group_by':'department_id'}"/>
+                        <filter name="grp_state" string="Status" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esg_audit" model="ir.actions.act_window">
+            <field name="name">ESG Audits</field>
+            <field name="res_model">esg.audit</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_esg_audit_search"/>
+        </record>
+
+    </data>
+</odoo>

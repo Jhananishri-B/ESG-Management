@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Template: Public ESG Scorecard -->
+    <template id="public_esg_scorecard" name="Public ESG Scorecard">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty bg-light pb-5">
+                
+                <section class="s_text_image pt104 pb104" data-snippet="s_text_image" data-name="Text - Image">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 pt16 pb16">
+                                <h1 class="display-4 font-weight-bold" style="color: #1e3a8a;">Our Commitment to Sustainability</h1>
+                                <p class="lead text-muted mt-3 mb-4">
+                                    Transparency is key to our ESG strategy. View our real-time sustainability scores reflecting our environmental, social, and ethical governance efforts.
+                                </p>
+                            </div>
+                            <div class="col-lg-6 text-center pt16 pb16">
+                                <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border-radius: 20px; padding: 40px; color: white; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);">
+                                    <h5 class="text-uppercase tracking-widest" style="letter-spacing: 2px;">Overall ESG Score</h5>
+                                    <div style="font-size: 80px; font-weight: 900; line-height: 1;"><t t-esc="overall_score"/></div>
+                                    <p class="mt-2 mb-0 opacity-75">Aggregated across <t t-esc="department_count"/> departments.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="pt64 pb64">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="card border-0 shadow-sm h-100 rounded-lg">
+                                    <div class="card-body text-center p-5">
+                                        <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px; font-size: 32px;">
+                                            <i class="fa fa-leaf"></i>
+                                        </div>
+                                        <h3 class="font-weight-bold" style="color: #10b981;"><t t-esc="avg_env"/> / 100</h3>
+                                        <h5 class="text-muted text-uppercase mt-2">Environmental</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card border-0 shadow-sm h-100 rounded-lg">
+                                    <div class="card-body text-center p-5">
+                                        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px; font-size: 32px;">
+                                            <i class="fa fa-users"></i>
+                                        </div>
+                                        <h3 class="font-weight-bold" style="color: #3b82f6;"><t t-esc="avg_soc"/> / 100</h3>
+                                        <h5 class="text-muted text-uppercase mt-2">Social</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card border-0 shadow-sm h-100 rounded-lg">
+                                    <div class="card-body text-center p-5">
+                                        <div class="rounded-circle" style="background-color: #8b5cf6; color: white; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; width: 80px; height: 80px; font-size: 32px;">
+                                            <i class="fa fa-balance-scale"></i>
+                                        </div>
+                                        <h3 class="font-weight-bold" style="color: #8b5cf6;"><t t-esc="avg_gov"/> / 100</h3>
+                                        <h5 class="text-muted text-uppercase mt-2">Governance</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="pt64 pb64 bg-white text-center">
+                    <div class="container">
+                        <h2 class="mb-4">See Something? Say Something.</h2>
+                        <p class="lead text-muted mb-5">We are committed to the highest ethical standards. Use our secure whistleblower portal to report any compliance or ethics violations anonymously.</p>
+                        <a href="/esg/report" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-sm">Report an Issue</a>
+                    </div>
+                </section>
+
+            </div>
+        </t>
+    </template>
+
+    <!-- Template: Whistleblower Report Form -->
+    <template id="public_esg_report_form" name="Submit ESG Issue">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty bg-light pt64 pb104">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="card border-0 shadow-lg rounded-lg">
+                                <div class="card-header bg-white border-bottom p-4 text-center">
+                                    <h2 class="mb-0 text-primary">Report an Issue</h2>
+                                    <p class="text-muted mt-2 mb-0">Your report goes directly to our compliance and governance team.</p>
+                                </div>
+                                <div class="card-body p-5">
+                                    <form action="/esg/report/submit" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        
+                                        <div class="mb-4">
+                                            <label for="name" class="form-label font-weight-bold">Name (Optional)</label>
+                                            <input type="text" class="form-control form-control-lg bg-light" id="name" name="name" placeholder="Leave blank to remain anonymous"/>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label for="severity" class="form-label font-weight-bold">Severity <span class="text-danger">*</span></label>
+                                            <select class="form-select form-select-lg bg-light" id="severity" name="severity" required="1">
+                                                <option value="low">Low - Minor concern</option>
+                                                <option value="medium">Medium - Potential policy violation</option>
+                                                <option value="high">High - Serious ethical/compliance breach</option>
+                                                <option value="critical">Critical - Immediate risk to company/safety</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-5">
+                                            <label for="description" class="form-label font-weight-bold">Description <span class="text-danger">*</span></label>
+                                            <textarea class="form-control form-control-lg bg-light" id="description" name="description" rows="5" required="1" placeholder="Please provide as much detail as possible..."></textarea>
+                                        </div>
+                                        
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary btn-lg rounded-pill">Submit Secure Report</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Template: Report Submitted Successfully -->
+    <template id="public_esg_report_success" name="Issue Submitted">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty bg-light pt104 pb104 text-center">
+                <div class="container">
+                    <div class="d-inline-block rounded-circle bg-success text-white mb-4" style="width: 100px; height: 100px; line-height: 100px; font-size: 50px;">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <h1 class="display-4 text-dark mb-3">Report Submitted</h1>
+                    <p class="lead text-muted mx-auto" style="max-width: 600px;">
+                        Thank you for speaking up. Your report has been securely submitted to our governance team and will be reviewed immediately.
+                    </p>
+                    <div class="mt-5">
+                        <a href="/esg" class="btn btn-outline-primary btn-lg rounded-pill px-5">Back to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    
+</odoo>

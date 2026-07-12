@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Environmental Category -->
+        <record id="esg_category_environmental" model="esg.category">
+            <field name="name">Environmental</field>
+            <field name="code">E</field>
+            <field name="color">10</field>
+            <field name="icon">fa-leaf</field>
+            <field name="sequence">1</field>
+            <field name="description">
+                Tracks the organization's environmental impact including
+                carbon emissions, energy consumption, water usage, and waste management.
+            </field>
+        </record>
+
+        <!-- Social Category -->
+        <record id="esg_category_social" model="esg.category">
+            <field name="name">Social</field>
+            <field name="code">S</field>
+            <field name="color">4</field>
+            <field name="icon">fa-users</field>
+            <field name="sequence">2</field>
+            <field name="description">
+                Measures the organization's social responsibility including
+                CSR activities, employee wellbeing, diversity, and community engagement.
+            </field>
+        </record>
+
+        <!-- Governance Category -->
+        <record id="esg_category_governance" model="esg.category">
+            <field name="name">Governance</field>
+            <field name="code">G</field>
+            <field name="color">2</field>
+            <field name="icon">fa-shield</field>
+            <field name="sequence">3</field>
+            <field name="description">
+                Evaluates organizational governance including policy compliance,
+                audit results, risk management, and ethical business practices.
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ══ Environmental Goals ══════════════════════════════════════ -->
+        <record id="goal_carbon_mfg_2024" model="esg.goal">
+            <field name="name">Reduce Manufacturing Carbon by 15%</field>
+            <field name="category_id" ref="ecosphere_core.esg_category_environmental"/>
+            <field name="department_id" ref="demo_departments.dept_manufacturing"/>
+            <field name="target_value">120000</field>
+            <field name="current_value">134500</field>
+            <field name="unit">kg CO₂e</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="deadline">2024-12-31</field>
+            <field name="state">at_risk</field>
+            <field name="priority">2</field>
+            <field name="weight">5.0</field>
+        </record>
+
+        <record id="goal_renewable_energy" model="esg.goal">
+            <field name="name">Achieve 60% Renewable Energy Usage</field>
+            <field name="category_id" ref="ecosphere_core.esg_category_environmental"/>
+            <field name="department_id" ref="demo_departments.dept_facilities"/>
+            <field name="target_value">60</field>
+            <field name="current_value">52</field>
+            <field name="unit">%</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="deadline">2024-09-30</field>
+            <field name="state">active</field>
+            <field name="priority">1</field>
+            <field name="weight">4.0</field>
+        </record>
+
+        <record id="goal_waste_reduction" model="esg.goal">
+            <field name="name">Zero Waste to Landfill Program</field>
+            <field name="category_id" ref="ecosphere_core.esg_category_environmental"/>
+            <field name="department_id" ref="demo_departments.dept_manufacturing"/>
+            <field name="target_value">100</field>
+            <field name="current_value">78</field>
+            <field name="unit">% diversion rate</field>
+            <field name="start_date">2024-03-01</field>
+            <field name="deadline">2024-12-31</field>
+            <field name="state">active</field>
+            <field name="priority">1</field>
+            <field name="weight">3.0</field>
+        </record>
+
+        <record id="goal_water_usage" model="esg.goal">
+            <field name="name">Reduce Water Consumption 20%</field>
+            <field name="category_id" ref="ecosphere_core.esg_category_environmental"/>
+            <field name="department_id" ref="demo_departments.dept_facilities"/>
+            <field name="target_value">800000</field>
+            <field name="current_value">920000</field>
+            <field name="unit">liters</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="deadline">2024-06-30</field>
+            <field name="state">achieved</field>
+            <field name="priority">0</field>
+            <field name="weight">2.0</field>
+        </record>
+
+        <!-- ══ Social Goals ═════════════════════════════════════════════ -->
+        <record id="goal_csr_participation" model="esg.goal">
+            <field name="name">80% Employee CSR Participation Rate</field>
+            <field name="category_id" ref="ecosphere_core.esg_category_social"/>
+            <field name="department_id" ref="demo_departments.dept_hr"/>
+            <field name="target_value">80</field>
+            <field name="current_value">73</field>
+            <field name="unit">%</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="deadline">2024-12-31</field>
+            <field name="state">active</field>
+            <field name="priority">1</field>
+            <field name="weight">4.0</field>
+        </record>
+
+        <record id="goal_volunteer_hours" model="esg.goal">
+            <field name="name">5,000 Volunteer Hours Across Organization</field>
+            <field name="category_id" ref="ecosphere_core.esg_category_social"/>
+            <field name="department_id" ref="demo_departments.dept_hr"/>
+            <field name="target_value">5000</field>
+            <field name="current_value">3820</field>
+            <field name="unit">hours</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="deadline">2024-12-31</field>
+            <field name="state">active</field>
+            <field name="priority">1</field>
+            <field name="weight">3.0</field>
+        </record>
+
+        <record id="goal_diversity" model="esg.goal">
+            <field name="name">30% Women in Leadership Roles</field>
+            <field name="category_id" ref="ecosphere_core.esg_category_social"/>
+            <field name="department_id" ref="demo_departments.dept_hr"/>
+            <field name="target_value">30</field>
+            <field name="current_value">24</field>
+            <field name="unit">%</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="deadline">2025-12-31</field>
+            <field name="state">active</field>
+            <field name="priority">2</field>
+            <field name="weight">5.0</field>
+        </record>
+
+        <record id="goal_training_hours" model="esg.goal">
+            <field name="name">40 Training Hours Per Employee Annually</field>
+            <field name="category_id" ref="ecosphere_core.esg_category_social"/>
+            <field name="department_id" ref="demo_departments.dept_hr"/>
+            <field name="target_value">40</field>
+            <field name="current_value">40</field>
+            <field name="unit">hours/employee</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="deadline">2024-12-31</field>
+            <field name="state">achieved</field>
+            <field name="priority">0</field>
+            <field name="weight">2.0</field>
+        </record>
+
+        <!-- ══ Governance Goals ══════════════════════════════════════════ -->
+        <record id="goal_policy_compliance" model="esg.goal">
+            <field name="name">100% Policy Acknowledgement Rate</field>
+            <field name="category_id" ref="ecosphere_core.esg_category_governance"/>
+            <field name="department_id" ref="demo_departments.dept_executive"/>
+            <field name="target_value">100</field>
+            <field name="current_value">94</field>
+            <field name="unit">%</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="deadline">2024-12-31</field>
+            <field name="state">active</field>
+            <field name="priority">2</field>
+            <field name="weight">5.0</field>
+        </record>
+
+        <record id="goal_audit_completion" model="esg.goal">
+            <field name="name">Complete All Scheduled Audits On Time</field>
+            <field name="category_id" ref="ecosphere_core.esg_category_governance"/>
+            <field name="department_id" ref="demo_departments.dept_finance"/>
+            <field name="target_value">30</field>
+            <field name="current_value">26</field>
+            <field name="unit">audits</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="deadline">2024-12-31</field>
+            <field name="state">active</field>
+            <field name="priority">1</field>
+            <field name="weight">4.0</field>
+        </record>
+
+        <record id="goal_risk_reduction" model="esg.goal">
+            <field name="name">Reduce High-Risk Items by 50%</field>
+            <field name="category_id" ref="ecosphere_core.esg_category_governance"/>
+            <field name="department_id" ref="demo_departments.dept_finance"/>
+            <field name="target_value">50</field>
+            <field name="current_value">38</field>
+            <field name="unit">% reduction</field>
+            <field name="start_date">2024-01-01</field>
+            <field name="deadline">2024-09-30</field>
+            <field name="state">active</field>
+            <field name="priority">1</field>
+            <field name="weight">3.0</field>
+        </record>
+
+        <record id="goal_iso_certification" model="esg.goal">
+            <field name="name">Achieve ISO 14001 Certification</field>
+            <field name="category_id" ref="ecosphere_core.esg_category_governance"/>
+            <field name="department_id" ref="demo_departments.dept_facilities"/>
+            <field name="target_value">1</field>
+            <field name="current_value">1</field>
+            <field name="unit">certification</field>
+            <field name="start_date">2023-06-01</field>
+            <field name="deadline">2024-06-30</field>
+            <field name="state">achieved</field>
+            <field name="priority">2</field>
+            <field name="weight">5.0</field>
+        </record>
+
+    </data>
+</odoo>

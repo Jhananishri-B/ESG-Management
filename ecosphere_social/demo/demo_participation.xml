@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Diversity Metrics — Q1 2024 Snapshot -->
+        <record id="dm_mfg_q1" model="diversity.metric">
+            <field name="department_id" ref="ecosphere_core.dept_manufacturing"/>
+            <field name="period_date">2024-01-01</field>
+            <field name="total_employees">120</field>
+            <field name="female_count">32</field>
+            <field name="male_count">86</field>
+            <field name="other_gender_count">2</field>
+            <field name="leadership_total">15</field>
+            <field name="female_leadership">4</field>
+            <field name="age_under_30">28</field>
+            <field name="age_30_50">72</field>
+            <field name="age_over_50">20</field>
+            <field name="new_hires">8</field>
+            <field name="attrition">3</field>
+        </record>
+
+        <record id="dm_tech_q1" model="diversity.metric">
+            <field name="department_id" ref="ecosphere_core.dept_technology"/>
+            <field name="period_date">2024-01-01</field>
+            <field name="total_employees">85</field>
+            <field name="female_count">28</field>
+            <field name="male_count">55</field>
+            <field name="other_gender_count">2</field>
+            <field name="leadership_total">12</field>
+            <field name="female_leadership">5</field>
+            <field name="age_under_30">35</field>
+            <field name="age_30_50">42</field>
+            <field name="age_over_50">8</field>
+            <field name="new_hires">12</field>
+            <field name="attrition">4</field>
+        </record>
+
+        <record id="dm_hr_q1" model="diversity.metric">
+            <field name="department_id" ref="ecosphere_core.dept_hr"/>
+            <field name="period_date">2024-01-01</field>
+            <field name="total_employees">25</field>
+            <field name="female_count">18</field>
+            <field name="male_count">7</field>
+            <field name="other_gender_count">0</field>
+            <field name="leadership_total">5</field>
+            <field name="female_leadership">3</field>
+            <field name="age_under_30">8</field>
+            <field name="age_30_50">14</field>
+            <field name="age_over_50">3</field>
+            <field name="new_hires">2</field>
+            <field name="attrition">1</field>
+        </record>
+    </data>
+</odoo>

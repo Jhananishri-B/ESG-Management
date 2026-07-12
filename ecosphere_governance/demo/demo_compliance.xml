@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Compliance Issues -->
+        <record id="demo_comp_1" model="compliance.issue">
+            <field name="name">Late filing of Q1 Emissions Report</field>
+            <field name="issue_type">regulatory</field>
+            <field name="severity">high</field>
+            <field name="department_id" ref="ecosphere_core.dept_manufacturing"/>
+            <field name="reported_date">2024-04-05</field>
+            <field name="due_date">2024-04-10</field>
+            <field name="state">resolved</field>
+            <field name="resolved_date">2024-04-08</field>
+            <field name="regulation_name">EPA GHG Reporting Program</field>
+            <field name="fine_amount">2500.00</field>
+            <field name="root_cause">Data gathering from site B was delayed due to system outage.</field>
+            <field name="corrective_action">Paid fine, filed report, automated data pipeline for site B.</field>
+        </record>
+
+        <record id="demo_comp_2" model="compliance.issue">
+            <field name="name">Supplier Data Privacy Breach</field>
+            <field name="issue_type">data_privacy</field>
+            <field name="severity">critical</field>
+            <field name="department_id" ref="ecosphere_core.dept_technology"/>
+            <field name="reported_date">2024-06-12</field>
+            <field name="due_date">2024-06-19</field>
+            <field name="state">in_progress</field>
+            <field name="regulation_name">GDPR</field>
+            <field name="description">A third-party supplier inadvertently exposed employee contact information.</field>
+        </record>
+
+        <!-- Risk Register -->
+        <record id="demo_risk_climate" model="risk.register">
+            <field name="name">Physical Climate Risk: Flood at Coastal Facility</field>
+            <field name="risk_category">climate</field>
+            <field name="department_id" ref="ecosphere_core.dept_manufacturing"/>
+            <field name="likelihood">3</field>
+            <field name="impact">5</field>
+            <field name="state">mitigating</field>
+            <field name="existing_controls">Standard flood insurance.</field>
+            <field name="mitigation_plan">Install permanent flood barriers and relocate critical servers to higher ground.</field>
+            <field name="residual_likelihood">2</field>
+            <field name="residual_impact">3</field>
+        </record>
+
+        <record id="demo_risk_supply" model="risk.register">
+            <field name="name">Child Labor in Tier 3 Supply Chain</field>
+            <field name="risk_category">supply_chain</field>
+            <field name="department_id" ref="ecosphere_core.dept_supplychain"/>
+            <field name="likelihood">2</field>
+            <field name="impact">5</field>
+            <field name="state">assessed</field>
+        </record>
+
+    </data>
+</odoo>

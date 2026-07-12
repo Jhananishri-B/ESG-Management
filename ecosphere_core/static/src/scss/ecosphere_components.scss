@@ -1,0 +1,361 @@
+/**
+ * EcoSphere — Additional Component Styles
+ * KPI cards, badges, leaderboards, timeline, notification panel, etc.
+ */
+
+// ═══════════════════════════════════════════════════════════════════════════
+// KPI CARDS
+// ═══════════════════════════════════════════════════════════════════════════
+
+.eco-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--eco-space-md);
+  margin-bottom: var(--eco-space-xl);
+}
+
+.eco-kpi-card {
+  background: var(--eco-bg);
+  border: 1px solid var(--eco-border);
+  border-radius: var(--eco-radius-lg);
+  padding: var(--eco-space-lg);
+  box-shadow: var(--eco-shadow-sm);
+  transition: var(--eco-transition);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--eco-kpi-accent, var(--eco-blue-500));
+    border-radius: var(--eco-radius-lg) var(--eco-radius-lg) 0 0;
+  }
+
+  &:hover {
+    box-shadow: var(--eco-shadow-lg);
+    transform: translateY(-2px);
+    border-color: var(--eco-blue-200);
+  }
+
+  .eco-kpi-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--eco-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    background: var(--eco-kpi-icon-bg, var(--eco-blue-50));
+    color: var(--eco-kpi-icon-color, var(--eco-blue-600));
+    margin-bottom: var(--eco-space-md);
+  }
+
+  .eco-kpi-label {
+    font-size: var(--eco-text-xs);
+    font-weight: 700;
+    color: var(--eco-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+
+  .eco-kpi-value {
+    font-size: var(--eco-text-2xl);
+    font-weight: 800;
+    color: var(--eco-text-primary);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 8px;
+    animation: eco-count-up 0.4s ease both;
+  }
+
+  .eco-kpi-delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--eco-text-xs);
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: var(--eco-radius-full);
+
+    &.positive {
+      background: var(--eco-emerald-50);
+      color: var(--eco-emerald-700);
+    }
+    &.negative {
+      background: var(--eco-rose-50);
+      color: var(--eco-rose-600);
+    }
+    &.neutral {
+      background: var(--eco-gray-100);
+      color: var(--eco-gray-600);
+    }
+  }
+
+  // Color variants
+  &.eco-kpi-env   { --eco-kpi-accent: #10b981; --eco-kpi-icon-bg: #ecfdf5; --eco-kpi-icon-color: #059669; }
+  &.eco-kpi-soc   { --eco-kpi-accent: #3b82f6; --eco-kpi-icon-bg: #eff6ff; --eco-kpi-icon-color: #2563eb; }
+  &.eco-kpi-gov   { --eco-kpi-accent: #8b5cf6; --eco-kpi-icon-bg: #f5f3ff; --eco-kpi-icon-color: #7c3aed; }
+  &.eco-kpi-amber { --eco-kpi-accent: #f59e0b; --eco-kpi-icon-bg: #fffbeb; --eco-kpi-icon-color: #d97706; }
+  &.eco-kpi-rose  { --eco-kpi-accent: #f43f5e; --eco-kpi-icon-bg: #fff1f2; --eco-kpi-icon-color: #e11d48; }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// BADGE COMPONENT
+// ═══════════════════════════════════════════════════════════════════════════
+
+.eco-badge-card {
+  background: var(--eco-bg);
+  border: 1px solid var(--eco-border);
+  border-radius: var(--eco-radius-lg);
+  padding: var(--eco-space-md);
+  text-align: center;
+  transition: var(--eco-transition);
+
+  &:hover {
+    box-shadow: var(--eco-shadow-lg);
+    transform: translateY(-3px);
+  }
+
+  .eco-badge-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    margin: 0 auto var(--eco-space-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    background: linear-gradient(135deg, var(--eco-amber-50), #fef3c7);
+    border: 3px solid #fde68a;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+    animation: eco-badge-pop 0.4s ease both;
+  }
+
+  .eco-badge-name {
+    font-weight: 700;
+    font-size: var(--eco-text-sm);
+    color: var(--eco-text-primary);
+    margin-bottom: 4px;
+  }
+
+  .eco-badge-desc {
+    font-size: var(--eco-text-xs);
+    color: var(--eco-text-muted);
+    line-height: 1.4;
+  }
+
+  .eco-badge-xp {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--eco-amber-50);
+    color: var(--eco-amber-600);
+    font-weight: 700;
+    font-size: var(--eco-text-xs);
+    padding: 3px 10px;
+    border-radius: var(--eco-radius-full);
+    border: 1px solid #fde68a;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// LEADERBOARD
+// ═══════════════════════════════════════════════════════════════════════════
+
+.eco-leaderboard {
+  background: var(--eco-bg);
+  border: 1px solid var(--eco-border);
+  border-radius: var(--eco-radius-lg);
+  overflow: hidden;
+
+  .eco-leaderboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--eco-space-md) var(--eco-space-lg);
+    border-bottom: 1px solid var(--eco-border);
+    background: var(--eco-gray-50);
+
+    h3 {
+      margin: 0;
+      font-size: var(--eco-text-md);
+      font-weight: 700;
+      color: var(--eco-text-primary);
+    }
+  }
+
+  .eco-leaderboard-row {
+    display: flex;
+    align-items: center;
+    gap: var(--eco-space-md);
+    padding: var(--eco-space-sm) var(--eco-space-lg);
+    border-bottom: 1px solid var(--eco-border-soft);
+    transition: var(--eco-transition-fast);
+
+    &:last-child { border-bottom: none; }
+    &:hover { background: var(--eco-gray-50); }
+
+    &.eco-rank-1 .eco-rank-badge { background: linear-gradient(135deg, #ffd700, #f59e0b); color: #fff; }
+    &.eco-rank-2 .eco-rank-badge { background: linear-gradient(135deg, #c0c0c0, #9ca3af); color: #fff; }
+    &.eco-rank-3 .eco-rank-badge { background: linear-gradient(135deg, #cd7f32, #92400e); color: #fff; }
+
+    .eco-rank-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: var(--eco-text-xs);
+      background: var(--eco-gray-100);
+      color: var(--eco-text-secondary);
+      flex-shrink: 0;
+    }
+
+    .eco-leaderboard-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--eco-blue-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--eco-text-sm);
+      color: var(--eco-blue-700);
+      flex-shrink: 0;
+    }
+
+    .eco-leaderboard-info {
+      flex: 1;
+      .eco-leaderboard-name { font-weight: 600; font-size: var(--eco-text-sm); color: var(--eco-text-primary); }
+      .eco-leaderboard-dept { font-size: var(--eco-text-xs); color: var(--eco-text-muted); }
+    }
+
+    .eco-leaderboard-xp {
+      font-weight: 800;
+      font-size: var(--eco-text-md);
+      color: var(--eco-amber-600);
+      letter-spacing: -0.02em;
+
+      &::after { content: ' XP'; font-size: var(--eco-text-xs); font-weight: 600; color: var(--eco-text-muted); }
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// NOTIFICATION PANEL
+// ═══════════════════════════════════════════════════════════════════════════
+
+.eco-notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--eco-space-sm);
+  padding: var(--eco-space-md);
+  border-radius: var(--eco-radius-md);
+  margin-bottom: var(--eco-space-xs);
+  border: 1px solid var(--eco-border);
+  background: var(--eco-bg);
+  transition: var(--eco-transition-fast);
+  animation: eco-slide-in-right 0.2s ease both;
+
+  &:hover { background: var(--eco-gray-50); }
+  &.unread { border-left: 3px solid var(--eco-blue-500); background: var(--eco-blue-50); }
+
+  .eco-notif-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--eco-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+
+    &.env   { background: var(--eco-emerald-50); color: var(--eco-emerald-600); }
+    &.soc   { background: var(--eco-blue-50);    color: var(--eco-blue-600); }
+    &.gov   { background: #f5f3ff;              color: var(--eco-violet-600); }
+    &.badge { background: var(--eco-amber-50);   color: var(--eco-amber-600); }
+    &.alert { background: var(--eco-rose-50);    color: var(--eco-rose-600); }
+  }
+
+  .eco-notif-content {
+    flex: 1;
+    .eco-notif-title { font-weight: 600; font-size: var(--eco-text-sm); color: var(--eco-text-primary); line-height: 1.3; }
+    .eco-notif-time  { font-size: var(--eco-text-xs); color: var(--eco-text-muted); margin-top: 2px; }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CHART CONTAINERS
+// ═══════════════════════════════════════════════════════════════════════════
+
+.eco-chart-card {
+  background: var(--eco-bg);
+  border: 1px solid var(--eco-border);
+  border-radius: var(--eco-radius-lg);
+  padding: var(--eco-space-lg);
+  box-shadow: var(--eco-shadow-sm);
+
+  .eco-chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--eco-space-lg);
+
+    h3 {
+      margin: 0;
+      font-size: var(--eco-text-md);
+      font-weight: 700;
+      color: var(--eco-text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .eco-chart-legend {
+      display: flex;
+      gap: var(--eco-space-md);
+      font-size: var(--eco-text-xs);
+
+      .eco-legend-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+        color: var(--eco-text-secondary);
+
+        &::before {
+          content: '';
+          width: 10px;
+          height: 10px;
+          border-radius: 2px;
+          background: var(--eco-legend-color, var(--eco-blue-500));
+        }
+      }
+    }
+  }
+
+  .eco-chart-canvas-wrap {
+    position: relative;
+    height: 240px;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// RESPONSIVE
+// ═══════════════════════════════════════════════════════════════════════════
+
+@media (max-width: 1024px) {
+  .eco-dept-score-summary { grid-template-columns: 1fr; }
+  .eco-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .eco-kpi-grid { grid-template-columns: 1fr; }
+  .eco-chart-card .eco-chart-canvas-wrap { height: 180px; }
+  .o_form_view .o_form_sheet { padding: var(--eco-space-md) !important; }
+}

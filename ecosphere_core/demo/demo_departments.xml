@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ══ Department Tags ══════════════════════════════════════════ -->
+        <record id="tag_manufacturing" model="esg.department.tag">
+            <field name="name">Manufacturing</field><field name="color">3</field>
+        </record>
+        <record id="tag_operations" model="esg.department.tag">
+            <field name="name">Operations</field><field name="color">4</field>
+        </record>
+        <record id="tag_corporate" model="esg.department.tag">
+            <field name="name">Corporate</field><field name="color">2</field>
+        </record>
+        <record id="tag_technology" model="esg.department.tag">
+            <field name="name">Technology</field><field name="color">6</field>
+        </record>
+
+        <!-- ══ Departments — Level 1 (Root) ════════════════════════════ -->
+        <record id="dept_executive" model="esg.department">
+            <field name="name">Executive Office</field>
+            <field name="sequence">1</field>
+            <field name="env_score">82.0</field>
+            <field name="social_score">88.0</field>
+            <field name="governance_score">91.0</field>
+            <field name="total_carbon_kg">12500.0</field>
+            <field name="carbon_target_kg">15000.0</field>
+            <field name="total_xp">3200</field>
+            <field name="esg_rank">1</field>
+            <field name="tag_ids" eval="[(4, ref('tag_corporate'))]"/>
+        </record>
+
+        <record id="dept_manufacturing" model="esg.department">
+            <field name="name">Manufacturing</field>
+            <field name="sequence">2</field>
+            <field name="env_score">58.0</field>
+            <field name="social_score">72.0</field>
+            <field name="governance_score">68.0</field>
+            <field name="total_carbon_kg">145000.0</field>
+            <field name="carbon_target_kg">120000.0</field>
+            <field name="total_xp">2800</field>
+            <field name="esg_rank">4</field>
+            <field name="tag_ids" eval="[(4, ref('tag_manufacturing'))]"/>
+        </record>
+
+        <record id="dept_technology" model="esg.department">
+            <field name="name">Technology</field>
+            <field name="sequence">3</field>
+            <field name="env_score">74.0</field>
+            <field name="social_score">80.0</field>
+            <field name="governance_score">85.0</field>
+            <field name="total_carbon_kg">28000.0</field>
+            <field name="carbon_target_kg">35000.0</field>
+            <field name="total_xp">4100</field>
+            <field name="esg_rank">2</field>
+            <field name="tag_ids" eval="[(4, ref('tag_technology'))]"/>
+        </record>
+
+        <record id="dept_hr" model="esg.department">
+            <field name="name">Human Resources</field>
+            <field name="sequence">4</field>
+            <field name="env_score">79.0</field>
+            <field name="social_score">91.0</field>
+            <field name="governance_score">87.0</field>
+            <field name="total_carbon_kg">8200.0</field>
+            <field name="carbon_target_kg">10000.0</field>
+            <field name="total_xp">3800</field>
+            <field name="esg_rank">3</field>
+            <field name="tag_ids" eval="[(4, ref('tag_corporate'))]"/>
+        </record>
+
+        <record id="dept_finance" model="esg.department">
+            <field name="name">Finance</field>
+            <field name="sequence">5</field>
+            <field name="env_score">71.0</field>
+            <field name="social_score">75.0</field>
+            <field name="governance_score">90.0</field>
+            <field name="total_carbon_kg">9500.0</field>
+            <field name="carbon_target_kg">12000.0</field>
+            <field name="total_xp">2200</field>
+            <field name="esg_rank">5</field>
+            <field name="tag_ids" eval="[(4, ref('tag_corporate'))]"/>
+        </record>
+
+        <record id="dept_logistics" model="esg.department">
+            <field name="name">Logistics &amp; Supply Chain</field>
+            <field name="sequence">6</field>
+            <field name="env_score">48.0</field>
+            <field name="social_score">65.0</field>
+            <field name="governance_score">62.0</field>
+            <field name="total_carbon_kg">220000.0</field>
+            <field name="carbon_target_kg">200000.0</field>
+            <field name="total_xp">1900</field>
+            <field name="esg_rank">8</field>
+            <field name="tag_ids" eval="[(4, ref('tag_operations'))]"/>
+        </record>
+
+        <record id="dept_marketing" model="esg.department">
+            <field name="name">Marketing</field>
+            <field name="sequence">7</field>
+            <field name="env_score">76.0</field>
+            <field name="social_score">84.0</field>
+            <field name="governance_score">79.0</field>
+            <field name="total_carbon_kg">11200.0</field>
+            <field name="carbon_target_kg">14000.0</field>
+            <field name="total_xp">3100</field>
+            <field name="esg_rank">6</field>
+            <field name="tag_ids" eval="[(4, ref('tag_corporate'))]"/>
+        </record>
+
+        <record id="dept_rd" model="esg.department">
+            <field name="name">Research &amp; Development</field>
+            <field name="sequence">8</field>
+            <field name="env_score">81.0</field>
+            <field name="social_score">86.0</field>
+            <field name="governance_score">83.0</field>
+            <field name="total_carbon_kg">18500.0</field>
+            <field name="carbon_target_kg">22000.0</field>
+            <field name="total_xp">4800</field>
+            <field name="esg_rank">3</field>
+            <field name="tag_ids" eval="[(4, ref('tag_technology'))]"/>
+        </record>
+
+        <record id="dept_sales" model="esg.department">
+            <field name="name">Sales</field>
+            <field name="sequence">9</field>
+            <field name="env_score">64.0</field>
+            <field name="social_score">78.0</field>
+            <field name="governance_score">74.0</field>
+            <field name="total_carbon_kg">35000.0</field>
+            <field name="carbon_target_kg">40000.0</field>
+            <field name="total_xp">2600</field>
+            <field name="esg_rank">7</field>
+            <field name="tag_ids" eval="[(4, ref('tag_operations'))]"/>
+        </record>
+
+        <record id="dept_facilities" model="esg.department">
+            <field name="name">Facilities &amp; Sustainability</field>
+            <field name="sequence">10</field>
+            <field name="env_score">88.0</field>
+            <field name="social_score">82.0</field>
+            <field name="governance_score">86.0</field>
+            <field name="total_carbon_kg">6800.0</field>
+            <field name="carbon_target_kg">8000.0</field>
+            <field name="total_xp">5200</field>
+            <field name="esg_rank">1</field>
+            <field name="tag_ids" eval="[(4, ref('tag_operations'))]"/>
+        </record>
+
+        <!-- ══ Sub-Departments ═══════════════════════════════════════ -->
+        <record id="dept_mfg_assembly" model="esg.department">
+            <field name="name">Assembly Line</field>
+            <field name="parent_id" ref="dept_manufacturing"/>
+            <field name="sequence">1</field>
+            <field name="env_score">52.0</field>
+            <field name="social_score">70.0</field>
+            <field name="governance_score">65.0</field>
+            <field name="total_carbon_kg">85000.0</field>
+            <field name="carbon_target_kg">70000.0</field>
+        </record>
+
+        <record id="dept_mfg_qa" model="esg.department">
+            <field name="name">Quality Assurance</field>
+            <field name="parent_id" ref="dept_manufacturing"/>
+            <field name="sequence">2</field>
+            <field name="env_score">66.0</field>
+            <field name="social_score">75.0</field>
+            <field name="governance_score">72.0</field>
+            <field name="total_carbon_kg">28000.0</field>
+            <field name="carbon_target_kg">30000.0</field>
+        </record>
+
+        <record id="dept_tech_software" model="esg.department">
+            <field name="name">Software Engineering</field>
+            <field name="parent_id" ref="dept_technology"/>
+            <field name="sequence">1</field>
+            <field name="env_score">78.0</field>
+            <field name="social_score">83.0</field>
+            <field name="governance_score">88.0</field>
+            <field name="total_carbon_kg">15000.0</field>
+            <field name="carbon_target_kg">18000.0</field>
+        </record>
+
+        <record id="dept_tech_infra" model="esg.department">
+            <field name="name">IT Infrastructure</field>
+            <field name="parent_id" ref="dept_technology"/>
+            <field name="sequence">2</field>
+            <field name="env_score">69.0</field>
+            <field name="social_score">77.0</field>
+            <field name="governance_score">82.0</field>
+            <field name="total_carbon_kg">13000.0</field>
+            <field name="carbon_target_kg">17000.0</field>
+        </record>
+
+    </data>
+</odoo>

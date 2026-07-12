@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ════════════════════════════════════════════════════════════
+             ESG DEPARTMENT — KANBAN
+        ════════════════════════════════════════════════════════════ -->
+        <record id="view_esg_department_kanban" model="ir.ui.view">
+            <field name="name">esg.department.kanban</field>
+            <field name="model">esg.department</field>
+            <field name="arch" type="xml">
+                <kanban class="eco-kanban-dept" default_group_by="parent_id">
+                    <field name="name"/>
+                    <field name="esg_score"/>
+                    <field name="env_score"/>
+                    <field name="social_score"/>
+                    <field name="governance_score"/>
+                    <field name="esg_score_delta"/>
+                    <field name="total_carbon_kg"/>
+                    <field name="manager_id"/>
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="card">
+                            <div t-attf-class="eco-dept-card #{record.color.raw_value ? 'eco-color-' + record.color.raw_value : ''}">
+                                <div class="eco-dept-card-header">
+                                    <div class="eco-dept-icon">
+                                        <i class="fa fa-building-o"/>
+                                    </div>
+                                    <div class="eco-dept-title">
+                                        <strong><field name="name"/></strong>
+                                        <small class="text-muted">
+                                            <field name="manager_id"/>
+                                        </small>
+                                    </div>
+                                    <div class="eco-score-badge">
+                                        <span t-attf-class="eco-score #{record.esg_score.raw_value >= 80 ? 'eco-score-excellent' : record.esg_score.raw_value >= 60 ? 'eco-score-good' : record.esg_score.raw_value >= 40 ? 'eco-score-average' : 'eco-score-poor'}">
+                                            <field name="esg_score"/>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="eco-dept-scores">
+                                    <div class="eco-pillar-score eco-env">
+                                        <span class="eco-pillar-label"><i class="fa fa-leaf"/> E</span>
+                                        <div class="eco-progress-bar-wrap">
+                                            <div class="eco-progress-bar eco-env-bar" t-attf-style="width: #{record.env_score.raw_value}%"/>
+                                        </div>
+                                        <span class="eco-pillar-val"><field name="env_score"/>%</span>
+                                    </div>
+                                    <div class="eco-pillar-score eco-soc">
+                                        <span class="eco-pillar-label"><i class="fa fa-users"/> S</span>
+                                        <div class="eco-progress-bar-wrap">
+                                            <div class="eco-progress-bar eco-soc-bar" t-attf-style="width: #{record.social_score.raw_value}%"/>
+                                        </div>
+                                        <span class="eco-pillar-val"><field name="social_score"/>%</span>
+                                    </div>
+                                    <div class="eco-pillar-score eco-gov">
+                                        <span class="eco-pillar-label"><i class="fa fa-shield"/> G</span>
+                                        <div class="eco-progress-bar-wrap">
+                                            <div class="eco-progress-bar eco-gov-bar" t-attf-style="width: #{record.governance_score.raw_value}%"/>
+                                        </div>
+                                        <span class="eco-pillar-val"><field name="governance_score"/>%</span>
+                                    </div>
+                                </div>
+                                <div class="eco-dept-footer">
+                                    <span class="eco-carbon-tag">
+                                        <i class="fa fa-cloud"/> <field name="total_carbon_kg"/> kg
+                                    </span>
+                                    <span t-attf-class="eco-delta #{record.esg_score_delta.raw_value >= 0 ? 'eco-delta-up' : 'eco-delta-down'}">
+                                        <i t-attf-class="fa #{record.esg_score_delta.raw_value >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"/>
+                                        <field name="esg_score_delta"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- ════════════════════════════════════════════════════════════
+             ESG DEPARTMENT — LIST
+        ════════════════════════════════════════════════════════════ -->
+        <record id="view_esg_department_list" model="ir.ui.view">
+            <field name="name">esg.department.list</field>
+            <field name="model">esg.department</field>
+            <field name="arch" type="xml">
+                <list string="Departments" decoration-success="esg_score &gt;= 80" decoration-warning="esg_score &gt;= 50 and esg_score &lt; 80" decoration-danger="esg_score &lt; 50">
+                    <field name="esg_rank" string="#"/>
+                    <field name="name"/>
+                    <field name="parent_id"/>
+                    <field name="manager_id"/>
+                    <field name="env_score" string="E Score" widget="progressbar" options="{'editable': false}"/>
+                    <field name="social_score" string="S Score" widget="progressbar" options="{'editable': false}"/>
+                    <field name="governance_score" string="G Score" widget="progressbar" options="{'editable': false}"/>
+                    <field name="esg_score" string="ESG Score" widget="progressbar" options="{'editable': false}"/>
+                    <field name="total_carbon_kg" string="Carbon (kg)"/>
+                    <field name="esg_score_delta" string="Δ ESG"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ════════════════════════════════════════════════════════════
+             ESG DEPARTMENT — FORM
+        ════════════════════════════════════════════════════════════ -->
+        <record id="view_esg_department_form" model="ir.ui.view">
+            <field name="name">esg.department.form</field>
+            <field name="model">esg.department</field>
+            <field name="arch" type="xml">
+                <form string="ESG Department">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_goals"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-flag">
+                                <field name="esg_score" widget="statinfo" string="ESG Score"/>
+                            </button>
+                            <button name="%(action_esg_goal)d"
+                                    type="action"
+                                    class="oe_stat_button"
+                                    icon="fa-bullseye">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_text">Goals</span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <field name="logo" widget="image" class="oe_avatar" options="{'preview_image': 'logo'}"/>
+
+                        <div class="oe_title">
+                            <label for="name" string="Department"/>
+                            <h1><field name="name" placeholder="Department Name"/></h1>
+                        </div>
+
+                        <!-- ESG Score Summary Bar -->
+                        <div class="eco-dept-score-summary">
+                            <div class="eco-score-item eco-env-item">
+                                <div class="eco-score-label">
+                                    <i class="fa fa-leaf eco-text-env"/> Environmental
+                                </div>
+                                <div class="eco-score-val">
+                                    <field name="env_score"/>
+                                    <span t-attf-class="eco-delta-badge #{record.env_score_delta >= 0 ? 'up' : 'down'}">
+                                        <field name="env_score_delta"/>
+                                    </span>
+                                </div>
+                                <div class="eco-score-bar-wrap">
+                                    <field name="env_score" widget="progressbar" options="{'editable': false, 'current_value': 'env_score', 'max_value': 100}"/>
+                                </div>
+                            </div>
+                            <div class="eco-score-item eco-soc-item">
+                                <div class="eco-score-label">
+                                    <i class="fa fa-users eco-text-soc"/> Social
+                                </div>
+                                <div class="eco-score-val">
+                                    <field name="social_score"/>
+                                </div>
+                                <field name="social_score" widget="progressbar" options="{'editable': false, 'current_value': 'social_score', 'max_value': 100}"/>
+                            </div>
+                            <div class="eco-score-item eco-gov-item">
+                                <div class="eco-score-label">
+                                    <i class="fa fa-shield eco-text-gov"/> Governance
+                                </div>
+                                <div class="eco-score-val">
+                                    <field name="governance_score"/>
+                                </div>
+                                <field name="governance_score" widget="progressbar" options="{'editable': false, 'current_value': 'governance_score', 'max_value': 100}"/>
+                            </div>
+                        </div>
+
+                        <group>
+                            <group string="Department Info">
+                                <field name="parent_id"/>
+                                <field name="manager_id"/>
+                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                <field name="sequence"/>
+                                <field name="active" widget="boolean_toggle"/>
+                            </group>
+                            <group string="ESG Performance">
+                                <field name="esg_score" string="Overall ESG Score"/>
+                                <field name="total_carbon_kg" string="Total Carbon (kg CO₂e)"/>
+                                <field name="carbon_target_kg" string="Carbon Target (kg CO₂e)"/>
+                                <field name="total_xp" string="Department XP"/>
+                                <field name="esg_rank" string="ESG Rank"/>
+                            </group>
+                        </group>
+
+                        <group string="Description">
+                            <field name="description" nolabel="1" widget="html"/>
+                        </group>
+
+                        <field name="child_ids" string="Sub-Departments">
+                            <list>
+                                <field name="name"/>
+                                <field name="manager_id"/>
+                                <field name="esg_score"/>
+                            </list>
+                        </field>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- ════════════════════════════════════════════════════════════
+             ESG DEPARTMENT — SEARCH
+        ════════════════════════════════════════════════════════════ -->
+        <record id="view_esg_department_search" model="ir.ui.view">
+            <field name="name">esg.department.search</field>
+            <field name="model">esg.department</field>
+            <field name="arch" type="xml">
+                <search string="Search Departments">
+                    <field name="name" string="Department" filter_domain="['|', ('name', 'ilike', self), ('complete_name', 'ilike', self)]"/>
+                    <field name="manager_id"/>
+                    <field name="parent_id"/>
+                    <separator/>
+                    <filter string="Top-Level" name="top_level" domain="[('parent_id', '=', False)]"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="High Score (≥80)" name="high_score" domain="[('esg_score', '>=', 80)]"/>
+                    <filter string="At Risk (&lt;50)" name="at_risk" domain="[('esg_score', '&lt;', 50)]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_parent" string="Parent Department" context="{'group_by': 'parent_id'}"/>
+                        <filter name="group_manager" string="Manager" context="{'group_by': 'manager_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_esg_department" model="ir.actions.act_window">
+            <field name="name">Departments</field>
+            <field name="res_model">esg.department</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="search_view_id" ref="view_esg_department_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create your first ESG Department</p>
+                <p>Departments are the core organizational unit for ESG performance tracking.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

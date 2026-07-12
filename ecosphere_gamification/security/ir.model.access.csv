@@ -1,0 +1,25 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+# ── xp.ledger ─────────────────────────────────────────────────────────────
+access_xp_ledger_employee,xp.ledger employee,ecosphere_gamification.model_xp_ledger,ecosphere_core.group_ecosphere_employee,1,0,0,0
+access_xp_ledger_manager,xp.ledger manager,ecosphere_gamification.model_xp_ledger,ecosphere_core.group_ecosphere_manager,1,1,1,1
+access_xp_ledger_admin,xp.ledger admin,ecosphere_gamification.model_xp_ledger,ecosphere_core.group_ecosphere_admin,1,1,1,1
+# ── esg.badge ─────────────────────────────────────────────────────────────
+access_esg_badge_employee,esg.badge employee,ecosphere_gamification.model_esg_badge,ecosphere_core.group_ecosphere_employee,1,0,0,0
+access_esg_badge_manager,esg.badge manager,ecosphere_gamification.model_esg_badge,ecosphere_core.group_ecosphere_manager,1,1,1,1
+access_esg_badge_admin,esg.badge admin,ecosphere_gamification.model_esg_badge,ecosphere_core.group_ecosphere_admin,1,1,1,1
+# ── esg.challenge ─────────────────────────────────────────────────────────
+access_esg_challenge_employee,esg.challenge employee,ecosphere_gamification.model_esg_challenge,ecosphere_core.group_ecosphere_employee,1,0,0,0
+access_esg_challenge_manager,esg.challenge manager,ecosphere_gamification.model_esg_challenge,ecosphere_core.group_ecosphere_manager,1,1,1,1
+access_esg_challenge_admin,esg.challenge admin,ecosphere_gamification.model_esg_challenge,ecosphere_core.group_ecosphere_admin,1,1,1,1
+# ── challenge.participation ───────────────────────────────────────────────
+access_challenge_participation_employee,challenge.participation employee,ecosphere_gamification.model_challenge_participation,ecosphere_core.group_ecosphere_employee,1,1,1,0
+access_challenge_participation_manager,challenge.participation manager,ecosphere_gamification.model_challenge_participation,ecosphere_core.group_ecosphere_manager,1,1,1,1
+access_challenge_participation_admin,challenge.participation admin,ecosphere_gamification.model_challenge_participation,ecosphere_core.group_ecosphere_admin,1,1,1,1
+# ── esg.reward ────────────────────────────────────────────────────────────
+access_esg_reward_employee,esg.reward employee,ecosphere_gamification.model_esg_reward,ecosphere_core.group_ecosphere_employee,1,0,0,0
+access_esg_reward_manager,esg.reward manager,ecosphere_gamification.model_esg_reward,ecosphere_core.group_ecosphere_manager,1,1,1,1
+access_esg_reward_admin,esg.reward admin,ecosphere_gamification.model_esg_reward,ecosphere_core.group_ecosphere_admin,1,1,1,1
+# ── reward.redemption ─────────────────────────────────────────────────────
+access_reward_redemption_employee,reward.redemption employee,ecosphere_gamification.model_reward_redemption,ecosphere_core.group_ecosphere_employee,1,1,1,0
+access_reward_redemption_manager,reward.redemption manager,ecosphere_gamification.model_reward_redemption,ecosphere_core.group_ecosphere_manager,1,1,1,1
+access_reward_redemption_admin,reward.redemption admin,ecosphere_gamification.model_reward_redemption,ecosphere_core.group_ecosphere_admin,1,1,1,1

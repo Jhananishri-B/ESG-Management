@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ════ KANBAN ══════════════════════════════════════════════ -->
+        <record id="view_csr_activity_kanban" model="ir.ui.view">
+            <field name="name">csr.activity.kanban</field>
+            <field name="model">csr.activity</field>
+            <field name="arch" type="xml">
+                <kanban class="eco-kanban-csr" default_group_by="state">
+                    <field name="name"/>
+                    <field name="state"/>
+                    <field name="activity_type"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="participant_count"/>
+                    <field name="approved_count"/>
+                    <field name="xp_reward"/>
+                    <field name="volunteer_hours"/>
+                    <field name="is_full"/>
+                    <field name="color"/>
+                    <field name="location"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="eco-csr-card" t-att-style="'border-top: 3px solid ' + (['#10b981','#3b82f6','#8b5cf6','#f59e0b','#f43f5e'][record.color.raw_value % 5])">
+                                <div class="eco-csr-type-pill">
+                                    <field name="activity_type"/>
+                                </div>
+                                <div class="eco-csr-title">
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div class="eco-csr-meta">
+                                    <span><i class="fa fa-calendar"/> <field name="start_date" widget="date"/></span>
+                                    <span invisible="not location"><i class="fa fa-map-marker"/> <field name="location"/></span>
+                                </div>
+                                <div class="eco-csr-stats">
+                                    <span class="eco-csr-stat">
+                                        <i class="fa fa-users"/> <field name="participant_count"/> registered
+                                    </span>
+                                    <span class="eco-csr-stat eco-xp-tag">
+                                        <i class="fa fa-star"/> <field name="xp_reward"/> XP
+                                    </span>
+                                    <span class="eco-csr-stat">
+                                        <i class="fa fa-clock-o"/> <field name="volunteer_hours"/>h
+                                    </span>
+                                </div>
+                                <div class="eco-csr-full-banner" invisible="not is_full">
+                                    🔒 Fully Booked
+                                </div>
+                                <div class="eco-csr-actions">
+                                    <button name="action_register_self" type="object"
+                                            class="btn btn-sm btn-primary"
+                                            invisible="state not in ('open',) or is_full">
+                                        Register
+                                    </button>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- ════ CALENDAR ════════════════════════════════════════════ -->
+        <record id="view_csr_activity_calendar" model="ir.ui.view">
+            <field name="name">csr.activity.calendar</field>
+            <field name="model">csr.activity</field>
+            <field name="arch" type="xml">
+                <calendar string="CSR Calendar"
+                          date_start="start_date"
+                          date_stop="end_date"
+                          color="color"
+                          event_limit="5"
+                          quick_create="0">
+                    <field name="name"/>
+                    <field name="activity_type"/>
+                    <field name="location"/>
+                    <field name="participant_count"/>
+                </calendar>
+            </field>
+        </record>
+
+        <!-- ════ LIST ════════════════════════════════════════════════ -->
+        <record id="view_csr_activity_list" model="ir.ui.view">
+            <field name="name">csr.activity.list</field>
+            <field name="model">csr.activity</field>
+            <field name="arch" type="xml">
+                <list string="CSR Activities"
+                      decoration-success="state == 'done'"
+                      decoration-info="state == 'open'"
+                      decoration-warning="state == 'in_progress'"
+                      decoration-muted="state in ('cancelled','archived')">
+                    <field name="name"/>
+                    <field name="activity_type" widget="badge"/>
+                    <field name="department_id"/>
+                    <field name="organizer_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="location"/>
+                    <field name="participant_count" string="Registered"/>
+                    <field name="approved_count" string="Approved"/>
+                    <field name="xp_reward" string="XP"/>
+                    <field name="volunteer_hours" string="Hours"/>
+                    <field name="state" widget="badge"
+                           decoration-success="state == 'done'"
+                           decoration-info="state == 'open'"
+                           decoration-warning="state == 'in_progress'"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ════ FORM ════════════════════════════════════════════════ -->
+        <record id="view_csr_activity_form" model="ir.ui.view">
+            <field name="name">csr.activity.form</field>
+            <field name="model">csr.activity</field>
+            <field name="arch" type="xml">
+                <form string="CSR Activity">
+                    <header>
+                        <button name="action_open" string="Open for Registration" type="object"
+                                class="btn-primary" invisible="state != 'draft'"/>
+                        <button name="action_start" string="Start Activity" type="object"
+                                invisible="state != 'open'"/>
+                        <button name="action_complete" string="Complete" type="object"
+                                invisible="state != 'in_progress'"/>
+                        <button name="action_done" string="Mark Done &amp; Award XP" type="object"
+                                class="btn-success" invisible="state != 'pending_review'"/>
+                        <button name="action_register_self" string="Register Myself" type="object"
+                                class="btn-secondary"
+                                invisible="state != 'open'"/>
+                        <button name="action_cancel" string="Cancel" type="object"
+                                invisible="state in ('done','cancelled','archived')"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,open,in_progress,pending_review,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" icon="fa-users"
+                                    type="object" name="%(action_employee_participation)d">
+                                <field name="participant_count" widget="statinfo" string="Registered"/>
+                            </button>
+                            <button class="oe_stat_button" icon="fa-check-circle">
+                                <field name="approved_count" widget="statinfo" string="Approved"/>
+                            </button>
+                        </div>
+
+                        <field name="image" widget="image" class="oe_avatar"
+                               options="{'preview_image': 'image'}"/>
+
+                        <div class="oe_title">
+                            <h1><field name="name" placeholder="Activity Name"/></h1>
+                        </div>
+
+                        <div class="eco-csr-reward-bar">
+                            <span class="eco-xp-pill">⭐ <field name="xp_reward"/> XP</span>
+                            <span class="eco-hours-pill">⏱ <field name="volunteer_hours"/> volunteer hours</span>
+                        </div>
+
+                        <group>
+                            <group string="Activity Details">
+                                <field name="activity_type"/>
+                                <field name="department_id"/>
+                                <field name="organizer_id"/>
+                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                <field name="requires_evidence" widget="boolean_toggle"/>
+                                <field name="color" widget="color_picker"/>
+                            </group>
+                            <group string="Schedule &amp; Location">
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="location"/>
+                                <field name="is_virtual" widget="boolean_toggle"/>
+                                <field name="meeting_url" invisible="not is_virtual"/>
+                                <field name="max_participants" string="Max Participants (0 = unlimited)"/>
+                                <field name="is_full" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group string="Description">
+                            <field name="description" nolabel="1" widget="html"/>
+                        </group>
+
+                        <field name="participation_ids" string="Participants">
+                            <list decoration-success="state == 'approved'"
+                                  decoration-warning="state == 'evidence_uploaded'"
+                                  decoration-danger="state == 'rejected'">
+                                <field name="employee_id"/>
+                                <field name="registration_date" string="Registered"/>
+                                <field name="state" widget="badge"/>
+                                <field name="xp_granted" string="XP Granted"/>
+                                <field name="hours_credited" string="Hours"/>
+                                <button name="action_approve" string="Approve" type="object"
+                                        class="btn-sm btn-success"
+                                        invisible="state not in ('attended','evidence_uploaded','registered')"/>
+                                <button name="action_reject" string="Reject" type="object"
+                                        invisible="state in ('approved','rejected')"/>
+                            </list>
+                        </field>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search -->
+        <record id="view_csr_activity_search" model="ir.ui.view">
+            <field name="name">csr.activity.search</field>
+            <field name="model">csr.activity</field>
+            <field name="arch" type="xml">
+                <search string="Search CSR Activities">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="organizer_id"/>
+                    <field name="activity_type"/>
+                    <separator/>
+                    <filter string="Open"        name="open"     domain="[('state','=','open')]"/>
+                    <filter string="In Progress" name="progress" domain="[('state','=','in_progress')]"/>
+                    <filter string="Done"        name="done"     domain="[('state','=','done')]"/>
+                    <filter string="My Activities" name="mine"   domain="[('organizer_id','=',uid)]"/>
+                    <filter string="Upcoming"    name="upcoming" domain="[('start_date','&gt;',context_today().strftime('%Y-%m-%d'))]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="grp_dept"   string="Department"   context="{'group_by':'department_id'}"/>
+                        <filter name="grp_type"   string="Type"         context="{'group_by':'activity_type'}"/>
+                        <filter name="grp_state"  string="Status"       context="{'group_by':'state'}"/>
+                        <filter name="grp_month"  string="Month"        context="{'group_by':'start_date:month'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_csr_activity" model="ir.actions.act_window">
+            <field name="name">CSR Activities</field>
+            <field name="res_model">csr.activity</field>
+            <field name="view_mode">kanban,calendar,list,form</field>
+            <field name="search_view_id" ref="view_csr_activity_search"/>
+            <field name="context">{'search_default_open': 1}</field>
+        </record>
+
+        <!-- Employee Participation action -->
+        <record id="action_employee_participation" model="ir.actions.act_window">
+            <field name="name">Participations</field>
+            <field name="res_model">employee.participation</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+    </data>
+</odoo>

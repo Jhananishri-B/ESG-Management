@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_esg_weight_config_list" model="ir.ui.view">
+            <field name="name">esg.weight.config.list</field>
+            <field name="model">esg.weight.config</field>
+            <field name="arch" type="xml">
+                <list string="ESG Weight Configurations" decoration-success="active == True">
+                    <field name="name"/>
+                    <field name="effective_date"/>
+                    <field name="weight_env" string="Env (%)"/>
+                    <field name="weight_social" string="Social (%)"/>
+                    <field name="weight_governance" string="Gov (%)"/>
+                    <field name="total_weight" string="Total (%)"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_esg_weight_config_form" model="ir.ui.view">
+            <field name="name">esg.weight.config.form</field>
+            <field name="model">esg.weight.config</field>
+            <field name="arch" type="xml">
+                <form string="ESG Weight Configuration">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" placeholder="Configuration Name"/></h1>
+                        </div>
+                        <div class="alert alert-info eco-weight-info" role="alert">
+                            <i class="fa fa-info-circle"/> All three weights must sum to exactly <strong>100%</strong>.
+                            Current total: <field name="total_weight" readonly="1"/>%
+                        </div>
+                        <group>
+                            <group string="Pillar Weights">
+                                <field name="weight_env" string="🌿 Environmental (%)"/>
+                                <field name="weight_social" string="👥 Social (%)"/>
+                                <field name="weight_governance" string="🛡️ Governance (%)"/>
+                                <field name="total_weight" string="Total (%)" readonly="1"/>
+                            </group>
+                            <group string="Configuration">
+                                <field name="effective_date"/>
+                                <field name="active" widget="boolean_toggle"/>
+                            </group>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes" nolabel="1" placeholder="Add notes about this weight configuration…"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_esg_weight_config" model="ir.actions.act_window">
+            <field name="name">ESG Weight Configuration</field>
+            <field name="res_model">esg.weight.config</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+    </data>
+</odoo>

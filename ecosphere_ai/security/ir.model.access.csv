@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ai_policy_generator_manager,ai.policy.generator manager,ecosphere_ai.model_ai_policy_generator,ecosphere_core.group_ecosphere_manager,1,1,1,1
+access_ai_policy_generator_admin,ai.policy.generator admin,ecosphere_ai.model_ai_policy_generator,ecosphere_core.group_ecosphere_admin,1,1,1,1

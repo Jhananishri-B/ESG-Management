@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Auto-confirm old draft carbon transactions (weekly) -->
+        <record id="cron_carbon_auto_confirm" model="ir.cron">
+            <field name="name">EcoSphere: Auto-confirm Draft Carbon Transactions</field>
+            <field name="model_id" ref="ecosphere_environment.model_carbon_transaction"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_auto_confirm_draft()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+
+        <!-- Refresh carbon forecasts (monthly) -->
+        <record id="cron_carbon_forecast_refresh" model="ir.cron">
+            <field name="name">EcoSphere: Refresh Carbon Forecasts</field>
+            <field name="model_id" ref="ecosphere_environment.model_carbon_forecast"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_refresh_forecasts()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+
+        <!-- Update department ESG scores from carbon data (daily) -->
+        <record id="cron_update_env_scores" model="ir.cron">
+            <field name="name">EcoSphere: Update Environmental Scores</field>
+            <field name="model_id" ref="ecosphere_environment.model_env_goal"/>
+            <field name="state">code</field>
+            <field name="code">
+active_goals = model.search([('state', '=', 'active')])
+for goal in active_goals:
+    days = (goal.deadline - fields.Date.today()).days if goal.deadline else 0
+    if days &lt; 7 and goal.progress &lt; 70:
+        goal.state = 'at_risk'
+            </field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+
+    </data>
+</odoo>

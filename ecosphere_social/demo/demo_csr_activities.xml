@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- CSR Activity Tags -->
+        <record id="tag_green" model="csr.activity.tag"><field name="name">Green</field><field name="color">10</field></record>
+        <record id="tag_community" model="csr.activity.tag"><field name="name">Community</field><field name="color">4</field></record>
+        <record id="tag_health" model="csr.activity.tag"><field name="name">Health</field><field name="color">2</field></record>
+        <record id="tag_education" model="csr.activity.tag"><field name="name">Education</field><field name="color">6</field></record>
+
+        <!-- ══ CSR Activities ════════════════════════════════════════ -->
+        <record id="csr_tree_planting_2024" model="csr.activity">
+            <field name="name">City Tree Planting Drive 2024</field>
+            <field name="activity_type">tree_planting</field>
+            <field name="department_id" ref="ecosphere_core.dept_facilities"/>
+            <field name="start_date">2024-03-15 08:00:00</field>
+            <field name="end_date">2024-03-15 17:00:00</field>
+            <field name="location">City Park, Downtown</field>
+            <field name="max_participants">50</field>
+            <field name="xp_reward">120</field>
+            <field name="volunteer_hours">8</field>
+            <field name="state">done</field>
+            <field name="color">10</field>
+            <field name="tag_ids" eval="[(4, ref('tag_green'))]"/>
+            <field name="description">&lt;p&gt;Join us for our annual tree planting initiative! We aim to plant 500 trees across city parks to offset our carbon footprint and beautify the community.&lt;/p&gt;</field>
+        </record>
+
+        <record id="csr_beach_cleanup" model="csr.activity">
+            <field name="name">Coastal Cleanup Initiative</field>
+            <field name="activity_type">beach_cleanup</field>
+            <field name="department_id" ref="ecosphere_core.dept_facilities"/>
+            <field name="start_date">2024-04-20 07:00:00</field>
+            <field name="end_date">2024-04-20 13:00:00</field>
+            <field name="location">Marine Beach</field>
+            <field name="max_participants">80</field>
+            <field name="xp_reward">100</field>
+            <field name="volunteer_hours">6</field>
+            <field name="state">done</field>
+            <field name="color">4</field>
+            <field name="tag_ids" eval="[(4, ref('tag_green')), (4, ref('tag_community'))]"/>
+        </record>
+
+        <record id="csr_food_drive_q2" model="csr.activity">
+            <field name="name">Q2 Food Bank Drive</field>
+            <field name="activity_type">food_drive</field>
+            <field name="department_id" ref="ecosphere_core.dept_hr"/>
+            <field name="start_date">2024-05-01 09:00:00</field>
+            <field name="end_date">2024-05-31 17:00:00</field>
+            <field name="location">Company HQ — Main Lobby</field>
+            <field name="max_participants">0</field>
+            <field name="xp_reward">60</field>
+            <field name="volunteer_hours">2</field>
+            <field name="state">done</field>
+            <field name="color">3</field>
+            <field name="tag_ids" eval="[(4, ref('tag_community'))]"/>
+        </record>
+
+        <record id="csr_stem_mentoring" model="csr.activity">
+            <field name="name">STEM Mentoring Program — Schools</field>
+            <field name="activity_type">mentoring</field>
+            <field name="department_id" ref="ecosphere_core.dept_technology"/>
+            <field name="start_date">2024-06-01 10:00:00</field>
+            <field name="end_date">2024-08-31 17:00:00</field>
+            <field name="location">Various Schools</field>
+            <field name="max_participants">30</field>
+            <field name="xp_reward">200</field>
+            <field name="volunteer_hours">20</field>
+            <field name="state">in_progress</field>
+            <field name="color">6</field>
+            <field name="tag_ids" eval="[(4, ref('tag_education'))]"/>
+        </record>
+
+        <record id="csr_wellness_run" model="csr.activity">
+            <field name="name">Annual Charity Wellness Run 5K</field>
+            <field name="activity_type">health</field>
+            <field name="department_id" ref="ecosphere_core.dept_hr"/>
+            <field name="start_date">2024-07-14 06:30:00</field>
+            <field name="end_date">2024-07-14 10:00:00</field>
+            <field name="location">Company Campus</field>
+            <field name="max_participants">200</field>
+            <field name="xp_reward">80</field>
+            <field name="volunteer_hours">3</field>
+            <field name="state">open</field>
+            <field name="color">2</field>
+            <field name="tag_ids" eval="[(4, ref('tag_health'))]"/>
+        </record>
+
+        <record id="csr_diversity_workshop" model="csr.activity">
+            <field name="name">Unconscious Bias &amp; Inclusion Workshop</field>
+            <field name="activity_type">diversity</field>
+            <field name="department_id" ref="ecosphere_core.dept_hr"/>
+            <field name="start_date">2024-08-15 09:00:00</field>
+            <field name="end_date">2024-08-15 17:00:00</field>
+            <field name="is_virtual">True</field>
+            <field name="meeting_url">https://meet.example.com/diversity-workshop</field>
+            <field name="max_participants">0</field>
+            <field name="xp_reward">75</field>
+            <field name="volunteer_hours">8</field>
+            <field name="requires_evidence">True</field>
+            <field name="state">open</field>
+            <field name="color">5</field>
+        </record>
+
+        <record id="csr_solar_awareness" model="csr.activity">
+            <field name="name">Renewable Energy Awareness Campaign</field>
+            <field name="activity_type">environment</field>
+            <field name="department_id" ref="ecosphere_core.dept_facilities"/>
+            <field name="start_date">2024-09-01 09:00:00</field>
+            <field name="end_date">2024-09-30 17:00:00</field>
+            <field name="location">All Offices</field>
+            <field name="max_participants">0</field>
+            <field name="xp_reward">50</field>
+            <field name="volunteer_hours">4</field>
+            <field name="state">draft</field>
+            <field name="color">10</field>
+        </record>
+
+    </data>
+</odoo>

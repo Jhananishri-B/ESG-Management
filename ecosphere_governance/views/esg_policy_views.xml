@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ════ LIST ════════════════════════════════════════════════ -->
+        <record id="view_esg_policy_list" model="ir.ui.view">
+            <field name="name">esg.policy.list</field>
+            <field name="model">esg.policy</field>
+            <field name="arch" type="xml">
+                <list string="ESG Policies"
+                      decoration-success="state == 'published'"
+                      decoration-info="state == 'under_review'"
+                      decoration-muted="state == 'archived'">
+                    <field name="reference"/>
+                    <field name="name"/>
+                    <field name="policy_type" widget="badge"/>
+                    <field name="owner_id"/>
+                    <field name="version"/>
+                    <field name="effective_date"/>
+                    <field name="acknowledgement_deadline"/>
+                    <field name="ack_rate" widget="progressbar"/>
+                    <field name="state" widget="badge"
+                           decoration-success="state == 'published'"
+                           decoration-info="state == 'under_review'"
+                           decoration-warning="state == 'draft'"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ════ FORM ════════════════════════════════════════════════ -->
+        <record id="view_esg_policy_form" model="ir.ui.view">
+            <field name="name">esg.policy.form</field>
+            <field name="model">esg.policy</field>
+            <field name="arch" type="xml">
+                <form string="ESG Policy">
+                    <header>
+                        <button name="action_submit_review" string="Submit for Review" type="object"
+                                class="btn-primary" invisible="state != 'draft'"/>
+                        <button name="action_publish" string="Publish &amp; Request Acknowledgement" type="object"
+                                class="btn-success" invisible="state != 'under_review'"
+                                groups="ecosphere_core.group_ecosphere_manager"/>
+                        <button name="action_send_reminder" string="Send Reminders" type="object"
+                                invisible="state != 'published' or pending_ack == 0"/>
+                        <button name="action_archive_policy" string="Archive" type="object"
+                                invisible="state in ('draft', 'archived')"/>
+                        <button name="action_reset_draft" string="Reset to Draft" type="object"
+                                invisible="state != 'archived'"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,under_review,published"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" icon="fa-check-square-o">
+                                <field name="total_ack" widget="statinfo" string="Acknowledged"/>
+                            </button>
+                            <button class="oe_stat_button" icon="fa-clock-o">
+                                <field name="pending_ack" widget="statinfo" string="Pending"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="Policy Title" readonly="state in ('published','archived')"/></h1>
+                            <h2><field name="reference" readonly="1"/></h2>
+                        </div>
+                        
+                        <div class="alert alert-info" role="alert" invisible="state != 'published'">
+                            <strong>Acknowledgement Rate:</strong> <field name="ack_rate" nolabel="1"/>% 
+                            (<field name="total_ack" nolabel="1"/> / <field name="total_ack" nolabel="1" class="d-none"/> 
+                            <span t-esc="record.total_ack.raw_value + record.pending_ack.raw_value"/> employees)
+                        </div>
+
+                        <group>
+                            <group string="Classification">
+                                <field name="policy_type" readonly="state in ('published','archived')"/>
+                                <field name="category_id" readonly="state in ('published','archived')"/>
+                                <field name="priority" widget="priority" readonly="state in ('published','archived')"/>
+                                <field name="version" readonly="state in ('published','archived')"/>
+                            </group>
+                            <group string="Scope &amp; Ownership">
+                                <field name="department_ids" widget="many2many_tags" 
+                                       placeholder="All Departments" readonly="state in ('published','archived')"/>
+                                <field name="applies_to_all" invisible="1"/>
+                                <field name="owner_id" readonly="state in ('published','archived')"/>
+                                <field name="reviewer_id" readonly="state in ('published','archived')"/>
+                            </group>
+                        </group>
+
+                        <group string="Dates">
+                            <group>
+                                <field name="effective_date" readonly="state in ('published','archived')"/>
+                                <field name="acknowledgement_deadline" readonly="state in ('published','archived')"/>
+                            </group>
+                            <group>
+                                <field name="review_date" readonly="state in ('published','archived')"/>
+                                <field name="expiry_date" readonly="state in ('published','archived')"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Content &amp; Summary">
+                                <group>
+                                    <field name="summary" placeholder="Executive summary..."/>
+                                </group>
+                                <field name="description" widget="html" placeholder="Full policy content..."/>
+                                <group>
+                                    <field name="attachment_ids" widget="many2many_binary" string="Documents"/>
+                                </group>
+                            </page>
+                            <page string="Acknowledgements" invisible="state not in ('published','archived')">
+                                <field name="acknowledgement_ids" readonly="1">
+                                    <list decoration-success="state == 'acknowledged'"
+                                          decoration-danger="state == 'overdue'"
+                                          decoration-muted="state == 'exempted'">
+                                        <field name="employee_id"/>
+                                        <field name="department_id"/>
+                                        <field name="deadline"/>
+                                        <field name="state" widget="badge"/>
+                                        <field name="acknowledged_on"/>
+                                        <field name="acknowledged_via"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search -->
+        <record id="view_esg_policy_search" model="ir.ui.view">
+            <field name="name">esg.policy.search</field>
+            <field name="model">esg.policy</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="reference"/>
+                    <field name="owner_id"/>
+                    <filter string="Published" name="published" domain="[('state','=','published')]"/>
+                    <filter string="Under Review" name="under_review" domain="[('state','=','under_review')]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="grp_type" string="Policy Type" context="{'group_by':'policy_type'}"/>
+                        <filter name="grp_state" string="Status" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_esg_policy" model="ir.actions.act_window">
+            <field name="name">ESG Policies</field>
+            <field name="res_model">esg.policy</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_esg_policy_search"/>
+        </record>
+
+    </data>
+</odoo>

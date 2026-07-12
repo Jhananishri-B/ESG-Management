@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="action_report_esg_policy" model="ir.actions.report">
+        <field name="name">Policy Acknowledgement Report</field>
+        <field name="model">esg.policy</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ecosphere_reports.report_esg_policy_template</field>
+        <field name="report_file">ecosphere_reports.report_esg_policy_template</field>
+        <field name="print_report_name">'Policy Report - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="ecosphere_governance.model_esg_policy"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="ecosphere_reports.paperformat_ecosphere_report"/>
+    </record>
+
+    <template id="report_esg_policy_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        
+                        <div class="row mt-4 mb-4 pb-3 border-bottom">
+                            <div class="col-8">
+                                <h1 style="color: #1e3a8a; font-weight: 800;"><t t-esc="doc.name"/></h1>
+                                <h4 class="text-muted">Version <t t-esc="doc.version"/> | Published: <t t-esc="doc.publish_date or 'Draft'"/></h4>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div t-attf-style="background-color: #{doc.ack_rate &gt;= 90 ? '#d1fae5' : doc.ack_rate &gt;= 70 ? '#fef3c7' : '#fee2e2'}; padding: 15px; border-radius: 8px; display: inline-block;">
+                                    <div style="font-size: 12px; font-weight: bold; text-transform: uppercase;" t-attf-class="#{doc.ack_rate &gt;= 90 ? 'text-success' : doc.ack_rate &gt;= 70 ? 'text-warning' : 'text-danger'}">Acknowledgement Rate</div>
+                                    <div t-attf-style="font-size: 32px; font-weight: 900;" t-attf-class="#{doc.ack_rate &gt;= 90 ? 'text-success' : doc.ack_rate &gt;= 70 ? 'text-warning' : 'text-danger'}">
+                                        <t t-esc="'%.1f' % doc.ack_rate"/>%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <strong>Category:</strong> <t t-esc="dict(doc.fields_get(allfields=['category'])['category']['selection'])[doc.category]"/><br/>
+                                <strong>Owner:</strong> <t t-esc="doc.owner_id.name"/><br/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Deadline:</strong> <t t-esc="doc.acknowledgement_deadline or 'None'"/><br/>
+                                <strong>Target Audiences:</strong> 
+                                <t t-esc="', '.join(doc.target_department_ids.mapped('name')) or 'All Departments'"/>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <h3 style="color: #334155; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px;">Missing Acknowledgements</h3>
+                            <t t-set="missing_acks" t-value="doc.acknowledgement_ids.filtered(lambda a: a.state == 'pending')"/>
+                            
+                            <t t-if="not missing_acks">
+                                <div class="alert alert-success mt-3">
+                                    <i class="fa fa-check-circle"></i> All required employees have acknowledged this policy.
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <p class="text-danger font-weight-bold mt-2">
+                                    <t t-esc="len(missing_acks)"/> employees have not yet acknowledged this policy.
+                                </p>
+                                <table class="table table-sm table-striped mt-3">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>Employee</th>
+                                            <th>Department</th>
+                                            <th>Sent Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="missing_acks" t-as="ack">
+                                            <td><t t-esc="ack.employee_id.name"/></td>
+                                            <td><t t-esc="ack.employee_id.department_id.name or 'N/A'"/></td>
+                                            <td><t t-esc="ack.date_sent"/></td>
+                                            <td>
+                                                <span t-if="ack.is_overdue" class="text-danger font-weight-bold">OVERDUE</span>
+                                                <span t-else="" class="text-warning">Pending</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h3 style="color: #334155; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px;">Completed Acknowledgements</h3>
+                            <t t-set="completed_acks" t-value="doc.acknowledgement_ids.filtered(lambda a: a.state == 'acknowledged')"/>
+                            
+                            <t t-if="not completed_acks">
+                                <p>No acknowledgements recorded yet.</p>
+                            </t>
+                            <t t-else="">
+                                <table class="table table-sm table-borderless mt-3">
+                                    <thead class="border-bottom">
+                                        <tr>
+                                            <th>Employee</th>
+                                            <th>Department</th>
+                                            <th>Acknowledged Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="completed_acks" t-as="ack">
+                                            <td><t t-esc="ack.employee_id.name"/></td>
+                                            <td><t t-esc="ack.employee_id.department_id.name or 'N/A'"/></td>
+                                            <td><t t-esc="ack.date_acknowledged"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

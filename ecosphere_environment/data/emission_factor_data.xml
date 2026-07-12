@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- IR Sequence for Carbon Transactions -->
+        <record id="seq_carbon_transaction" model="ir.sequence">
+            <field name="name">Carbon Transaction</field>
+            <field name="code">carbon.transaction</field>
+            <field name="prefix">CTX-%(year)s-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <!-- ══ Scope 1 — Direct Emission Factors ════════════════════════ -->
+        <record id="ef_diesel_litre" model="emission.factor">
+            <field name="name">Diesel — Road Transport</field>
+            <field name="code">DIESEL_L</field>
+            <field name="scope">1</field>
+            <field name="category">fuel</field>
+            <field name="factor_value">2.68800</field>
+            <field name="unit">litre</field>
+            <field name="source">DEFRA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_petrol_litre" model="emission.factor">
+            <field name="name">Petrol / Gasoline — Road Transport</field>
+            <field name="code">PETROL_L</field>
+            <field name="scope">1</field>
+            <field name="category">fuel</field>
+            <field name="factor_value">2.31200</field>
+            <field name="unit">litre</field>
+            <field name="source">DEFRA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_natural_gas_m3" model="emission.factor">
+            <field name="name">Natural Gas — Combustion</field>
+            <field name="code">NAT_GAS_M3</field>
+            <field name="scope">1</field>
+            <field name="category">fuel</field>
+            <field name="factor_value">2.04000</field>
+            <field name="unit">m³</field>
+            <field name="source">IPCC 2021</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_lpg_litre" model="emission.factor">
+            <field name="name">LPG — Combustion</field>
+            <field name="code">LPG_L</field>
+            <field name="scope">1</field>
+            <field name="category">fuel</field>
+            <field name="factor_value">1.55500</field>
+            <field name="unit">litre</field>
+            <field name="source">DEFRA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_fleet_car_km" model="emission.factor">
+            <field name="name">Company Car — Average</field>
+            <field name="code">FLEET_CAR_KM</field>
+            <field name="scope">1</field>
+            <field name="category">fleet</field>
+            <field name="factor_value">0.17100</field>
+            <field name="unit">km</field>
+            <field name="source">DEFRA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_fleet_truck_km" model="emission.factor">
+            <field name="name">Delivery Truck — HGV</field>
+            <field name="code">FLEET_HGV_KM</field>
+            <field name="scope">1</field>
+            <field name="category">fleet</field>
+            <field name="factor_value">0.92400</field>
+            <field name="unit">km</field>
+            <field name="source">DEFRA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <!-- ══ Scope 2 — Purchased Energy Emission Factors ══════════════ -->
+        <record id="ef_electricity_in" model="emission.factor">
+            <field name="name">Electricity — India Grid Average</field>
+            <field name="code">GRID_IN</field>
+            <field name="scope">2</field>
+            <field name="category">electricity</field>
+            <field name="factor_value">0.71600</field>
+            <field name="unit">kWh</field>
+            <field name="source">CEA India 2023</field>
+            <field name="region">IN</field>
+        </record>
+
+        <record id="ef_electricity_global" model="emission.factor">
+            <field name="name">Electricity — Global Average</field>
+            <field name="code">GRID_GLOBAL</field>
+            <field name="scope">2</field>
+            <field name="category">electricity</field>
+            <field name="factor_value">0.48300</field>
+            <field name="unit">kWh</field>
+            <field name="source">IEA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_electricity_eu" model="emission.factor">
+            <field name="name">Electricity — EU Average</field>
+            <field name="code">GRID_EU</field>
+            <field name="scope">2</field>
+            <field name="category">electricity</field>
+            <field name="factor_value">0.27500</field>
+            <field name="unit">kWh</field>
+            <field name="source">EEA 2023</field>
+            <field name="region">EU</field>
+        </record>
+
+        <record id="ef_heat_steam" model="emission.factor">
+            <field name="name">District Heat / Steam</field>
+            <field name="code">HEAT_STEAM</field>
+            <field name="scope">2</field>
+            <field name="category">heat</field>
+            <field name="factor_value">0.23600</field>
+            <field name="unit">kWh</field>
+            <field name="source">IPCC 2021</field>
+            <field name="region">Global</field>
+        </record>
+
+        <!-- ══ Scope 3 — Value Chain Emission Factors ════════════════════ -->
+        <record id="ef_air_travel_km" model="emission.factor">
+            <field name="name">Air Travel — Economy Class</field>
+            <field name="code">AIR_ECO_KM</field>
+            <field name="scope">3</field>
+            <field name="category">air_travel</field>
+            <field name="factor_value">0.25500</field>
+            <field name="unit">km per passenger</field>
+            <field name="source">DEFRA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_air_travel_business" model="emission.factor">
+            <field name="name">Air Travel — Business Class</field>
+            <field name="code">AIR_BIZ_KM</field>
+            <field name="scope">3</field>
+            <field name="category">air_travel</field>
+            <field name="factor_value">0.62700</field>
+            <field name="unit">km per passenger</field>
+            <field name="source">DEFRA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_waste_landfill" model="emission.factor">
+            <field name="name">Waste to Landfill — Mixed</field>
+            <field name="code">WASTE_LANDFILL</field>
+            <field name="scope">3</field>
+            <field name="category">waste</field>
+            <field name="factor_value">0.58700</field>
+            <field name="unit">kg waste</field>
+            <field name="source">DEFRA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_waste_recycling" model="emission.factor">
+            <field name="name">Waste Recycled</field>
+            <field name="code">WASTE_RECYCLE</field>
+            <field name="scope">3</field>
+            <field name="category">waste</field>
+            <field name="factor_value">0.02100</field>
+            <field name="unit">kg waste</field>
+            <field name="source">DEFRA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_water_supply" model="emission.factor">
+            <field name="name">Water Supply</field>
+            <field name="code">WATER_M3</field>
+            <field name="scope">3</field>
+            <field name="category">water</field>
+            <field name="factor_value">0.34900</field>
+            <field name="unit">m³</field>
+            <field name="source">DEFRA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_steel_kg" model="emission.factor">
+            <field name="name">Steel Production</field>
+            <field name="code">STEEL_KG</field>
+            <field name="scope">3</field>
+            <field name="category">material</field>
+            <field name="factor_value">1.89000</field>
+            <field name="unit">kg</field>
+            <field name="source">World Steel Association 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_plastic_kg" model="emission.factor">
+            <field name="name">Plastic Production (general)</field>
+            <field name="code">PLASTIC_KG</field>
+            <field name="scope">3</field>
+            <field name="category">material</field>
+            <field name="factor_value">2.53000</field>
+            <field name="unit">kg</field>
+            <field name="source">PlasticsEurope 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_paper_kg" model="emission.factor">
+            <field name="name">Paper / Cardboard</field>
+            <field name="code">PAPER_KG</field>
+            <field name="scope">3</field>
+            <field name="category">material</field>
+            <field name="factor_value">0.91900</field>
+            <field name="unit">kg</field>
+            <field name="source">DEFRA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_freight_road_tkm" model="emission.factor">
+            <field name="name">Freight — Road (tkm)</field>
+            <field name="code">FREIGHT_ROAD_TKM</field>
+            <field name="scope">3</field>
+            <field name="category">transport</field>
+            <field name="factor_value">0.10700</field>
+            <field name="unit">tonne-km</field>
+            <field name="source">DEFRA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+        <record id="ef_freight_sea_tkm" model="emission.factor">
+            <field name="name">Freight — Sea (tkm)</field>
+            <field name="code">FREIGHT_SEA_TKM</field>
+            <field name="scope">3</field>
+            <field name="category">transport</field>
+            <field name="factor_value">0.01640</field>
+            <field name="unit">tonne-km</field>
+            <field name="source">DEFRA 2023</field>
+            <field name="region">Global</field>
+        </record>
+
+    </data>
+</odoo>

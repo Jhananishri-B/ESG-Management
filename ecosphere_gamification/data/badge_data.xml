@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Badges -->
+        <record id="badge_eco_warrior" model="esg.badge">
+            <field name="name">Eco Warrior</field>
+            <field name="description">Awarded for participating in 5 environmental initiatives.</field>
+            <field name="badge_type">environment</field>
+            <field name="level">gold</field>
+            <field name="sequence">10</field>
+            <field name="auto_award">True</field>
+            <field name="rule_type">xp_total</field>
+            <field name="rule_threshold">500</field>
+        </record>
+
+        <record id="badge_community_champion" model="esg.badge">
+            <field name="name">Community Champion</field>
+            <field name="description">Awarded for completing 50 volunteer hours.</field>
+            <field name="badge_type">social</field>
+            <field name="level">silver</field>
+            <field name="sequence">20</field>
+            <field name="auto_award">True</field>
+            <field name="rule_type">volunteer_hours</field>
+            <field name="rule_threshold">50</field>
+        </record>
+
+        <record id="badge_ethics_first" model="esg.badge">
+            <field name="name">Ethics First</field>
+            <field name="description">Acknowledged all governance policies on time for a full year.</field>
+            <field name="badge_type">governance</field>
+            <field name="level">bronze</field>
+            <field name="sequence">30</field>
+        </record>
+    </data>
+</odoo>

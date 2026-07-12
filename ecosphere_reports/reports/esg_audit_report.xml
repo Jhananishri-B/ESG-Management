@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="action_report_esg_audit" model="ir.actions.report">
+        <field name="name">Official Audit Report</field>
+        <field name="model">esg.audit</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ecosphere_reports.report_esg_audit_template</field>
+        <field name="report_file">ecosphere_reports.report_esg_audit_template</field>
+        <field name="print_report_name">'Audit Report - %s' % (object.reference)</field>
+        <field name="binding_model_id" ref="ecosphere_governance.model_esg_audit"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="ecosphere_reports.paperformat_ecosphere_report"/>
+    </record>
+
+    <template id="report_esg_audit_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        
+                        <div class="text-center mb-5 border-bottom pb-4">
+                            <h4 class="text-muted text-uppercase tracking-widest mb-1">Official ESG Audit Report</h4>
+                            <h1 style="color: #1e3a8a; font-weight: 800; margin-top: 10px;"><t t-esc="doc.name"/></h1>
+                            <h5><t t-esc="doc.reference"/> | <t t-esc="dict(doc.fields_get(allfields=['audit_type'])['audit_type']['selection'])[doc.audit_type]"/></h5>
+                        </div>
+
+                        <div class="row mb-5">
+                            <div class="col-6">
+                                <table class="table table-sm table-borderless">
+                                    <tr>
+                                        <td style="font-weight: bold; width: 40%;">Department:</td>
+                                        <td><t t-esc="doc.department_id.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold;">Lead Auditor:</td>
+                                        <td><t t-esc="doc.lead_auditor_id.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold;">Date Completed:</td>
+                                        <td><t t-esc="doc.end_date or doc.planned_date"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-6 text-end">
+                                <div style="display:inline-block; text-align:center; border:2px solid #e2e8f0; border-radius:10px; padding:15px; min-width:150px;">
+                                    <div style="font-size:14px; font-weight:bold; color:#64748b;">AUDIT SCORE</div>
+                                    <div t-attf-style="font-size:36px; font-weight:900; color:#{doc.overall_score &gt;= 90 ? '#10b981' : doc.overall_score &gt;= 70 ? '#f59e0b' : '#ef4444'};">
+                                        <t t-esc="doc.overall_score"/>
+                                    </div>
+                                    <div style="font-weight:bold; text-transform:uppercase;"><t t-esc="doc.result"/></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h3 style="color: #334155; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px;">Executive Summary</h3>
+                            <div class="mt-3">
+                                <t t-raw="doc.executive_summary or 'No executive summary provided.'"/>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h3 style="color: #334155; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px;">Scope</h3>
+                            <p class="mt-3"><t t-esc="doc.scope or 'Not specified.'"/></p>
+                        </div>
+
+                        <div class="mb-4">
+                            <h3 style="color: #334155; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px; margin-bottom: 20px;">Findings &amp; Non-Conformities</h3>
+                            <t t-if="not doc.finding_ids">
+                                <p><em>No findings reported during this audit.</em></p>
+                            </t>
+                            <t t-else="">
+                                <table class="table table-bordered table-sm">
+                                    <thead style="background-color: #f1f5f9;">
+                                        <tr>
+                                            <th style="width: 25%;">Finding</th>
+                                            <th style="width: 15%;">Severity</th>
+                                            <th style="width: 15%;">Area</th>
+                                            <th style="width: 45%;">Corrective Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="doc.finding_ids" t-as="finding">
+                                            <td><strong t-esc="finding.name"/><br/><small class="text-muted" t-esc="finding.description"/></td>
+                                            <td>
+                                                <t t-esc="dict(finding.fields_get(allfields=['severity'])['severity']['selection'])[finding.severity]"/>
+                                            </td>
+                                            <td><t t-esc="finding.area"/></td>
+                                            <td>
+                                                <t t-esc="finding.corrective_action"/><br/>
+                                                <small t-if="finding.due_date"><strong>Due: </strong> <t t-esc="finding.due_date"/></small>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_social_csr"
+                  name="CSR Activities"
+                  parent="ecosphere_core.menu_ecosphere_social"
+                  action="action_csr_activity"
+                  sequence="10"/>
+        <menuitem id="menu_social_participation"
+                  name="Participations"
+                  parent="ecosphere_core.menu_ecosphere_social"
+                  action="action_employee_participation"
+                  sequence="20"/>
+        <menuitem id="menu_social_volunteer"
+                  name="Volunteer Hours"
+                  parent="ecosphere_core.menu_ecosphere_social"
+                  action="action_volunteer_hours"
+                  sequence="30"/>
+        <menuitem id="menu_social_diversity"
+                  name="Diversity Metrics"
+                  parent="ecosphere_core.menu_ecosphere_social"
+                  action="action_diversity_metric"
+                  sequence="40"
+                  groups="ecosphere_core.group_ecosphere_manager"/>
+    </data>
+</odoo>
